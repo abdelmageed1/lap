@@ -313,3 +313,60 @@ def find_patients_by_phone(phone: str):
         return [dict(r) for r in rows]
     finally:
         conn.close()
+
+
+def get_daily_trends(days: int = 7):
+    """Returns daily visits count and revenue for the last N days."""
+    conn = get_connection()
+    try:
+        results = []
+        now = datetime.now()
+        for i in range(days - 1, -1, -1):
+            target_date = (now - timedelta(days=i)).date().isoformat()
+            row = conn.execute(
+                "SELECT COUNT(id) AS visits, COALESCE(SUM(paid_amount), 0.0) AS revenue "
+                "FROM visits WHERE visit_date LIKE ?", (f"{target_date}%",)
+            ).fetchone()
+            results.append({
+                "date": target_date[5:],
+                "full_date": target_date,
+                "visits": row["visits"] or 0,
+                "revenue": row["revenue"] or 0.0
+            })
+        return results
+    finally:
+        conn.close()
+
+
+def get_patient_journey(visit_id: int) -> list:
+    """Return ordered list of test stages for a given visit.
+    Each entry includes test name and current status from ``visit_test_orders``.
+    """
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            """
+            SELECT t.name AS test_name, vto.status
+            FROM visit_test_orders vto
+            JOIN tests t ON t.id = vto.test_id
+            WHERE vto.visit_id = ?
+            ORDER BY vto.id ASC
+            """,
+            (visit_id,)
+        ).fetchall()
+        return [dict(row) for row in rows]
+    finally:
+        conn.close()
+
+    """Returns top N requested tests and their order counts."""
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            "SELECT t.name AS test_name, COUNT(vto.id) AS test_count "
+            "FROM visit_test_orders vto "
+            "JOIN tests t ON t.id = vto.test_id "
+            "GROUP BY t.id ORDER BY test_count DESC LIMIT ?", (limit,)
+        ).fetchall()
+        return [{"test_name": r["test_name"], "count": r["test_count"]} for r in rows]
+    finally:
+        conn.close()

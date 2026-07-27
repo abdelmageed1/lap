@@ -10,6 +10,7 @@ from app.ui.backup_view import BackupView
 from app.ui.catalog_view import CatalogView
 from app.ui.dashboard_view import DashboardView
 from app.ui.patient_history_view import PatientHistoryView
+from app.ui.patient_tracker_widget import PatientTrackerWidget
 from app.ui.reception_view import ReceptionView
 from app.ui.results_view import ResultsView
 from app.ui.settings_view import SettingsView
@@ -80,6 +81,7 @@ class MainWindow(QWidget):
                 ("Visits", "الزيارات والفواتير", VisitsView),
                 ("Results", "نتائج التحاليل", ResultsView),
                 ("PatientHistory", "سجل المريض", PatientHistoryView),
+                ("PatientTracker", "تتبّع المريض", PatientTrackerWidget),
             ]),
             ("الإدارة", [
                 ("Catalog", "كتالوج التحاليل", CatalogView),
