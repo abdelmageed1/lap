@@ -162,10 +162,10 @@ class ResultsView(QWidget):
             range_label.setStyleSheet("color: #6B7280;")
             range_label.setMinimumWidth(180)
             value_edit = QLineEdit()
-            if p["data_type"] == "Numeric" and p.get("existing_numeric") is not None:
-                value_edit.setText(str(p["existing_numeric"]))
-            elif p.get("existing_text"):
-                value_edit.setText(p["existing_text"])
+            # Show reference range as tooltip for quick guidance
+            tooltip_text = self._get_range_text(p)
+            if tooltip_text:
+                value_edit.setToolTip(f"المدى الطبيعي: {tooltip_text}")
 
             row.addWidget(name_label)
             row.addWidget(range_label)

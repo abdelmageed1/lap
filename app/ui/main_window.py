@@ -1,4 +1,5 @@
 from PySide2.QtCore import Qt
+from app.ui.styles import apply_theme, get_saved_theme
 from PySide2.QtGui import QIcon, QPixmap
 from PySide2.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QScrollArea, QStackedWidget,
                                 QVBoxLayout, QWidget)
@@ -133,6 +134,8 @@ class MainWindow(QWidget):
         sidebar_layout.addWidget(logout_button)
 
         root.addWidget(sidebar)
+        # Apply saved theme on startup
+        apply_theme(QApplication.instance(), get_saved_theme())
 
         content_scroll = QScrollArea()
         content_scroll.setWidgetResizable(True)
@@ -175,3 +178,19 @@ class MainWindow(QWidget):
 
     def logout(self):
         self.on_logout()
+
+    def closeEvent(self, event):
+        """Ensure all background threads are asked to stop before the window closes.
+        This prevents the "QThread: Destroyed while thread is still running" warning.
+        """
+        try:
+            # Import the global thread registry from worker module
+            from app.utils.worker import _ACTIVE_THREADS
+            for thread in list(_ACTIVE_THREADS):
+                # Ask each thread to stop and wait for it to finish
+                if hasattr(thread, "request_stop"):
+                    thread.request_stop()
+                thread.wait(3000)  # wait up to 3 seconds per thread
+        except Exception:
+            pass
+        event.accept()

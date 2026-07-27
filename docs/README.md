@@ -3,6 +3,14 @@
 ```
 conda activate laplis
 python main.py
+
+
+# 1️⃣ إنشاء بيئة جديدة باسم “laplis”
+conda create -y -n laplis python=3.13
+# 2️⃣ تفعيل البيئة
+conda activate laplis
+# 3️⃣ تثبيت PySide2 من قناة conda‑forge
+conda install -y -c conda-forge pyside2
 ```
 هذه نسخة بديلة من نظام LapLIS، مبنية بلغة **Python** بدلاً من C#/.NET، خصيصًا لدعم الأجهزة القديمة التي لا تزال تعمل بنظام **Windows 7** (والذي توقفت .NET 8 — المستخدمة في النسخة الأساسية — عن دعمه تمامًا).
 

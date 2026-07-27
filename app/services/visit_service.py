@@ -358,6 +358,7 @@ def get_patient_journey(visit_id: int) -> list:
     finally:
         conn.close()
 
+def get_top_requested_tests(limit: int = 5) -> list:
     """Returns top N requested tests and their order counts."""
     conn = get_connection()
     try:
@@ -365,7 +366,8 @@ def get_patient_journey(visit_id: int) -> list:
             "SELECT t.name AS test_name, COUNT(vto.id) AS test_count "
             "FROM visit_test_orders vto "
             "JOIN tests t ON t.id = vto.test_id "
-            "GROUP BY t.id ORDER BY test_count DESC LIMIT ?", (limit,)
+            "GROUP BY t.id ORDER BY test_count DESC LIMIT ?",
+            (limit,)
         ).fetchall()
         return [{"test_name": r["test_name"], "count": r["test_count"]} for r in rows]
     finally:
