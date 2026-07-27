@@ -1,0 +1,144 @@
+from PySide2.QtCore import Qt
+from PySide2.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QScrollArea, QStackedWidget,
+                                QVBoxLayout, QWidget)
+
+from app.services import catalog_service
+from app.ui.audit_log_view import AuditLogView
+from app.ui.backup_view import BackupView
+from app.ui.catalog_view import CatalogView
+from app.ui.dashboard_view import DashboardView
+from app.ui.patient_history_view import PatientHistoryView
+from app.ui.reception_view import ReceptionView
+from app.ui.results_view import ResultsView
+from app.ui.settings_view import SettingsView
+from app.ui.users_view import UsersView
+from app.ui.visits_view import VisitsView
+
+
+class MainWindow(QWidget):
+    def __init__(self, user, on_logout):
+        super().__init__()
+        self.user = user
+        self.on_logout = on_logout
+        self.setWindowTitle("LapLIS")
+        # Fallback size for window managers that ignore showMaximized() (main.py maximizes on
+        # normal startup) - generous enough that dense screens like the Catalog don't need
+        # horizontal scrolling even at this "un-maximized" size.
+        self.resize(1366, 820)
+        self.setMinimumSize(1100, 700)
+
+        root = QHBoxLayout(self)
+        root.setContentsMargins(0, 0, 0, 0)
+        root.setSpacing(0)
+
+        # Sidebar
+        sidebar = QWidget()
+        sidebar.setObjectName("Sidebar")
+        sidebar.setFixedWidth(220)
+        sidebar_layout = QVBoxLayout(sidebar)
+        sidebar_layout.setContentsMargins(0, 0, 0, 0)
+        sidebar_layout.setSpacing(0)
+
+        settings = catalog_service.get_lab_settings()
+        name_label = QLabel(settings.get("lab_name") or "المعمل")
+        name_label.setObjectName("SidebarTitle")
+        name_label.setWordWrap(True)
+        sidebar_layout.addWidget(name_label)
+        if settings.get("tagline"):
+            tagline_label = QLabel(settings["tagline"])
+            tagline_label.setObjectName("SidebarTagline")
+            tagline_label.setWordWrap(True)
+            sidebar_layout.addWidget(tagline_label)
+
+        self.nav_buttons = {}
+        self.pages = {}
+        self.stack = QStackedWidget()
+
+        # Grouped with section headers so the sidebar reads as "daily work" vs. "administration"
+        # instead of one flat list of unrelated screen names.
+        nav_groups = [
+            (None, [
+                ("Dashboard", "لوحة المتابعة", DashboardView),
+            ]),
+            ("العمليات اليومية", [
+                ("Reception", "استقبال", ReceptionView),
+                ("Visits", "الزيارات والفواتير", VisitsView),
+                ("Results", "نتائج التحاليل", ResultsView),
+                ("PatientHistory", "سجل المريض", PatientHistoryView),
+            ]),
+            ("الإدارة", [
+                ("Catalog", "كتالوج التحاليل", CatalogView),
+                ("Settings", "الإعدادات", SettingsView),
+                ("Users", "المستخدمون والأدوار", UsersView),
+                ("Audit", "سجل التدقيق", AuditLogView),
+                ("Backup", "النسخ الاحتياطي والاستعادة", BackupView),
+            ]),
+        ]
+
+        for section_title, items in nav_groups:
+            visible_items = [i for i in items if user.can_view(i[0])]
+            if not visible_items:
+                continue
+            if section_title:
+                section_label = QLabel(section_title)
+                section_label.setObjectName("SidebarSection")
+                sidebar_layout.addWidget(section_label)
+            for module_key, label, view_cls in visible_items:
+                button = QPushButton(label)
+                button.setObjectName("NavButton")
+                button.clicked.connect(lambda checked=False, k=module_key: self.navigate(k))
+                sidebar_layout.addWidget(button)
+                self.nav_buttons[module_key] = button
+                self.pages[module_key] = view_cls
+
+        sidebar_layout.addStretch()
+
+        user_label = QLabel(user.full_name)
+        user_label.setStyleSheet("color: white; padding: 8px 16px; font-weight: bold;")
+        sidebar_layout.addWidget(user_label)
+        role_label = QLabel(user.role_name)
+        role_label.setStyleSheet("color: #CBD5E1; padding: 0 16px 8px 16px; font-size: 10px;")
+        sidebar_layout.addWidget(role_label)
+
+        logout_button = QPushButton("تسجيل الخروج")
+        logout_button.setObjectName("NavButton")
+        logout_button.setToolTip("إنهاء الجلسة الحالية والعودة لشاشة تسجيل الدخول")
+        logout_button.clicked.connect(self.logout)
+        sidebar_layout.addWidget(logout_button)
+
+        root.addWidget(sidebar)
+
+        content_scroll = QScrollArea()
+        content_scroll.setWidgetResizable(True)
+        content_scroll.setWidget(self.stack)
+        root.addWidget(content_scroll, 1)
+
+        self._loaded_views = {}
+        if self.nav_buttons:
+            first_key = next(iter(self.nav_buttons))
+            self.navigate(first_key)
+
+    def navigate(self, module_key):
+        if module_key not in self._loaded_views:
+            view_cls = self.pages[module_key]
+            try:
+                # try passing current user to the view if it accepts it
+                view = view_cls(self.user)
+            except TypeError:
+                view = view_cls()
+            self._loaded_views[module_key] = view
+            self.stack.addWidget(view)
+        else:
+            view = self._loaded_views[module_key]
+            if hasattr(view, "refresh"):
+                view.refresh()
+
+        self.stack.setCurrentWidget(view)
+
+        for key, button in self.nav_buttons.items():
+            button.setObjectName("NavButtonActive" if key == module_key else "NavButton")
+            button.style().unpolish(button)
+            button.style().polish(button)
+
+    def logout(self):
+        self.on_logout()

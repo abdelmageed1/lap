@@ -1,0 +1,5228 @@
+{
+ "profiles": [
+  {
+   "attachKey": "cbc",
+   "parameters": [
+    {
+     "name": "WBC",
+     "unit": "x10^3/uL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 4.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 4.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 4.0,
+       "highValue": 13.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 4.0,
+       "highValue": 13.5
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 5.0,
+       "highValue": 14.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 5.0,
+       "highValue": 14.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 6.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 5.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 9.0,
+       "highValue": 26.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 9.0,
+       "highValue": 26.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "RBC",
+     "unit": "x10^6/uL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 4.5,
+       "highValue": 6.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 3.8,
+       "highValue": 5.8
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 4.1,
+       "highValue": 5.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 4.0,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 4.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 4.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 3.2,
+       "highValue": 4.8
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 3.2,
+       "highValue": 4.8
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 4.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 4.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "HB",
+     "unit": "g/dL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 13.0,
+       "highValue": 18.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 11.5,
+       "highValue": 15.5
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 11.5,
+       "highValue": 14.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 11.5,
+       "highValue": 14.5
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 11.0,
+       "highValue": 13.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 11.0,
+       "highValue": 13.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 10.0,
+       "highValue": 14.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 10.0,
+       "highValue": 14.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 14.0,
+       "highValue": 19.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 14.0,
+       "highValue": 19.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 12.0,
+       "highValue": 14.0
+      }
+     ]
+    },
+    {
+     "name": "HCT",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 38.0,
+       "highValue": 48.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 35.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 35.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 35.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 34.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 34.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 32.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 32.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 44.0,
+       "highValue": 64.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 44.0,
+       "highValue": 64.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "MCV",
+     "unit": "fL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 76.0,
+       "highValue": 96.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 80.0,
+       "highValue": 96.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 77.0,
+       "highValue": 92.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 77.0,
+       "highValue": 92.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 75.0,
+       "highValue": 90.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 75.0,
+       "highValue": 90.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 70.0,
+       "highValue": 86.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 70.0,
+       "highValue": 86.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 90.0,
+       "highValue": 112.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 90.0,
+       "highValue": 112.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "MCH",
+     "unit": "pg",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 26.0,
+       "highValue": 32.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 27.0,
+       "highValue": 32.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 25.0,
+       "highValue": 30.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 25.0,
+       "highValue": 30.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 25.0,
+       "highValue": 31.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 25.0,
+       "highValue": 31.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 23.0,
+       "highValue": 31.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 23.0,
+       "highValue": 31.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 25.0,
+       "highValue": 33.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 25.0,
+       "highValue": 33.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "MCHC",
+     "unit": "g/dL",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 30.0,
+       "highValue": 36.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 30.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 31.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 31.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 31.0,
+       "highValue": 36.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 31.0,
+       "highValue": 36.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 30.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 30.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 30.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 30.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "PLT",
+     "unit": "x10^3/uL",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Neutrophils %",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 8,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 80.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 75.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 20.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 20.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 25.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 25.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 20.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 20.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 25.0,
+       "highValue": 50.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 25.0,
+       "highValue": 50.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Band Cells %",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 9,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Lymphocytes %",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 10,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 45.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 45.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 30.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 30.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 30.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 30.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 30.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 30.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 35.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 35.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Monocytes %",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 11,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 1.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 1.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 2.0,
+       "highValue": 7.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 2.0,
+       "highValue": 7.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 1.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 1.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 2.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 2.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Eosinophils %",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 12,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 1.0,
+       "highValue": 8.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 1.0,
+       "highValue": 8.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 1.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 1.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 1.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 1.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 1.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 1.0,
+       "highValue": 6.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Basophils %",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 13,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 2.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 2.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.0,
+       "highValue": 2.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.0,
+       "highValue": 2.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Band Count",
+     "unit": "/uL",
+     "dataType": "Numeric",
+     "displayOrder": 14,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 80.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 80.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 20.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 20.0,
+       "highValue": 70.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 37.0,
+       "highValue": 75.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 37.0,
+       "highValue": 75.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 20.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 20.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 37.0,
+       "highValue": 75.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 37.0,
+       "highValue": 75.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Segmented Count",
+     "unit": "/uL",
+     "dataType": "Numeric",
+     "displayOrder": 15,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 2000.0,
+       "highValue": 7000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 2000.0,
+       "highValue": 7000.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 2000.0,
+       "highValue": 6000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 2000.0,
+       "highValue": 6000.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 2000.0,
+       "highValue": 6200.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 2000.0,
+       "highValue": 6200.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 2000.0,
+       "highValue": 6000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 2000.0,
+       "highValue": 6000.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 5000.0,
+       "highValue": 10000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 5000.0,
+       "highValue": 10000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Lymphocyte Count",
+     "unit": "/uL",
+     "dataType": "Numeric",
+     "displayOrder": 16,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 1000.0,
+       "highValue": 4000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 1000.0,
+       "highValue": 4000.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 3000.0,
+       "highValue": 8500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 3000.0,
+       "highValue": 8500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 2500.0,
+       "highValue": 7500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 2500.0,
+       "highValue": 7500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 3000.0,
+       "highValue": 8500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 3000.0,
+       "highValue": 8500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 3500.0,
+       "highValue": 13000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 3500.0,
+       "highValue": 13000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Monocyte Count",
+     "unit": "/uL",
+     "dataType": "Numeric",
+     "displayOrder": 17,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 200.0,
+       "highValue": 800.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 200.0,
+       "highValue": 800.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 400.0,
+       "highValue": 1500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 400.0,
+       "highValue": 1500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 200.0,
+       "highValue": 1000.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 200.0,
+       "highValue": 1000.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 400.0,
+       "highValue": 1500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 400.0,
+       "highValue": 1500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 500.0,
+       "highValue": 1500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 500.0,
+       "highValue": 1500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Eosinophil Count",
+     "unit": "/uL",
+     "dataType": "Numeric",
+     "displayOrder": 18,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 20.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 30.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 30.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 100.0,
+       "highValue": 400.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 100.0,
+       "highValue": 400.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 30.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 30.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 100.0,
+       "highValue": 1300.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 100.0,
+       "highValue": 1300.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Basophil Count",
+     "unit": "/uL",
+     "dataType": "Numeric",
+     "displayOrder": 19,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 100.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 100.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 0.0,
+       "highValue": 300.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 0.0,
+       "highValue": 300.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 150.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 150.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 0.0,
+       "highValue": 100.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.0,
+       "highValue": 150.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.0,
+       "highValue": 150.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "RDW",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 20,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 2.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 5.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    },
+    {
+     "name": "Reticulocyte %",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 21,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.5,
+       "highValue": 2.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.5,
+       "highValue": 2.5
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.9167,
+       "lowValue": 0.5,
+       "highValue": 2.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 0.9167,
+       "lowValue": 0.5,
+       "highValue": 2.5
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.5,
+       "highValue": 2.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 0.5,
+       "highValue": 2.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "attachKey": "liverfunctiontests",
+   "department": "CHEMISTRY",
+   "parameters": [
+    {
+     "name": "Total Bilirubin",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.2,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.2,
+       "highValue": 1.1
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 1.0,
+       "highValue": 13.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.1,
+       "highValue": 13.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.2,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.2,
+       "highValue": 1.0
+      }
+     ]
+    },
+    {
+     "name": "Direct Bilirubin",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 0.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 0.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.3,
+       "highValue": 1.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.3,
+       "highValue": 1.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 0.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 0.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.3
+      }
+     ]
+    },
+    {
+     "name": "Indirect Bilirubin",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.2,
+       "highValue": 0.7
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.2,
+       "highValue": 0.7
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.0,
+       "highValue": 11.7
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.0,
+       "highValue": 11.7
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 0.8
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 0.8
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.2,
+       "highValue": 0.7
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.2,
+       "highValue": 0.7
+      }
+     ]
+    },
+    {
+     "name": "Total Protein",
+     "unit": "g/dL",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 6.2,
+       "highValue": 8.4
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 6.2,
+       "highValue": 8.4
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 6.2,
+       "highValue": 8.4
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 6.2,
+       "highValue": 8.4
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 4.6,
+       "highValue": 7.6
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 4.6,
+       "highValue": 7.6
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 6.2,
+       "highValue": 8.2
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 6.2,
+       "highValue": 8.2
+      }
+     ]
+    },
+    {
+     "name": "Albumin",
+     "unit": "g/dL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 3.5,
+       "highValue": 5.3
+      }
+     ]
+    },
+    {
+     "name": "Globulin",
+     "unit": "g/dL",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.5,
+       "highValue": 3.0
+      }
+     ]
+    },
+    {
+     "name": "A/G Ratio",
+     "unit": "",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.5,
+       "highValue": 2.1
+      }
+     ]
+    },
+    {
+     "name": "AST (SGOT)",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      }
+     ]
+    },
+    {
+     "name": "ALT (SGPT)",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 8,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 40.0
+      }
+     ]
+    },
+    {
+     "name": "ALP",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 9,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 42.0,
+       "highValue": 270.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 42.0,
+       "highValue": 270.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 20.0,
+       "highValue": 800.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 20.0,
+       "highValue": 800.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 20.0,
+       "highValue": 460.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 20.0,
+       "highValue": 460.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 56.0,
+       "highValue": 270.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 53.0,
+       "highValue": 270.0
+      }
+     ]
+    },
+    {
+     "name": "GGT",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 10,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 60.0,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.3288,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 11.0,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 61.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 47.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "attachKey": "kidneyfunctions",
+   "parameters": [
+    {
+     "name": "Urea",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 15.0,
+       "highValue": 45.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 15.0,
+       "highValue": 45.0
+      }
+     ]
+    },
+    {
+     "name": "Serum Creatinine",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.7,
+       "highValue": 1.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.6,
+       "highValue": 1.3
+      }
+     ]
+    },
+    {
+     "name": "Uric Acid",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 3.4,
+       "highValue": 7.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 2.4,
+       "highValue": 6.0
+      }
+     ]
+    },
+    {
+     "name": "Sodium (Na)",
+     "unit": "mEq/L",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 135.0,
+       "highValue": 145.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 135.0,
+       "highValue": 145.0
+      }
+     ]
+    },
+    {
+     "name": "Potassium (K)",
+     "unit": "mEq/L",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 3.5,
+       "highValue": 5.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 3.5,
+       "highValue": 5.0
+      }
+     ]
+    },
+    {
+     "name": "Calcium",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 8.5,
+       "highValue": 10.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 8.5,
+       "highValue": 10.5
+      }
+     ]
+    },
+    {
+     "name": "Phosphorus",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 2.5,
+       "highValue": 4.8
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 2.5,
+       "highValue": 4.8
+      }
+     ]
+    },
+    {
+     "name": "Ionized Calcium",
+     "unit": "mmol/L",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 4.6,
+       "highValue": 5.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 4.6,
+       "highValue": 5.3
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "attachKey": "lipidsprofile",
+   "parameters": [
+    {
+     "name": "Total Lipids",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 400.0,
+       "highValue": 750.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 400.0,
+       "highValue": 750.0
+      }
+     ]
+    },
+    {
+     "name": "Total Cholesterol",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 200.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 200.0
+      }
+     ]
+    },
+    {
+     "name": "HDL",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 35.0,
+       "highValue": 65.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 35.0,
+       "highValue": 65.0
+      }
+     ]
+    },
+    {
+     "name": "LDL",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 135.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 135.0
+      }
+     ]
+    },
+    {
+     "name": "Triglycerides",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 40.0,
+       "highValue": 160.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 35.0,
+       "highValue": 135.0
+      }
+     ]
+    },
+    {
+     "name": "VLDL",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 32.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 32.0
+      }
+     ]
+    },
+    {
+     "name": "Risk Ratio I",
+     "unit": "",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 2.7,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 2.7,
+       "highValue": 5.0
+      }
+     ]
+    },
+    {
+     "name": "Risk Ratio II",
+     "unit": "",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 2.0,
+       "highValue": 3.6
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 2.0,
+       "highValue": 3.6
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "attachKey": "thyroidfunction",
+   "department": "Thyroid hormones",
+   "parameters": [
+    {
+     "name": "T3",
+     "unit": "ng/dL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 80.0,
+       "highValue": 200.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 80.0,
+       "highValue": 200.0
+      }
+     ]
+    },
+    {
+     "name": "Free T3",
+     "unit": "pg/mL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.8,
+       "highValue": 4.6
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.8,
+       "highValue": 4.6
+      }
+     ]
+    },
+    {
+     "name": "T4",
+     "unit": "ug/dL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 5.1,
+       "highValue": 14.1
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 5.1,
+       "highValue": 14.1
+      }
+     ]
+    },
+    {
+     "name": "Free T4",
+     "unit": "ng/dL",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.93,
+       "highValue": 1.79
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.9,
+       "highValue": 1.8
+      }
+     ]
+    },
+    {
+     "name": "TSH",
+     "unit": "uIU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.3,
+       "highValue": 4.2
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.3,
+       "highValue": 4.2
+      }
+     ]
+    },
+    {
+     "name": "T3 Uptake",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.66,
+       "highValue": 1.2
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.66,
+       "highValue": 1.2
+      }
+     ]
+    },
+    {
+     "name": "FTI",
+     "unit": "",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.5,
+       "highValue": 4.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 1.5,
+       "highValue": 4.5
+      }
+     ]
+    },
+    {
+     "name": "PBI",
+     "unit": "ug/dL",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 4.0,
+       "highValue": 8.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 13.0,
+       "ageToYears": 120.0,
+       "lowValue": 4.0,
+       "highValue": 8.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "newTest": {
+    "key": "coagulation-profile",
+    "name": "Coagulation Profile",
+    "abbreviation": "Coag Profile",
+    "department": "COAGULATION",
+    "defaultUnit": null,
+    "turnaroundTime": "DAILY",
+    "collectionInstructions": "Citrate tube (blue top), fill completely"
+   },
+   "parameters": [
+    {
+     "name": "Bleeding Time",
+     "unit": "min",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 1.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 1.0,
+       "highValue": 5.0
+      }
+     ]
+    },
+    {
+     "name": "Clotting Time",
+     "unit": "min",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      }
+     ]
+    },
+    {
+     "name": "Platelet Count",
+     "unit": "x10^3/uL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 150.0,
+       "highValue": 450.0
+      }
+     ]
+    },
+    {
+     "name": "Prothrombin Time (PT)",
+     "unit": "sec",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 12.0,
+       "highValue": 16.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 12.0,
+       "highValue": 16.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 12.0,
+       "highValue": 16.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 11.0,
+       "highValue": 16.0
+      }
+     ]
+    },
+    {
+     "name": "Prothrombin Concentration",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 110.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 110.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 70.0,
+       "highValue": 100.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 70.0,
+       "highValue": 100.0
+      }
+     ]
+    },
+    {
+     "name": "INR",
+     "unit": "",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 1.3
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 1.0,
+       "highValue": 1.3
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 1.0,
+       "highValue": 2.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 1.0,
+       "highValue": 1.3
+      }
+     ]
+    },
+    {
+     "name": "PTT",
+     "unit": "sec",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 25.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 25.0,
+       "highValue": 40.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 26.0,
+       "highValue": 36.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 26.0,
+       "highValue": 36.0
+      }
+     ]
+    },
+    {
+     "name": "Fibrinogen",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 150.0,
+       "highValue": 350.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 150.0,
+       "highValue": 350.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 150.0,
+       "highValue": 350.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 150.0,
+       "highValue": 350.0
+      }
+     ]
+    },
+    {
+     "name": "FDPs",
+     "unit": "ug/mL",
+     "dataType": "Numeric",
+     "displayOrder": 8,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 500.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 0.0,
+       "highValue": 500.0
+      }
+     ]
+    },
+    {
+     "name": "Antithrombin III",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 9,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 80.0,
+       "highValue": 120.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 80.0,
+       "highValue": 120.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 80.0,
+       "highValue": 120.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 80.0,
+       "highValue": 120.0
+      }
+     ]
+    },
+    {
+     "name": "Factor VIII",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 10,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 120.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 120.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 70.0,
+       "highValue": 120.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 70.0,
+       "highValue": 120.0
+      }
+     ]
+    },
+    {
+     "name": "Factor IX",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 11,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 140.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 140.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 70.0,
+       "highValue": 140.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 70.0,
+       "highValue": 140.0
+      }
+     ]
+    }
+   ],
+   "price": 150
+  },
+  {
+   "newTest": {
+    "key": "immunoglobulin-panel",
+    "name": "Immunoglobulin Panel (IgG, IgM, IgA, IgE, C3, C4)",
+    "abbreviation": "Ig Panel",
+    "department": "IMMUNOLOGY",
+    "defaultUnit": null,
+    "turnaroundTime": "1 WEEK",
+    "collectionInstructions": "Serum"
+   },
+   "parameters": [
+    {
+     "name": "IgG",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 1.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 1.0,
+       "highValue": 5.0
+      }
+     ]
+    },
+    {
+     "name": "IgM",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 2.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 2.0,
+       "highValue": 10.0
+      }
+     ]
+    },
+    {
+     "name": "IgA",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 1.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 1.0,
+       "highValue": 1.0
+      }
+     ]
+    },
+    {
+     "name": "IgE",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 1.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 1.0,
+       "highValue": 1.0
+      }
+     ]
+    },
+    {
+     "name": "Complement C3",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 53.0,
+       "highValue": 120.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 53.0,
+       "highValue": 120.0
+      }
+     ]
+    },
+    {
+     "name": "Complement C4",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 66.0,
+       "highValue": 157.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 122.0,
+       "lowValue": 66.0,
+       "highValue": 157.0
+      }
+     ]
+    }
+   ],
+   "price": 300
+  },
+  {
+   "newTest": {
+    "key": "cardiac-profile",
+    "name": "Cardiac Profile",
+    "abbreviation": "Cardiac Profile",
+    "department": "CARDIOLOGY",
+    "defaultUnit": null,
+    "turnaroundTime": "DAILY",
+    "collectionInstructions": "Serum"
+   },
+   "parameters": [
+    {
+     "name": "Total CPK",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 24.0,
+       "highValue": 170.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 24.0,
+       "highValue": 190.0
+      }
+     ]
+    },
+    {
+     "name": "CK-MB",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 25.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 25.0
+      }
+     ]
+    },
+    {
+     "name": "LDH",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 220.0,
+       "highValue": 420.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 220.0,
+       "highValue": 420.0
+      }
+     ]
+    },
+    {
+     "name": "AST (GOT)",
+     "unit": "U/L",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 31.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 38.0
+      }
+     ]
+    },
+    {
+     "name": "Anti-Cardiolipin IgG",
+     "unit": "GPL-U/mL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 50.0,
+       "highValue": 98.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 50.0,
+       "highValue": 98.0
+      }
+     ]
+    },
+    {
+     "name": "Anti-Cardiolipin IgM",
+     "unit": "MPL-U/mL",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 4.0,
+       "highValue": 12.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 4.0,
+       "highValue": 12.0
+      }
+     ]
+    },
+    {
+     "name": "Troponin T",
+     "unit": "ng/mL",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.2
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.2
+      }
+     ]
+    }
+   ],
+   "price": 250
+  },
+  {
+   "newTest": {
+    "key": "glucose-tolerance-curve",
+    "name": "Glucose Tolerance Curve",
+    "abbreviation": "GTT",
+    "department": "CHEMISTRY",
+    "defaultUnit": null,
+    "turnaroundTime": "DAILY",
+    "collectionInstructions": "Fasting, then 75-100 gm glucose load; 5 samples (fasting, 30, 60, 120, 180 min)"
+   },
+   "parameters": [
+    {
+     "name": "Fasting Blood Sugar",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 60.0,
+       "highValue": 110.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 60.0,
+       "highValue": 110.0
+      }
+     ]
+    },
+    {
+     "name": "Blood Sugar 30 min",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 110.0,
+       "highValue": 170.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 110.0,
+       "highValue": 170.0
+      }
+     ]
+    },
+    {
+     "name": "Blood Sugar 1h",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 120.0,
+       "highValue": 170.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 120.0,
+       "highValue": 170.0
+      }
+     ]
+    },
+    {
+     "name": "Blood Sugar 2h",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 130.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 70.0,
+       "highValue": 130.0
+      }
+     ]
+    },
+    {
+     "name": "Blood Sugar 3h",
+     "unit": "mg/dL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 60.0,
+       "highValue": 110.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 60.0,
+       "highValue": 110.0
+      }
+     ]
+    }
+   ],
+   "price": 60
+  },
+  {
+   "newTest": {
+    "key": "tumor-marker-panel",
+    "name": "Tumor Marker Panel",
+    "abbreviation": "Tumor Markers",
+    "department": "TUMER MARKERS",
+    "defaultUnit": null,
+    "turnaroundTime": "2 DAYS",
+    "collectionInstructions": "Serum"
+   },
+   "parameters": [
+    {
+     "name": "MCA",
+     "unit": "U/mL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 1.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 1.0,
+       "highValue": 11.0
+      }
+     ]
+    },
+    {
+     "name": "CEA",
+     "unit": "ng/mL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 3.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 3.0
+      }
+     ]
+    },
+    {
+     "name": "AFP",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 9.0
+      }
+     ]
+    },
+    {
+     "name": "PSA",
+     "unit": "ng/mL",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 4.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 4.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 4.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 4.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 4.0
+      }
+     ]
+    },
+    {
+     "name": "Free PSA",
+     "unit": "ng/mL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 0.93000001
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 0.93000001
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 0.93000001
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.93000001
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 0.93000001
+      }
+     ]
+    },
+    {
+     "name": "Free/Total PSA Ratio",
+     "unit": "",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 1.0
+      }
+     ]
+    },
+    {
+     "name": "CA 15-3",
+     "unit": "U/mL",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 31.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 31.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 28.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 28.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 28.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 28.0
+      }
+     ]
+    },
+    {
+     "name": "CA 19-9",
+     "unit": "U/mL",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 39.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 39.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 39.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 39.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 39.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 39.0
+      }
+     ]
+    },
+    {
+     "name": "CA 125",
+     "unit": "U/mL",
+     "dataType": "Numeric",
+     "displayOrder": 8,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 35.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 35.0
+      }
+     ]
+    },
+    {
+     "name": "Ferritin",
+     "unit": "ng/mL",
+     "dataType": "Numeric",
+     "displayOrder": 9,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 17.0,
+       "highValue": 293.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 14.0,
+       "highValue": 233.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 19.0,
+       "highValue": 323.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 7.0,
+       "highValue": 283.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 17.0,
+       "highValue": 293.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 14.0,
+       "highValue": 233.0
+      }
+     ]
+    },
+    {
+     "name": "Beta-HCG",
+     "unit": "mIU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 10,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.0,
+       "highValue": 0.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      }
+     ]
+    },
+    {
+     "name": "PIII-NP",
+     "unit": "U/mL",
+     "dataType": "Numeric",
+     "displayOrder": 11,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 0.30000001,
+       "highValue": 0.80000001
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.30000001,
+       "highValue": 0.80000001
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 0.30000001,
+       "highValue": 0.80000001
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 0.30000001,
+       "highValue": 0.80000001
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 0.30000001,
+       "highValue": 0.80000001
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 0.30000001,
+       "highValue": 0.80000001
+      }
+     ]
+    },
+    {
+     "name": "Beta-2 Microglobulin",
+     "unit": "mg/L",
+     "dataType": "Numeric",
+     "displayOrder": 12,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 3.0,
+       "highValue": 9.0
+      }
+     ]
+    },
+    {
+     "name": "Alpha-Fetoprotein Index",
+     "unit": "",
+     "dataType": "Numeric",
+     "displayOrder": 13,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 40.0,
+       "lowValue": 8.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 31.0,
+       "ageToYears": 120.0,
+       "lowValue": 8.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 41.0,
+       "ageToYears": 60.0,
+       "lowValue": 8.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 30.0,
+       "lowValue": 8.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 60.0,
+       "ageToYears": 120.0,
+       "lowValue": 8.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 8.0,
+       "highValue": 10.0
+      }
+     ]
+    }
+   ],
+   "price": 400
+  },
+  {
+   "attachKey": "hemoglobin",
+   "parameters": [
+    {
+     "name": "Haemoglobin",
+     "unit": "g/dL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 13.0,
+       "highValue": 18.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 11.5,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 11.0,
+       "highValue": 14.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 11.0,
+       "highValue": 14.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 10.0,
+       "highValue": 14.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 10.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 13.5,
+       "highValue": 19.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 2.5,
+       "lowValue": 13.5,
+       "highValue": 19.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 13.5,
+       "highValue": 17.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 12.0,
+       "highValue": 16.0
+      }
+     ]
+    },
+    {
+     "name": "Haematocrit",
+     "unit": "%",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 38.0,
+       "highValue": 48.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 12.0,
+       "ageToYears": 120.0,
+       "lowValue": 36.0,
+       "highValue": 46.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 36.0,
+       "highValue": 46.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 1.0,
+       "ageToYears": 12.0,
+       "lowValue": 36.0,
+       "highValue": 46.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 34.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0833,
+       "ageToYears": 1.0,
+       "lowValue": 34.0,
+       "highValue": 44.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0.0,
+       "ageToYears": 0.0822,
+       "lowValue": 44.0,
+       "highValue": 64.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0.0,
+       "ageToYears": 2.5,
+       "lowValue": 44.0,
+       "highValue": 64.0
+      },
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 40.0,
+       "highValue": 50.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "lowValue": 36.0,
+       "highValue": 46.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "attachKey": "torch",
+   "department": "VIROLOGY",
+   "parameters": [
+    {
+     "name": "Toxoplasma IgG",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 30.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 30.0
+      }
+     ]
+    },
+    {
+     "name": "Toxoplasma IgM",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.5
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.89999998
+      }
+     ]
+    },
+    {
+     "name": "CMV IgG",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 15.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.5
+      }
+     ]
+    },
+    {
+     "name": "CMV IgM",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.40000001
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.89999998
+      }
+     ]
+    },
+    {
+     "name": "Rubella IgG",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 5.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 9.0
+      }
+     ]
+    },
+    {
+     "name": "Rubella IgM",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.60000002
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 0.89999998
+      }
+     ]
+    },
+    {
+     "name": "HSV-1 IgG",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 11.0
+      }
+     ]
+    },
+    {
+     "name": "HSV-2 IgG",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      }
+     ]
+    },
+    {
+     "name": "HSV-1 IgM",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 8,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 9.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 9.0
+      }
+     ]
+    },
+    {
+     "name": "HSV-2 IgM",
+     "unit": "IU/mL",
+     "dataType": "Numeric",
+     "displayOrder": 9,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120.0,
+       "lowValue": 0.0,
+       "highValue": 10.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "newTest": {
+    "key": "fertility-hormone-profile",
+    "name": "Fertility Hormone Profile",
+    "abbreviation": "Fertility Profile",
+    "department": "FERTILITY HORMONES",
+    "defaultUnit": null,
+    "turnaroundTime": "2 DAYS",
+    "collectionInstructions": "Serum — note cycle day for females"
+   },
+   "parameters": [
+    {
+     "name": "FSH",
+     "unit": "mIU/mL",
+     "dataType": "Text",
+     "displayOrder": 0,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "1.7 - 12"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "Follicular phase 3.03 - 8.08 Mid-cycle peak 2.55 - 16.69 Luteal phase 1.38 - 5.47 Postmenopausal 26.72 - 133.41"
+      }
+     ]
+    },
+    {
+     "name": "LH",
+     "unit": "mIU/mL",
+     "dataType": "Text",
+     "displayOrder": 1,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "1.1 - 7"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "Follicular phase 1.8 - 11.78 Mid-cycle peak 7.59 - 89.08 Luteal phase 0.56 - 14 Postmenopausal 5.16 - 61.99"
+      }
+     ]
+    },
+    {
+     "name": "Prolactin",
+     "unit": "ng/mL",
+     "dataType": "Text",
+     "displayOrder": 2,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "Up to 20"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "1.2 - 29.93"
+      }
+     ]
+    },
+    {
+     "name": "Progesterone",
+     "unit": "ng/mL",
+     "dataType": "Text",
+     "displayOrder": 3,
+     "ranges": [
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "Follicular phase 0.1 - 0.54 Ovulation 0.25 - 6.22 Luteal phase 1.5 - 20 Menopausal Up to 40"
+      }
+     ]
+    },
+    {
+     "name": "Estradiol (E2)",
+     "unit": "pg/mL",
+     "dataType": "Text",
+     "displayOrder": 4,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "Up to 52"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "Follicular phase Up to 160 Follicular phase Days 2 to 3 Up to 84 Priovulatory 34 - 400 Luteal phase 27 - 246 Untreated postmenopausal Up to 30 Treated postmenopausal Up to 93 Oral contraceptives Up to 102"
+      }
+     ]
+    },
+    {
+     "name": "Testosterone",
+     "unit": "ng/mL",
+     "dataType": "Text",
+     "displayOrder": 5,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "3 - 10.6"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "0.1 - 0.9"
+      }
+     ]
+    },
+    {
+     "name": "Free Testosterone",
+     "unit": "pg/mL",
+     "dataType": "Text",
+     "displayOrder": 6,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "8.6 - 54.6"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "8.6 - 54.6"
+      }
+     ]
+    },
+    {
+     "name": "DHEA-S",
+     "unit": "ug/dL",
+     "dataType": "Text",
+     "displayOrder": 7,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "80 - 560"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "35 - 430"
+      }
+     ]
+    },
+    {
+     "name": "TSH",
+     "unit": "uIU/mL",
+     "dataType": "Text",
+     "displayOrder": 8,
+     "ranges": [
+      {
+       "sex": "Male",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "0.3 - 6"
+      },
+      {
+       "sex": "Female",
+       "ageFromYears": 0,
+       "ageToYears": 120,
+       "normalText": "0.3 - 6"
+      }
+     ]
+    }
+   ],
+   "price": 500
+  }
+ ],
+ "dedupe": {
+  "deactivateKeys": [
+   "completebloodcountcbc",
+   "cbccompletebloodcount"
+  ]
+ }
+}

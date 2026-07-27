@@ -1,0 +1,11 @@
+# PySide2 (Qt5) is required, not PySide6 (Qt6) - Qt6 dropped Windows 7 support entirely.
+# Do not upgrade to PySide6 unless you are intentionally dropping Windows 7 support.
+PySide2
+reportlab
+arabic-reshaper
+python-bidi
+bcrypt
+
+# Dev/build only (not needed to just run the app):
+pytest
+pyinstaller

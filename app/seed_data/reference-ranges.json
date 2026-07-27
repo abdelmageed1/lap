@@ -1,0 +1,6837 @@
+[
+  {
+    "testKey": "rossa",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "units",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "units",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumrosewaalertest",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 6.0,
+        "unit": "IU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 6.0,
+        "unit": "IU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumrprrapidplasmareagin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumrubellaabigg",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 5.0,
+        "unit": "IU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumrubellaabigm",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.6,
+        "unit": "IU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumgotast",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumgptalt",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumsodium",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 135.0,
+        "highValue": 145.0,
+        "unit": "mmol/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 135.0,
+        "highValue": 145.0,
+        "unit": "mmol/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "sodiumurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 40.0,
+        "highValue": 220.0,
+        "unit": "mmol/24 hrs Urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 40.0,
+        "highValue": 220.0,
+        "unit": "mmol/24 hrs Urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "rhantibodiestitre",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "ssaro",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "ssbla",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "stoneanalysis",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumt3total",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 80.0,
+        "highValue": 180.0,
+        "unit": "ng/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 80.0,
+        "highValue": 200.0,
+        "unit": "ng/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumt3uptake",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 22.0,
+        "highValue": 35.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 22.0,
+        "highValue": 35.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumt4total",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.5,
+        "highValue": 12.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.1,
+        "highValue": 14.1,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtegretolcarbamazepin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.0,
+        "highValue": 10.0,
+        "unit": "ug/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.0,
+        "highValue": 10.0,
+        "unit": "ug/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtestosteronefree",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 10.0,
+        "highValue": 40.0,
+        "unit": "pg/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.04,
+        "highValue": 3.9,
+        "unit": "pg/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtestosteronetotal",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.2,
+        "highValue": 0.8,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 3.0,
+        "highValue": 10.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 0.3,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.06,
+        "highValue": 0.9,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "thrombintime",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 16.0,
+        "highValue": 21.0,
+        "unit": "Sec.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 16.0,
+        "highValue": 21.0,
+        "unit": "Sec.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumthyroidautoantibodiesmicrosmal",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtibc",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 1.0,
+        "lowValue": 59.0,
+        "highValue": 175.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 1.0,
+        "lowValue": 59.0,
+        "highValue": 175.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 2.0,
+        "ageToYears": 13.0,
+        "lowValue": 250.0,
+        "highValue": 400.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 2.0,
+        "ageToYears": 12.0,
+        "lowValue": 250.0,
+        "highValue": 400.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 14.0,
+        "ageToYears": 120.0,
+        "lowValue": 250.0,
+        "highValue": 400.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 14.0,
+        "ageToYears": 120.0,
+        "lowValue": 250.0,
+        "highValue": 400.0,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "totalleucocyticcount",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 13.0,
+        "lowValue": 4.0,
+        "highValue": 13.5,
+        "unit": "Thousands/cmm",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 4.0,
+        "highValue": 13.5,
+        "unit": "Thousands/cmm",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 14.0,
+        "ageToYears": 120.0,
+        "lowValue": 4.0,
+        "highValue": 11.0,
+        "unit": "Thousands/cmm",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 4.0,
+        "highValue": 11.0,
+        "unit": "Thousands/c.mm",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumanaif",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      }
+    ]
+  },
+  {
+    "testKey": "serumanatitre",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Less than 1/20"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Less than 1/20"
+      }
+    ]
+  },
+  {
+    "testKey": "serumancaantineutrophilcytoplasmicab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantibilharzialab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Less than 1/160"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Less than 1/160"
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumanticardiolipinabsigm",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 11.0,
+        "unit": "MPL/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 11.0,
+        "unit": "MPL/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumanticardiolipinabsigg",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 10.0,
+        "unit": "GPLu/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 10.0,
+        "unit": "GPLu/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumanticentromereab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantidna",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantidnatitre",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "antiintrinsicfactorab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantilkm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "antispermabsemen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 75.0,
+        "unit": "mIu/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumapolipoproteina1",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 104.0,
+        "highValue": 204.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 111.0,
+        "highValue": 214.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumapolipoproteinb",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 45.0,
+        "highValue": 140.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 45.0,
+        "highValue": 140.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumasot",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 200.0,
+        "unit": "IU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 200.0,
+        "unit": "IU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumb2microglobulin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 60.0,
+        "lowValue": 0.8,
+        "highValue": 2.5,
+        "unit": "ug/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 60.0,
+        "lowValue": 0.8,
+        "highValue": 2.5,
+        "unit": "ug/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 61.0,
+        "ageToYears": 120.0,
+        "lowValue": 1.4,
+        "highValue": 2.9,
+        "unit": "ug/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 61.0,
+        "ageToYears": 120.0,
+        "lowValue": 1.4,
+        "highValue": 2.9,
+        "unit": "ug/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumbhcg",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 5.0,
+        "unit": "mIU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumdirectbilirubin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.3,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.3,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 0.3,
+        "highValue": 1.3,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 0.3,
+        "highValue": 1.3,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 0.25,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 0.25,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtotalbilirubin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 1.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 1.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 0.1,
+        "highValue": 13.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 0.1,
+        "highValue": 13.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 1.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 1.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "bleedingtime",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 120.0,
+        "lowValue": 1.0,
+        "highValue": 5.0,
+        "unit": "min.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 120.0,
+        "lowValue": 1.0,
+        "highValue": 5.0,
+        "unit": "min.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "bloodgrouping",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "brucellatest",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "bloodureanitrogen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.0,
+        "highValue": 23.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.0,
+        "highValue": 23.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcomplement3c3",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 90.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 90.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcomplement4c4",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 40.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 40.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumca125",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 35.0,
+        "unit": "U/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 35.0,
+        "unit": "U/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumiron",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 37.0,
+        "highValue": 170.0,
+        "unit": "ug/dL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 13.0,
+        "lowValue": 49.0,
+        "highValue": 181.0,
+        "unit": "ug/dL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 49.0,
+        "highValue": 181.0,
+        "unit": "ug/dL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 37.0,
+        "highValue": 170.0,
+        "unit": "ug/dL",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "lassb",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "units",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "units",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumldh",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 230.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 230.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "lecells",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumlh",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 14.0,
+        "ageToYears": 120.0,
+        "lowValue": 1.3,
+        "highValue": 12.9,
+        "unit": "mIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 13.0,
+        "lowValue": 0.0,
+        "highValue": 2.0,
+        "unit": "mIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 0.0,
+        "highValue": 2.0,
+        "unit": "mIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mIU/ml",
+        "normalText": "Follicular phase: 2.4 - 12.6\\r\\nMid cycle peak: 14.0 - 59.6\\r\\nLuteal phase: 1.0 - 11.4\\r\\nMenopausal phase: 7.7 - 58.5"
+      }
+    ]
+  },
+  {
+    "testKey": "serumlipase",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 59.0,
+        "lowValue": 10.0,
+        "highValue": 150.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 59.0,
+        "lowValue": 10.0,
+        "highValue": 150.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 60.0,
+        "ageToYears": 120.0,
+        "lowValue": 18.0,
+        "highValue": 180.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 60.0,
+        "ageToYears": 120.0,
+        "lowValue": 18.0,
+        "highValue": 180.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "blglucose1hrafter50gmglucose",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 120.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 120.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "barbiturate",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumlipoproteinelectrophoresis",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumlithium",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.5,
+        "highValue": 1.5,
+        "unit": "mmol/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.5,
+        "highValue": 1.5,
+        "unit": "mmol/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "lupusanticoagulant",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 33.0,
+        "highValue": 42.0,
+        "unit": "Sec.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 33.0,
+        "highValue": 42.0,
+        "unit": "Sec.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serummagnesium",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 1.7,
+        "highValue": 2.8,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 1.7,
+        "highValue": 2.8,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "magnesiumurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 200.0,
+        "unit": "mg/24 hrs",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 200.0,
+        "unit": "mg/24 hrs",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "malariafilm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serummethotrexate",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "microalbuminurea",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "mg/24 hrs urine",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "mg/24 hrs urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "occultbloodinstool",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      }
+    ]
+  },
+  {
+    "testKey": "opiates",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 12.0,
+        "highValue": 72.0,
+        "unit": "pg/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 12.0,
+        "highValue": 72.0,
+        "unit": "pg/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "oxalatesinurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/24h Urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/24h Urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumparathyroidhormonepth",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 12.0,
+        "highValue": 72.0,
+        "unit": "Pg/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 12.0,
+        "highValue": 72.0,
+        "unit": "Pg/mL",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "paulbunneltest",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "phenobarbital",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "phenylcyclidinepcp",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumphenytoinepauntin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 10.0,
+        "highValue": 20.0,
+        "unit": "ug/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 10.0,
+        "highValue": 20.0,
+        "unit": "ug/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumphosphorus",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.5,
+        "highValue": 4.8,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.5,
+        "highValue": 4.8,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 4.5,
+        "highValue": 5.5,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 4.5,
+        "highValue": 5.5,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantispermabsemen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "antilassb",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantiparitalcellabapca",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantiplateletabdirect",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantiplateletabindirect",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantiribonucleoproteinab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "up to 25"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "up to 25"
+      }
+    ]
+  },
+  {
+    "testKey": "bencejonesproteinurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "benzodiazepine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "cannabinoids",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 50.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 50.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "urinary17ketosteroids",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 10.0,
+        "highValue": 20.0,
+        "unit": "mg/24 hrs urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.0,
+        "highValue": 10.0,
+        "unit": "mg/24 hrs urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serum17alphaohprogesterone",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "ng/ml",
+        "normalText": "01 - 1.8"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "ng/ml",
+        "normalText": "Fo :- 0.1-  1\\r\\nLeu:- 0.8 - 4"
+      }
+    ]
+  },
+  {
+    "testKey": "serumacidphosphataseprostatic",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 4.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumacidphosphatasetotal",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 11.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 11.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumacth9am",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 130.0,
+        "lowValue": 0.0,
+        "highValue": 46.0,
+        "unit": "ng/ml.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 130.0,
+        "lowValue": 0.0,
+        "highValue": 46.0,
+        "unit": "ng/ml.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumacth9pm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 130.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "pg/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 130.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "pg/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumafp",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 11.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 11.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumalbumin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.5,
+        "highValue": 5.2,
+        "unit": "g/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.5,
+        "highValue": 5.2,
+        "unit": "g/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "glycosolated",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "mg/g creatinine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "mg/g creatinine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "alb24hrsurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "mg/24 hrs urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 30.0,
+        "unit": "mg/24 hrs urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "alcohol",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumalkphosphatase",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 13.0,
+        "ageToYears": 60.0,
+        "lowValue": 53.0,
+        "highValue": 128.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 60.0,
+        "lowValue": 53.0,
+        "highValue": 128.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 20.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 20.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 61.0,
+        "ageToYears": 120.0,
+        "lowValue": 56.0,
+        "highValue": 119.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 61.0,
+        "ageToYears": 120.0,
+        "lowValue": 53.0,
+        "highValue": 141.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 20.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 20.0,
+        "highValue": 460.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumalpha1antitrypsin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 128.0,
+        "highValue": 234.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 128.0,
+        "highValue": 234.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "amoebiasisantibody",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "amphetamine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumamylase",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 45.0,
+        "highValue": 200.0,
+        "unit": "U/dl.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 45.0,
+        "highValue": 200.0,
+        "unit": "U/dl.",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 50.0,
+        "highValue": 100.0,
+        "unit": "U/dl.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "phosphorusurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.4,
+        "highValue": 1.3,
+        "unit": "gm/24 hrs urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.4,
+        "highValue": 1.3,
+        "unit": "gm/24 hrs urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "plasmarenin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "plateletcount",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 150000.0,
+        "highValue": 450000.0,
+        "unit": "/c.mm",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 150000.0,
+        "highValue": 450000.0,
+        "unit": "/c.mm",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "postprandialbloodsugar",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 130.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 130.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumpotassium",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.5,
+        "highValue": 5.2,
+        "unit": "mmol/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.5,
+        "highValue": 5.2,
+        "unit": "mmol/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "potassiumurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 25.0,
+        "highValue": 125.0,
+        "unit": "mmol/24 hrs Urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 25.0,
+        "highValue": 125.0,
+        "unit": "mmol/24 hrs Urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumprocollageniii",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.3,
+        "highValue": 8.0,
+        "unit": "ug/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.3,
+        "highValue": 8.0,
+        "unit": "ug/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumprogesterone",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.28,
+        "highValue": 1.22,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 12.0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "ng/ml",
+        "normalText": "Follicular phase: 0.2 - 1.5\\r\\nMid cycle peak: 0.8 - 3.0\\r\\nLuteal phase: 1.7 - 27\\r\\nMenopausal phase: 0.11 - 1.0"
+      }
+    ]
+  },
+  {
+    "testKey": "serumprolactin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.58,
+        "highValue": 21.4,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.9,
+        "highValue": 29.9,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumproteinc",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumproteinelectrophoresis",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumproteins",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumpsafree",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.9,
+        "unit": "ng/mL",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumpsatotal",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 50.0,
+        "lowValue": 0.0,
+        "highValue": 4.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 51.0,
+        "ageToYears": 60.0,
+        "lowValue": 0.0,
+        "highValue": 4.5,
+        "unit": "ng/ml.",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 61.0,
+        "ageToYears": 70.0,
+        "lowValue": 0.0,
+        "highValue": 5.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "ptt",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 26.0,
+        "highValue": 36.0,
+        "unit": "Sec.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 26.0,
+        "highValue": 36.0,
+        "unit": "Sec.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "randombloodsugar",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 160.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 160.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 160.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 160.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "rectalswab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "reticulocyticcount",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 0.5,
+        "highValue": 2.5,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 0.5,
+        "highValue": 2.5,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.2,
+        "highValue": 2.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.2,
+        "highValue": 2.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 1.0,
+        "highValue": 2.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 1.0,
+        "highValue": 2.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumrevotril",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.0,
+        "highValue": 50.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.0,
+        "highValue": 50.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumrheumatoidfactorwithtitre",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 8.0,
+        "unit": "IU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 8.0,
+        "unit": "IU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumrheumatoidfactor",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 8.0,
+        "unit": "IU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 8.0,
+        "unit": "IU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtotallipids",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 400.0,
+        "highValue": 800.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 400.0,
+        "highValue": 800.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "antispermabcervical",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumca153",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 31.0,
+        "unit": "U/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 31.0,
+        "unit": "U/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumca199",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 37.0,
+        "unit": "U/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 37.0,
+        "unit": "U/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "urinarycalcium",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 100.0,
+        "highValue": 300.0,
+        "unit": "mg/24 hours",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 100.0,
+        "highValue": 300.0,
+        "unit": "mg/24 hours",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumionizedcalcium",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.6,
+        "highValue": 5.2,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.6,
+        "highValue": 5.2,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 4.6,
+        "highValue": 5.2,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 4.6,
+        "highValue": 5.2,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtotalcalcium",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 8.5,
+        "highValue": 10.5,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 8.5,
+        "highValue": 10.5,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 8.5,
+        "highValue": 10.5,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 8.5,
+        "highValue": 10.5,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 8.5,
+        "highValue": 10.5,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 8.5,
+        "highValue": 10.5,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "urinarycatecholamines",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 200.0,
+        "unit": "ug/24 hrs urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 200.0,
+        "unit": "ug/24 hrs urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcea",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 5.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 5.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumceruloplasmin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 60.0,
+        "unit": "g/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 60.0,
+        "unit": "g/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumchloride",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 98.0,
+        "highValue": 107.0,
+        "unit": "mmol/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 98.0,
+        "highValue": 107.0,
+        "unit": "mmol/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "urinarychloride",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 170.0,
+        "highValue": 250.0,
+        "unit": "mEq/24hrs",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 170.0,
+        "highValue": 250.0,
+        "unit": "mEq/24hrs",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhdlcholesterol",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 35.0,
+        "highValue": 65.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 35.0,
+        "highValue": 75.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumldlcholesterol",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 160.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 160.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtotalcholesterol",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 150.0,
+        "highValue": 250.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 150.0,
+        "highValue": 250.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumckmb",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 24.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 24.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcktotal",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 24.0,
+        "highValue": 195.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 24.0,
+        "highValue": 170.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "clottingtime",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.0,
+        "highValue": 9.0,
+        "unit": "min.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 4.0,
+        "highValue": 9.0,
+        "unit": "min.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcmvigg",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 15.0,
+        "unit": "AU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 15.0,
+        "unit": "AU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcmvigm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.5,
+        "unit": "Index",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.5,
+        "unit": "Index",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcopper",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "copperurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.0,
+        "highValue": 35.0,
+        "unit": "ug/24 hours",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.0,
+        "highValue": 35.0,
+        "unit": "ug/24 hours",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcortisol9am",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 6.2,
+        "highValue": 19.4,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 6.2,
+        "highValue": 19.4,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcortisol9pm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.1,
+        "highValue": 16.7,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.1,
+        "highValue": 16.7,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "cortisolurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 28.5,
+        "highValue": 213.7,
+        "unit": "ug/24 hrs urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 28.5,
+        "highValue": 213.7,
+        "unit": "ug/24 hrs urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcpeptide",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.8,
+        "highValue": 4.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.8,
+        "highValue": 4.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcreatinine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 4.0,
+        "lowValue": 0.3,
+        "highValue": 1.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 4.0,
+        "lowValue": 0.3,
+        "highValue": 1.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 5.0,
+        "ageToYears": 30.0,
+        "lowValue": 0.2,
+        "highValue": 0.4,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 5.0,
+        "ageToYears": 30.0,
+        "lowValue": 0.2,
+        "highValue": 0.4,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 16.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.7,
+        "highValue": 1.3,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 16.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.6,
+        "highValue": 1.2,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 15.0,
+        "lowValue": 0.2,
+        "highValue": 0.7,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 15.0,
+        "lowValue": 0.2,
+        "highValue": 0.7,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 0.2,
+        "highValue": 0.7,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 12.0,
+        "lowValue": 0.2,
+        "highValue": 0.7,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "creatinineclearance",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 88.0,
+        "highValue": 128.0,
+        "unit": "ml/min",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 88.0,
+        "highValue": 128.0,
+        "unit": "ml/min",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcrp",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/L",
+        "normalText": "Up to 6.0"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/L",
+        "normalText": "Up to 6.0"
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/L",
+        "normalText": "Up to 6.0"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/L",
+        "normalText": "Up to 6.0"
+      }
+    ]
+  },
+  {
+    "testKey": "serumdepakenvalporicacid",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 100.0,
+        "unit": "ug/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 100.0,
+        "unit": "ug/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumdheas",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 80.0,
+        "highValue": 560.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 35.0,
+        "highValue": 430.0,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumdigoxinlanoxin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 16.0,
+        "lowValue": 0.0,
+        "highValue": 4.3,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 16.0,
+        "lowValue": 0.0,
+        "highValue": 4.3,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 17.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.8,
+        "highValue": 2.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 17.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.8,
+        "highValue": 2.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumepanutinphenytoin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 10.0,
+        "highValue": 20.0,
+        "unit": "ug/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 10.0,
+        "highValue": 20.0,
+        "unit": "ug/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "epesteinbarrvirusigg",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "epesteinbarrvirusigm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "esr2ndh",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.0,
+        "highValue": 30.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.0,
+        "highValue": 30.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 5.0,
+        "highValue": 30.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 5.0,
+        "highValue": 30.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 5.0,
+        "highValue": 30.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 5.0,
+        "highValue": 30.0,
+        "unit": "mm/h",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "esr1sth",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 1.0,
+        "highValue": 15.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 1.0,
+        "highValue": 15.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 1.0,
+        "highValue": 15.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 1.0,
+        "highValue": 15.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 1.0,
+        "highValue": 15.0,
+        "unit": "mm/h",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 1.0,
+        "highValue": 15.0,
+        "unit": "mm/h",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumestradiole2",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 52.0,
+        "unit": "pg/ml.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "pg/ml.",
+        "normalText": "Follicular phase: 2.5 - 166\\r\\nMidycle phase: 85.8 - 498\\r\\nLuteal phase: 43.8 -211\\r\\nMenopausal phase:<5.0 - 54.7"
+      }
+    ]
+  },
+  {
+    "testKey": "factorix",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 80.0,
+        "highValue": 120.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 80.0,
+        "highValue": 120.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "factorv",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "factorvii",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "factorviii",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 1000.0,
+        "lowValue": 80.0,
+        "highValue": 120.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 1000.0,
+        "lowValue": 80.0,
+        "highValue": 120.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "factorx",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 140.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "fasciolaantibody",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "fastingbloodsugar",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 110.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 60.0,
+        "highValue": 80.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 110.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 60.0,
+        "highValue": 80.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumferritin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 18.7,
+        "highValue": 323.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 31.0,
+        "ageToYears": 120.0,
+        "lowValue": 16.4,
+        "highValue": 294.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 7.0,
+        "highValue": 283.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "fibrinogendegradationproducts",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.1,
+        "highValue": 7.7,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.1,
+        "highValue": 7.7,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "filariafilm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfolicacid",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.6,
+        "highValue": 14.6,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.6,
+        "highValue": 14.6,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfreepsa",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.9,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfreet3",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.3,
+        "highValue": 4.2,
+        "unit": "pg/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.3,
+        "highValue": 4.2,
+        "unit": "pg/mL",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfreet4",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.69,
+        "highValue": 1.55,
+        "unit": "ng/dL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.69,
+        "highValue": 1.55,
+        "unit": "ng/dL",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfreetestosterone",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 8.6,
+        "highValue": 54.6,
+        "unit": "pg/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 8.6,
+        "highValue": 54.6,
+        "unit": "pg/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfribrinogen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfructosamine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 10.0,
+        "highValue": 40.0,
+        "unit": "pg/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.04,
+        "highValue": 3.9,
+        "unit": "pg/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "fructoseinsemen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 150.0,
+        "highValue": 400.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumfsh",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 10.0,
+        "lowValue": 0.5,
+        "highValue": 3.7,
+        "unit": "mIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 10.0,
+        "lowValue": 0.5,
+        "highValue": 3.7,
+        "unit": "mIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 11.0,
+        "ageToYears": 120.0,
+        "lowValue": 1.7,
+        "highValue": 12.0,
+        "unit": "mIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 11.0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mIU/ml",
+        "normalText": "Folliular phase: 3.5 -12.5\\r\\nMidcycle peak: 4.7 - 21.5\\r\\nLuteal phase: 1.7 - 7.7\\r\\nMenopausal phase:25.8 - 134.8"
+      }
+    ]
+  },
+  {
+    "testKey": "g6pdquantitative",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 120.0,
+        "lowValue": 5.9,
+        "highValue": 13.5,
+        "unit": "U/g Hb",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 5.9,
+        "highValue": 13.5,
+        "unit": "U/g Hb",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 5.9,
+        "highValue": 13.5,
+        "unit": "U/g Hb",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 5.9,
+        "highValue": 13.5,
+        "unit": "U/g Hb",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "g6pdqualitative",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumggt",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 11.0,
+        "highValue": 50.0,
+        "unit": "U/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 11.0,
+        "highValue": 50.0,
+        "unit": "U/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumglobulin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.9,
+        "highValue": 3.3,
+        "unit": "g/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.9,
+        "highValue": 3.3,
+        "unit": "g/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "glycosylatedhb",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "%",
+        "normalText": "Non Diabetic <6.0\\r\\nDiabetic under control  6 - 8\\r\\nDiabetic out of control >8.0"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "%",
+        "normalText": "Non Diabetic <6.0\\r\\nDiabetic under control  6 - 8\\r\\nDiabetic out of control >8.0"
+      }
+    ]
+  },
+  {
+    "testKey": "serumgrowthhormone",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 15.0,
+        "lowValue": 0.0,
+        "highValue": 10.0,
+        "unit": "ng/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 15.0,
+        "lowValue": 0.0,
+        "highValue": 10.0,
+        "unit": "ng/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 16.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 7.0,
+        "unit": "ng/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 16.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 7.0,
+        "unit": "ng/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 10.0,
+        "highValue": 40.0,
+        "unit": "ng/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 30.0,
+        "lowValue": 10.0,
+        "highValue": 40.0,
+        "unit": "ng/mL",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumgrowthhormoneafterstimulation",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 40.0,
+        "unit": "uIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 20.0,
+        "highValue": 40.0,
+        "unit": "uIU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhaptoglobin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 230.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 230.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhbeab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhbeag",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhbsab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mIU/ml",
+        "normalText": "Negative : Up to 10\\r\\nReactive : > or = 10"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mIU/ml",
+        "normalText": "Negative : Up to 10\\r\\nReactive : > or = 10"
+      }
+    ]
+  },
+  {
+    "testKey": "serumhbsag",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      }
+    ]
+  },
+  {
+    "testKey": "hctpcv",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 14.0,
+        "ageToYears": 120.0,
+        "lowValue": 38.0,
+        "highValue": 48.0,
+        "unit": "%",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 36.0,
+        "highValue": 46.0,
+        "unit": "%",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhcvab3rdgen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      }
+    ]
+  },
+  {
+    "testKey": "serumhcvigm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhcvribatest",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhcvrnapcr",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhelicobacterpyloriabigg",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Up to 1.1"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Up to 1.1"
+      }
+    ]
+  },
+  {
+    "testKey": "bloodhemoglobinconc",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 11.5,
+        "highValue": 14.0,
+        "unit": "g/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 14.0,
+        "ageToYears": 120.0,
+        "lowValue": 13.0,
+        "highValue": 18.0,
+        "unit": "g/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 13.0,
+        "lowValue": 12.5,
+        "highValue": 14.5,
+        "unit": "g/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 11.5,
+        "highValue": 14.5,
+        "unit": "g/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumherpessimplexiabigg",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "EU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "EU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumherpessimplexiabigm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 100.0,
+        "unit": "EU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 100.0,
+        "unit": "EU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumherpessimplexiiabigg",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "EU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 20.0,
+        "unit": "EU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumherpessimplexiiigm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 100.0,
+        "unit": "EU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 100.0,
+        "unit": "EU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhiv123rdgen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      }
+    ]
+  },
+  {
+    "testKey": "serumiga",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 100.0,
+        "highValue": 490.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 85.0,
+        "highValue": 450.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumigd",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumigetotal",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 2.0,
+        "lowValue": 0.0,
+        "highValue": 10.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 2.0,
+        "lowValue": 0.0,
+        "highValue": 10.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 3.0,
+        "ageToYears": 4.0,
+        "lowValue": 0.0,
+        "highValue": 25.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 3.0,
+        "ageToYears": 4.0,
+        "lowValue": 0.0,
+        "highValue": 25.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 5.0,
+        "ageToYears": 7.0,
+        "lowValue": 0.0,
+        "highValue": 50.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 5.0,
+        "ageToYears": 7.0,
+        "lowValue": 0.0,
+        "highValue": 50.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 8.0,
+        "ageToYears": 14.0,
+        "lowValue": 0.0,
+        "highValue": 100.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 8.0,
+        "ageToYears": 14.0,
+        "lowValue": 0.0,
+        "highValue": 100.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 15.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 150.0,
+        "unit": "Ku/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 15.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 150.0,
+        "unit": "Ku/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumigg",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 800.0,
+        "highValue": 1700.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 800.0,
+        "highValue": 1700.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumigm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 50.0,
+        "highValue": 320.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 370.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "seruminsulinfasting",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.0,
+        "highValue": 17.0,
+        "unit": "uIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.0,
+        "highValue": 17.0,
+        "unit": "uIU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "seruminsulinpostprandial",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 16.0,
+        "highValue": 166.0,
+        "unit": "uIU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 16.0,
+        "highValue": 166.0,
+        "unit": "uIU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "totalproteincsf",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 15.0,
+        "highValue": 45.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 15.0,
+        "highValue": 45.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtotalprotein",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 6.4,
+        "highValue": 8.3,
+        "unit": "g/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 6.4,
+        "highValue": 8.3,
+        "unit": "g/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "totalproteinurine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 150.0,
+        "unit": "mg/24hrs Urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 150.0,
+        "unit": "mg/24hrs Urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtoxoplasmaabigg",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 3.0,
+        "unit": "IU/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 3.0,
+        "unit": "IU/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtoxoplasmaabigm",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.9,
+        "unit": "Index",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "tphatreponemapallidumhemagglutinationassay",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtransferrin",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 230.0,
+        "highValue": 430.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 230.0,
+        "highValue": 430.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtriglycerides",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 55.0,
+        "highValue": 155.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 55.0,
+        "highValue": 155.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtroponini",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 2.0,
+        "unit": "ng/ml",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 2.0,
+        "unit": "ng/ml",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumtsh",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 20.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.3,
+        "highValue": 4.2,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 20.0,
+        "ageToYears": 120.0,
+        "lowValue": 0.3,
+        "highValue": 4.2,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 3.0,
+        "lowValue": 0.8,
+        "highValue": 20.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 3.0,
+        "lowValue": 0.8,
+        "highValue": 20.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 3.0,
+        "ageToYears": 30.0,
+        "lowValue": 0.5,
+        "highValue": 10.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 3.0,
+        "ageToYears": 30.0,
+        "lowValue": 0.5,
+        "highValue": 10.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 30.0,
+        "ageToYears": 60.0,
+        "lowValue": 0.45,
+        "highValue": 10.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 30.0,
+        "ageToYears": 60.0,
+        "lowValue": 0.45,
+        "highValue": 10.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 2.0,
+        "ageToYears": 12.0,
+        "lowValue": 0.4,
+        "highValue": 7.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 2.0,
+        "ageToYears": 12.0,
+        "lowValue": 0.4,
+        "highValue": 7.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 5.0,
+        "lowValue": 0.4,
+        "highValue": 7.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 5.0,
+        "lowValue": 0.4,
+        "highValue": 0.0,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 5.0,
+        "ageToYears": 10.0,
+        "lowValue": 0.35,
+        "highValue": 5.5,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 5.0,
+        "ageToYears": 10.0,
+        "lowValue": 0.35,
+        "highValue": 5.5,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 10.0,
+        "ageToYears": 19.0,
+        "lowValue": 0.35,
+        "highValue": 5.5,
+        "unit": "uIU/mL",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 10.0,
+        "ageToYears": 19.0,
+        "lowValue": 0.35,
+        "highValue": 5.5,
+        "unit": "uIU/mL",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "tuberclintest",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumurea",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 15.0,
+        "highValue": 45.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 15.0,
+        "highValue": 45.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 15.0,
+        "highValue": 45.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 12.0,
+        "lowValue": 15.0,
+        "highValue": 45.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "ureaclearancetest",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumuricacid",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 2.5,
+        "highValue": 6.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 3.5,
+        "highValue": 7.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "urinaryamylase",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 490.0,
+        "unit": "U/24 hrs Urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 490.0,
+        "unit": "U/24 hrs Urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "urinarycortisol",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 72.5,
+        "highValue": 372.0,
+        "unit": "nmol/L",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 72.5,
+        "highValue": 372.0,
+        "unit": "nmol/L",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "vanilylmandelicacidurinaryvma",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 1.9,
+        "highValue": 9.8,
+        "unit": "Umol/24h urine",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 1.9,
+        "highValue": 9.8,
+        "unit": "Umol/24h urine",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumvdrl",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "zincsemen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 0.0,
+        "highValue": 40.0,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumzinc",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 50.0,
+        "highValue": 120.0,
+        "unit": "ug/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": 50.0,
+        "highValue": 120.0,
+        "unit": "ug/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "bloodcyclosporine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcoombstestdirect",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumcoombstestindirect",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 120.0,
+        "ageToYears": 120,
+        "lowValue": 1.0,
+        "highValue": 80.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 120.0,
+        "ageToYears": 120,
+        "lowValue": 1.0,
+        "highValue": 80.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumaldosterone",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "monospottest",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "urinaryglucose",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumantispermantibodies",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "antirossa",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "cocaine",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "freethyroxinindexfti",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "hemoglobinelectrophoresis",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumamaantimitochondrialab",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumammonia",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 0.0,
+        "highValue": 0.0,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "santismoothmuscleabasma",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhavabigm",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "synovialfluidforpuscells",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "synovialfluidforrbcs",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "synovialfluidforepithcells",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "synovialfluidforcrystals",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "rhtype",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "bloodsugar3hoursaftermeals",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 85.0,
+        "highValue": 125.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 85.0,
+        "highValue": 125.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "bloodglucoseonehouraftermeal",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 85.0,
+        "highValue": 140.0,
+        "unit": "mg/dl.",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 85.0,
+        "highValue": 140.0,
+        "unit": "mg/dl.",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "scotchtestforoxyuris",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 1.0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 1.0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumhydatidantibody",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "redbloodcellscount",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 4.5,
+        "highValue": 6.5,
+        "unit": "Millions/cmm",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 13.0,
+        "ageToYears": 120.0,
+        "lowValue": 3.9,
+        "highValue": 5.5,
+        "unit": "Millons/cmm",
+        "normalText": null
+      },
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 13.0,
+        "lowValue": 4.0,
+        "highValue": 5.2,
+        "unit": "Millions/cmm",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 13.0,
+        "lowValue": 4.0,
+        "highValue": 5.2,
+        "unit": "Millons/cmm",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "ppbloodsugar",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 140.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 60.0,
+        "highValue": 140.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumbilharsiaantigen",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      }
+    ]
+  },
+  {
+    "testKey": "helicobacterpyloriaginstool",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": "Negative"
+      }
+    ]
+  },
+  {
+    "testKey": "serumcholesrtrol",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 200.0,
+        "unit": "mg/dl",
+        "normalText": null
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": 70.0,
+        "highValue": 200.0,
+        "unit": "mg/dl",
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "serumpregnanacytest",
+    "ranges": [
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": null,
+        "normalText": null
+      }
+    ]
+  },
+  {
+    "testKey": "albumincreatinineratio",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/g.Creat.",
+        "normalText": "Up to 25"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/g.Creat.",
+        "normalText": "Up to 25"
+      }
+    ]
+  },
+  {
+    "testKey": "proteincreatinineratio",
+    "ranges": [
+      {
+        "sex": "Male",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/g Creatinine",
+        "normalText": "Up to 200"
+      },
+      {
+        "sex": "Female",
+        "ageFromYears": 0,
+        "ageToYears": 120.0,
+        "lowValue": null,
+        "highValue": null,
+        "unit": "mg/g Creatinine",
+        "normalText": "Up to 200"
+      }
+    ]
+  }
+]
