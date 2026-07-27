@@ -1,6 +1,8 @@
 from PySide2.QtCore import Qt, Signal
+from PySide2.QtGui import QIcon, QPixmap
 from PySide2.QtWidgets import (QFrame, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget)
 
+from app.config import get_logo_path
 from app.services import auth_service, catalog_service
 
 
@@ -10,7 +12,11 @@ class LoginWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("تسجيل الدخول")
-        self.resize(420, 460)
+        self.resize(420, 520)
+
+        logo_path = get_logo_path()
+        if logo_path:
+            self.setWindowIcon(QIcon(logo_path))
 
         settings = catalog_service.get_lab_settings()
 
@@ -23,6 +29,13 @@ class LoginWindow(QWidget):
         card_layout = QVBoxLayout(card)
         card_layout.setSpacing(10)
         card_layout.setContentsMargins(28, 28, 28, 28)
+
+        if logo_path:
+            logo_label = QLabel()
+            pixmap = QPixmap(logo_path).scaledToWidth(90, Qt.SmoothTransformation)
+            logo_label.setPixmap(pixmap)
+            logo_label.setAlignment(Qt.AlignCenter)
+            card_layout.addWidget(logo_label)
 
         title = QLabel(settings.get("lab_name") or "المعمل")
         title.setStyleSheet("font-size: 18px; font-weight: bold; color: #0B4F6C;")

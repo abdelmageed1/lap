@@ -12,6 +12,7 @@ if (-not (Get-Command pyinstaller -ErrorAction SilentlyContinue)) {
 pyinstaller --noconfirm --onefile --windowed --name LapLIS `
     --add-data "app/seed_data;app/seed_data" `
     --add-data "app/reports/fonts;app/reports/fonts" `
+    --add-data "logo;logo" `
     main.py
 
 Write-Host "Build complete. See dist\LapLIS.exe"

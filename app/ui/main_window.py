@@ -1,7 +1,9 @@
 from PySide2.QtCore import Qt
+from PySide2.QtGui import QIcon, QPixmap
 from PySide2.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QScrollArea, QStackedWidget,
                                 QVBoxLayout, QWidget)
 
+from app.config import get_logo_path
 from app.services import catalog_service
 from app.ui.audit_log_view import AuditLogView
 from app.ui.backup_view import BackupView
@@ -21,6 +23,11 @@ class MainWindow(QWidget):
         self.user = user
         self.on_logout = on_logout
         self.setWindowTitle("LapLIS")
+
+        logo_path = get_logo_path()
+        if logo_path:
+            self.setWindowIcon(QIcon(logo_path))
+
         # Fallback size for window managers that ignore showMaximized() (main.py maximizes on
         # normal startup) - generous enough that dense screens like the Catalog don't need
         # horizontal scrolling even at this "un-maximized" size.
@@ -38,6 +45,14 @@ class MainWindow(QWidget):
         sidebar_layout = QVBoxLayout(sidebar)
         sidebar_layout.setContentsMargins(0, 0, 0, 0)
         sidebar_layout.setSpacing(0)
+
+        if logo_path:
+            logo_label = QLabel()
+            pixmap = QPixmap(logo_path).scaledToWidth(65, Qt.SmoothTransformation)
+            logo_label.setPixmap(pixmap)
+            logo_label.setAlignment(Qt.AlignCenter)
+            logo_label.setStyleSheet("padding-top: 16px; padding-bottom: 4px;")
+            sidebar_layout.addWidget(logo_label)
 
         settings = catalog_service.get_lab_settings()
         name_label = QLabel(settings.get("lab_name") or "المعمل")
@@ -100,6 +115,15 @@ class MainWindow(QWidget):
         role_label.setStyleSheet("color: #CBD5E1; padding: 0 16px 8px 16px; font-size: 10px;")
         sidebar_layout.addWidget(role_label)
 
+        from app.ui.styles import apply_theme, get_saved_theme
+        current_theme = get_saved_theme()
+        theme_label = "🌙 الوضع المظلم" if current_theme == "light" else "☀️ الوضع الفاتح"
+        self.theme_button = QPushButton(theme_label)
+        self.theme_button.setObjectName("NavButton")
+        self.theme_button.setToolTip("التبديل بين الوضع الفاتح والوضع المظلم")
+        self.theme_button.clicked.connect(self.toggle_theme)
+        sidebar_layout.addWidget(self.theme_button)
+
         logout_button = QPushButton("تسجيل الخروج")
         logout_button.setObjectName("NavButton")
         logout_button.setToolTip("إنهاء الجلسة الحالية والعودة لشاشة تسجيل الدخول")
@@ -139,6 +163,13 @@ class MainWindow(QWidget):
             button.setObjectName("NavButtonActive" if key == module_key else "NavButton")
             button.style().unpolish(button)
             button.style().polish(button)
+
+    def toggle_theme(self):
+        from PySide2.QtWidgets import QApplication
+        from app.ui.styles import apply_theme, get_saved_theme
+        new_theme = "dark" if get_saved_theme() == "light" else "light"
+        apply_theme(QApplication.instance(), new_theme)
+        self.theme_button.setText("🌙 الوضع المظلم" if new_theme == "light" else "☀️ الوضع الفاتح")
 
     def logout(self):
         self.on_logout()

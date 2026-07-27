@@ -327,16 +327,31 @@ class ResultsView(QWidget):
             return
         order_id = self.current_review_order_id
         result_service.approve_order(order_id, user_id=self._current_user_id())
-        data = result_service.get_report_data(order_id)
-        settings = catalog_service.get_lab_settings()
-        path = generate_lab_report_pdf(
-            data["patient_name"], data["gender"], data["age_years"], data["test_name"],
-            data["parameters"], settings, data["invoice_number"],
-        )
-        self.review_message.setText("تم اعتماد النتيجة، وتم فتح تقرير PDF جاهز للطباعة.")
-        self.review_message.setStyleSheet("color: #146C8E;")
-        self._open_file(path)
-        self.refresh_review()
+        self.review_message.setText("جاري إعداد وتحضير تقرير النتيجة PDF...")
+        self.approve_button.setEnabled(False)
+
+        def _generate_pdf():
+            data = result_service.get_report_data(order_id)
+            settings = catalog_service.get_lab_settings()
+            return generate_lab_report_pdf(
+                data["patient_name"], data["gender"], data["age_years"], data["test_name"],
+                data["parameters"], settings, data["invoice_number"],
+            )
+
+        def _on_done(path):
+            self.approve_button.setEnabled(True)
+            self.review_message.setText("تم اعتماد النتيجة، وتم فتح تقرير PDF جاهز للطباعة.")
+            self.review_message.setStyleSheet("color: #146C8E;")
+            self._open_file(path)
+            self.refresh_review()
+
+        def _on_err(err):
+            self.approve_button.setEnabled(True)
+            self.review_message.setText(f"حدث خطأ أثناء إنتاج التقرير: {err}")
+            self.review_message.setStyleSheet("color: #C62828;")
+
+        from app.utils.worker import run_in_background
+        run_in_background(_generate_pdf, on_success=_on_done, on_error=_on_err)
 
     def reject_current_order(self):
         if self.current_review_order_id is None:

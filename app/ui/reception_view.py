@@ -324,20 +324,36 @@ class ReceptionView(QWidget):
             self.message_label.setStyleSheet("color: #C62828;")
             return
 
-        details = visit_service.get_visit_details(visit["id"])
-        settings = catalog_service.get_lab_settings()
-        invoice_path = generate_invoice_pdf(details, details["orders"], settings)
-        labels_path = generate_sample_labels_pdf(details["patient_name"], visit["invoice_number"], details["orders"])
+        self.message_label.setText("جاري إعداد الفاتورة وملصقات الباركود...")
+        self.save_button.setEnabled(False)
 
-        self.message_label.setText(
-            f"تم حفظ الزيارة برقم فاتورة {visit['invoice_number']} بنجاح. "
-            "تم فتح الفاتورة وملصقات باركود العينات تلقائيًا للطباعة."
-        )
-        self.message_label.setStyleSheet("color: #146C8E;")
-        self.status_banner.setText(f"تمت إضافة زيارة جديدة للمريض: {patient['full_name']}")
-        self._open_file(invoice_path)
-        self._open_file(labels_path)
-        self.reset_form()
+        def _build_pdfs():
+            details = visit_service.get_visit_details(visit["id"])
+            settings = catalog_service.get_lab_settings()
+            inv_p = generate_invoice_pdf(details, details["orders"], settings)
+            lbl_p = generate_sample_labels_pdf(details["patient_name"], visit["invoice_number"], details["orders"])
+            return inv_p, lbl_p
+
+        def _on_done(paths):
+            self.save_button.setEnabled(True)
+            invoice_path, labels_path = paths
+            self.message_label.setText(
+                f"تم حفظ الزيارة برقم فاتورة {visit['invoice_number']} بنجاح. "
+                "تم فتح الفاتورة وملصقات باركود العينات تلقائيًا للطباعة."
+            )
+            self.message_label.setStyleSheet("color: #146C8E;")
+            self.status_banner.setText(f"تمت إضافة زيارة جديدة للمريض: {patient['full_name']}")
+            self._open_file(invoice_path)
+            self._open_file(labels_path)
+            self.reset_form()
+
+        def _on_err(err):
+            self.save_button.setEnabled(True)
+            self.message_label.setText(f"حدث خطأ أثناء إنشاء التقارير: {err}")
+            self.message_label.setStyleSheet("color: #C62828;")
+
+        from app.utils.worker import run_in_background
+        run_in_background(_build_pdfs, on_success=_on_done, on_error=_on_err)
 
     def _open_file(self, path):
         try:

@@ -13,9 +13,17 @@ def main():
     init_schema()
     seed_if_empty()
 
+    from app.config import get_logo_path
+    from app.ui.styles import apply_theme, get_saved_theme
+    from PySide2.QtGui import QIcon
+
     app = QApplication(sys.argv)
     app.setLayoutDirection(Qt.RightToLeft)
-    app.setStyleSheet(STYLESHEET)
+    apply_theme(app, get_saved_theme())
+
+    logo_path = get_logo_path()
+    if logo_path:
+        app.setWindowIcon(QIcon(logo_path))
 
     state = {"main_window": None, "login_window": None}
 

@@ -16,7 +16,7 @@
 
 2. من داخل مجلد `python-app`، نفّذ:
    ```cmd
-   pyinstaller --name LapLIS --onefile --windowed --add-data "app/seed_data;app/seed_data" --add-data "app/reports/fonts;app/reports/fonts" main.py
+   pyinstaller --name LapLIS --onefile --windowed --add-data "app/seed_data;app/seed_data" --add-data "app/reports/fonts;app/reports/fonts" --add-data "logo;logo" main.py
    ```
 
    شرح كل جزء:
@@ -27,6 +27,7 @@
    | `--windowed` | عدم فتح نافذة Console سوداء خلف التطبيق |
    | `--add-data "app/seed_data;..."` | تضمين ملفات JSON المرجعية (كتالوج التحاليل والأسعار) داخل الملف التنفيذي |
    | `--add-data "app/reports/fonts;..."` | تضمين خط DejaVu Sans المطلوب لطباعة PDF بالعربية |
+   | `--add-data "logo;logo"` | تضمين مجلد اللوجو لربط أيقونة ونوافل البرنامج وشعاره الرسمي |
 
    أو، بدل تنفيذ الأمر يدويًا، شغّل سكربت PowerShell الجاهز (يحتوي على نفس الأمر بالضبط):
    ```powershell
