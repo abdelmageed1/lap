@@ -1,4 +1,5 @@
 from PySide2.QtCore import Qt
+from PySide2.QtWidgets import QApplication
 from app.ui.styles import apply_theme, get_saved_theme
 from PySide2.QtGui import QIcon, QPixmap
 from PySide2.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QScrollArea, QStackedWidget,
