@@ -280,22 +280,55 @@ def get_recent_patients(limit: int = 200):
         conn.close()
 
 
-def search_patients(query: str = "", limit: int = 100):
-    """Search patients by name or phone, with their visit count - powers the Patient History screen."""
+def search_patients(query: str = "", start_date: str = None, end_date: str = None, limit: int = 100):
+    """Search patients by name or phone and/or date range of their visits."""
     conn = get_connection()
     try:
         query = (query or "").strip()
-        base = ("SELECT p.*, COUNT(v.id) visit_count, MAX(v.visit_date) last_visit FROM patients p "
-                "LEFT JOIN visits v ON v.patient_id = p.id ")
-        if query:
-            like = f"%{query}%"
-            rows = conn.execute(
-                base + "WHERE p.full_name LIKE ? OR p.phone LIKE ? GROUP BY p.id ORDER BY p.id DESC LIMIT ?",
-                (like, like, limit),
-            ).fetchall()
+        sql = ["SELECT p.*, COUNT(v.id) visit_count, MAX(v.visit_date) last_visit FROM patients p"]
+
+        if start_date or end_date:
+            sql.append("INNER JOIN visits v ON v.patient_id = p.id")
         else:
-            rows = conn.execute(base + "GROUP BY p.id ORDER BY p.id DESC LIMIT ?", (limit,)).fetchall()
+            sql.append("LEFT JOIN visits v ON v.patient_id = p.id")
+
+        where_clauses = []
+        params = []
+
+        if query:
+            where_clauses.append("(p.full_name LIKE ? OR p.phone LIKE ?)")
+            like = f"%{query}%"
+            params.extend([like, like])
+
+        if start_date:
+            where_clauses.append("v.visit_date >= ?")
+            params.append(f"{start_date} 00:00:00")
+
+        if end_date:
+            where_clauses.append("v.visit_date <= ?")
+            params.append(f"{end_date} 23:59:59")
+
+        if where_clauses:
+            sql.append("WHERE " + " AND ".join(where_clauses))
+
+        sql.append("GROUP BY p.id ORDER BY p.id DESC LIMIT ?")
+        params.append(limit)
+
+        rows = conn.execute(" ".join(sql), tuple(params)).fetchall()
         return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+def get_patient_by_id(patient_id: int):
+    """Retrieve full patient details by ID with visit count and last visit date."""
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            "SELECT p.*, COUNT(v.id) visit_count, MAX(v.visit_date) last_visit FROM patients p "
+            "LEFT JOIN visits v ON v.patient_id = p.id WHERE p.id = ? GROUP BY p.id", (patient_id,)
+        ).fetchone()
+        return dict(row) if row else None
     finally:
         conn.close()
 

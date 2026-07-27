@@ -4,9 +4,13 @@ import os
 from PySide2.QtCore import Qt, Signal
 from PySide2.QtGui import QColor, QPainter
 from PySide2.QtWidgets import (QComboBox, QDialog, QFrame, QGridLayout, QHBoxLayout,
-                                QLabel, QListWidget, QMessageBox, QPushButton, QTableWidget,
+                                QLabel, QLineEdit, QListWidget, QMessageBox, QPushButton, QTableWidget,
                                 QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView)
-from PySide2.QtCharts import QtCharts
+from app.ui.animated_button import AnimatedButton
+try:
+    from PySide2.QtCharts import QtCharts
+except ImportError:
+    from PySide6.QtCharts import QtCharts
 
 from app.config import BACKUPS_DIR
 from app.ui.styles import get_saved_theme
@@ -67,22 +71,38 @@ class DetailDialog(QDialog):
     def __init__(self, title: str, lines: list, parent=None):
         super().__init__(parent)
         self.setWindowTitle(title)
-        self.resize(580, 440)
+        self.resize(600, 460)
+        self.all_lines = lines or []
+
         layout = QVBoxLayout(self)
         heading = QLabel(title)
         heading.setStyleSheet("font-weight: bold; font-size: 14px; color: #146C8E;")
         layout.addWidget(heading)
 
-        listw = QListWidget()
-        if lines:
-            listw.addItems(lines)
-        else:
-            listw.addItem("لا توجد بيانات لعرضها")
-        layout.addWidget(listw)
+        # Live Search bar
+        self.search_edit = QLineEdit()
+        self.search_edit.setPlaceholderText("🔍 ابحث في النتائج (بالاسم، الفاتورة، أو المبلغ)...")
+        self.search_edit.setStyleSheet("padding: 7px 10px; border-radius: 6px; border: 1px solid #CBD5E1;")
+        self.search_edit.textChanged.connect(self.filter_items)
+        layout.addWidget(self.search_edit)
 
-        close_button = QPushButton("إغلاق")
+        self.listw = QListWidget()
+        layout.addWidget(self.listw)
+
+        self.filter_items("")
+
+        close_button = AnimatedButton("إغلاق")
         close_button.clicked.connect(self.accept)
         layout.addWidget(close_button)
+
+    def filter_items(self, text: str):
+        query = text.strip().lower()
+        self.listw.clear()
+        matching = [line for line in self.all_lines if query in line.lower()] if query else self.all_lines
+        if matching:
+            self.listw.addItems(matching)
+        else:
+            self.listw.addItem("لا توجد بيانات مطابقة للبحث")
 
 
 class DashboardView(QWidget):
@@ -108,12 +128,12 @@ class DashboardView(QWidget):
         header_row.addWidget(self.period_combo)
 
         # Refresh & Export Buttons
-        refresh_button = QPushButton("تحديث 🔄")
+        refresh_button = AnimatedButton("تحديث 🔄")
         refresh_button.setObjectName("Primary")
         refresh_button.clicked.connect(self.refresh)
         header_row.addWidget(refresh_button)
 
-        export_button = QPushButton("تصدير CSV 📊")
+        export_button = AnimatedButton("تصدير CSV 📊")
         export_button.clicked.connect(self.export_summary)
         header_row.addWidget(export_button)
 

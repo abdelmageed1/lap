@@ -8,6 +8,7 @@ from PySide2.QtWidgets import (QComboBox, QDoubleSpinBox, QFrame, QHBoxLayout, Q
 from app.reports.barcode_report import generate_sample_labels_pdf
 from app.reports.invoice_report import generate_invoice_pdf
 from app.services import catalog_service, visit_service
+from app.ui.animated_button import AnimatedButton
 from app.ui.patient_history_view import PatientHistoryDialog
 from app.ui.widgets import HintBanner, StepLabel
 
@@ -183,11 +184,11 @@ class ReceptionView(QWidget):
         self.status_banner.setStyleSheet("color: #0B4F6C; font-size: 11px;")
         tests_layout.addWidget(self.status_banner)
 
-        save_button = QPushButton("حفظ الزيارة وطباعة الفاتورة")
-        save_button.setObjectName("Primary")
-        save_button.setToolTip("يحفظ الزيارة، ويطبع الفاتورة وملصقات باركود العينات تلقائيًا")
-        save_button.clicked.connect(self.save_visit)
-        tests_layout.addWidget(save_button)
+        self.save_button = AnimatedButton("حفظ الزيارة وطباعة الفاتورة")
+        self.save_button.setObjectName("Primary")
+        self.save_button.setToolTip("يحفظ الزيارة، ويطبع الفاتورة وملصقات باركود العينات تلقائيًا")
+        self.save_button.clicked.connect(self.save_visit)
+        tests_layout.addWidget(self.save_button)
 
         columns.addWidget(tests_card, 1)
 

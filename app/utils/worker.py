@@ -40,6 +40,9 @@ class WorkerThread(QThread):
             self.signals.error.emit(e)
 
 
+_ACTIVE_THREADS = []
+
+
 def run_in_background(fn, *args, on_success=None, on_error=None, **kwargs):
     """Helper to launch `fn(*args, **kwargs)` in a background thread.
     
@@ -53,6 +56,11 @@ def run_in_background(fn, *args, on_success=None, on_error=None, **kwargs):
     if on_error:
         thread.signals.error.connect(on_error)
         
+    def _cleanup():
+        if thread in _ACTIVE_THREADS:
+            _ACTIVE_THREADS.remove(thread)
+
+    thread.finished.connect(_cleanup)
     thread.finished.connect(thread.deleteLater)
     thread.start()
     _ACTIVE_THREADS.append(thread)

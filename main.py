@@ -1,6 +1,6 @@
 """Entry point for the Windows-7-compatible (Python + PySide2) edition of LapLIS."""
 import sys
-
+import app.ui.qt_shim as qt_shim
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication
 

@@ -153,24 +153,43 @@ class ResultsView(QWidget):
         self.entry_title.setText(f"{view['test_name']} - {view['patient_name']}")
 
         for p in view["parameters"]:
-            row = QHBoxLayout()
-            range_text = self._get_range_text(p)
+            param_card = QFrame()
+            param_card.setStyleSheet("""
+                QFrame {
+                    background-color: #F8FAFC;
+                    border: 1px solid #E2E8F0;
+                    border-radius: 8px;
+                }
+            """)
+            card_layout = QVBoxLayout(param_card)
+            card_layout.setSpacing(8)
+            card_layout.setContentsMargins(14, 12, 14, 12)
+
+            top_row = QHBoxLayout()
             unit_text = p.get("unit") or "-"
-            name_label = QLabel(f"{p['name']} | الوحدة: {unit_text}")
-            name_label.setMinimumWidth(220)
-            range_label = QLabel(f"المدى الطبيعي: {range_text}")
-            range_label.setStyleSheet("color: #6B7280;")
-            range_label.setMinimumWidth(180)
+            name_label = QLabel(f"<b>{p['name']}</b> <span style='color: #64748B;'>(الوحدة: {unit_text})</span>")
+            name_label.setStyleSheet("font-size: 14px; color: #0F172A;")
+
+            range_text = self._get_range_text(p)
+            range_label = QLabel(f"المدى الطبيعي: <b>{range_text}</b>")
+            range_label.setStyleSheet("color: #0369A1; background: #E0F2FE; padding: 4px 10px; border-radius: 6px; font-size: 12px;")
+
+            top_row.addWidget(name_label)
+            top_row.addStretch()
+            top_row.addWidget(range_label)
+
             value_edit = QLineEdit()
-            # Show reference range as tooltip for quick guidance
+            value_edit.setPlaceholderText(f"أدخل النتيجة (المدى الطبيعي: {range_text})")
+            value_edit.setStyleSheet("font-size: 14px; padding: 8px 12px; border: 1px solid #CBD5E1; border-radius: 6px; background: white;")
+
             tooltip_text = self._get_range_text(p)
             if tooltip_text:
                 value_edit.setToolTip(f"المدى الطبيعي: {tooltip_text}")
 
-            row.addWidget(name_label)
-            row.addWidget(range_label)
-            row.addWidget(value_edit)
-            self.params_layout.addLayout(row)
+            card_layout.addLayout(top_row)
+            card_layout.addWidget(value_edit)
+
+            self.params_layout.addWidget(param_card)
             self.parameter_inputs.append((p["parameter_id"], p["data_type"], value_edit, p))
 
         self.params_layout.addStretch()
@@ -309,13 +328,47 @@ class ResultsView(QWidget):
             range_text = self._get_range_text(p)
             unit_text = p.get("unit") or "-"
             flag = p.get("flag", "Normal")
-            color = "#C62828" if flag in ("High", "Low", "Abnormal") else "#1A1A1A"
+            is_abnormal = flag in ("High", "Low", "Abnormal")
+            
             flag_display = FLAG_LABELS.get(flag, flag)
-            line = QLabel(
-                f"{p['name']} | القيمة: {value} | الوحدة: {unit_text} | المدى الطبيعي: {range_text} | [{flag_display}]"
-            )
-            line.setStyleSheet(f"color: {color};")
-            self.review_values_layout.addWidget(line)
+            bg_color = "#FEF2F2" if is_abnormal else "#F8FAFC"
+            border_color = "#FCA5A5" if is_abnormal else "#E2E8F0"
+            text_color = "#991B1B" if is_abnormal else "#0F172A"
+            flag_bg = "#FEE2E2" if is_abnormal else "#DCFCE7"
+            flag_fg = "#991B1B" if is_abnormal else "#166534"
+
+            card = QFrame()
+            card.setStyleSheet(f"""
+                QFrame {{
+                    background-color: {bg_color};
+                    border: 1px solid {border_color};
+                    border-radius: 8px;
+                }}
+            """)
+            layout = QHBoxLayout(card)
+            layout.setContentsMargins(14, 10, 14, 10)
+
+            name_lbl = QLabel(f"<b>{p['name']}</b> <span style='color: #64748B;'>(الوحدة: {unit_text})</span>")
+            name_lbl.setStyleSheet(f"font-size: 14px; color: {text_color};")
+
+            val_lbl = QLabel(f"القيمة: <b>{value}</b>")
+            val_lbl.setStyleSheet(f"font-size: 14px; color: {text_color};")
+
+            range_lbl = QLabel(f"المدى الطبيعي: {range_text}")
+            range_lbl.setStyleSheet("font-size: 12px; color: #64748B;")
+
+            flag_lbl = QLabel(flag_display)
+            flag_lbl.setStyleSheet(f"background: {flag_bg}; color: {flag_fg}; font-weight: bold; padding: 4px 10px; border-radius: 6px; font-size: 12px;")
+
+            layout.addWidget(name_lbl)
+            layout.addStretch()
+            layout.addWidget(val_lbl)
+            layout.addSpacing(16)
+            layout.addWidget(range_lbl)
+            layout.addSpacing(16)
+            layout.addWidget(flag_lbl)
+
+            self.review_values_layout.addWidget(card)
         self.review_values_layout.addStretch()
         self.review_message.setText("")
 

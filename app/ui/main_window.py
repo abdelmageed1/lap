@@ -2,8 +2,10 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication
 from app.ui.styles import apply_theme, get_saved_theme
 from PySide2.QtGui import QIcon, QPixmap
-from PySide2.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QScrollArea, QStackedWidget,
-                                QVBoxLayout, QWidget)
+from PySide2.QtWidgets import (QComboBox, QDialog, QFrame, QGridLayout, QHBoxLayout,
+                                 QLabel, QListWidget, QMessageBox, QPushButton, QTableWidget,
+                                 QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView, QScrollArea, QStackedWidget)
+from app.ui.animated_button import AnimatedButton
 
 from app.config import get_logo_path
 from app.services import catalog_service
@@ -103,7 +105,7 @@ class MainWindow(QWidget):
                 section_label.setObjectName("SidebarSection")
                 sidebar_layout.addWidget(section_label)
             for module_key, label, view_cls in visible_items:
-                button = QPushButton(label)
+                button = AnimatedButton(label)
                 button.setObjectName("NavButton")
                 button.clicked.connect(lambda checked=False, k=module_key: self.navigate(k))
                 sidebar_layout.addWidget(button)
@@ -122,13 +124,13 @@ class MainWindow(QWidget):
         from app.ui.styles import apply_theme, get_saved_theme
         current_theme = get_saved_theme()
         theme_label = "🌙 الوضع المظلم" if current_theme == "light" else "☀️ الوضع الفاتح"
-        self.theme_button = QPushButton(theme_label)
+        self.theme_button = AnimatedButton(theme_label)
         self.theme_button.setObjectName("NavButton")
         self.theme_button.setToolTip("التبديل بين الوضع الفاتح والوضع المظلم")
         self.theme_button.clicked.connect(self.toggle_theme)
         sidebar_layout.addWidget(self.theme_button)
 
-        logout_button = QPushButton("تسجيل الخروج")
+        logout_button = AnimatedButton("تسجيل الخروج")
         logout_button.setObjectName("NavButton")
         logout_button.setToolTip("إنهاء الجلسة الحالية والعودة لشاشة تسجيل الدخول")
         logout_button.clicked.connect(self.logout)

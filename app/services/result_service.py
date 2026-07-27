@@ -263,12 +263,26 @@ def get_patient_result_summary(patient_id: int):
         conn.close()
 
 
-def get_patient_history(patient_id: int):
+def get_patient_history(patient_id: int, start_date: str = None, end_date: str = None):
     conn = get_connection()
     try:
-        visits = conn.execute(
-            "SELECT * FROM visits WHERE patient_id = ? ORDER BY id DESC", (patient_id,)
-        ).fetchall()
+        query = "SELECT * FROM visits WHERE patient_id = ?"
+        params = [patient_id]
+        if start_date:
+            query += " AND visit_date >= ?"
+            params.append(f"{start_date} 00:00:00")
+        if end_date:
+            query += " AND visit_date <= ?"
+            params.append(f"{end_date} 23:59:59")
+        query += " ORDER BY id DESC"
+
+        visits = conn.execute(query, tuple(params)).fetchall()
+        patient = conn.execute(
+            "SELECT gender, age_years FROM patients WHERE id = ?", (patient_id,)
+        ).fetchone()
+        sex = patient["gender"] if patient else None
+        age = patient["age_years"] if patient and patient["age_years"] else 0
+
         history = []
         for v in visits:
             v = dict(v)
@@ -285,6 +299,13 @@ def get_patient_history(patient_id: int):
                 ).fetchall()
                 for r in rows:
                     r = dict(r)
+                    ranges = [dict(x) for x in conn.execute(
+                        "SELECT * FROM parameter_reference_ranges WHERE parameter_id = ?", (r["parameter_id"],)
+                    ).fetchall()]
+                    matched = _select_range(ranges, sex, age)
+                    r["range_low"] = matched["low_value"] if matched else None
+                    r["range_high"] = matched["high_value"] if matched else None
+                    r["range_text"] = matched["normal_text"] if matched else None
                     r["test_name"] = o["test_name"]
                     results.append(r)
             v["results"] = results
