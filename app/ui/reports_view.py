@@ -9,6 +9,7 @@ from PySide2.QtWidgets import (QCheckBox, QComboBox, QDateEdit, QFileDialog, QFr
 from app.services import reports_service
 from app.ui.animated_button import AnimatedButton
 from app.ui.reports_chart_widgets import KPICardWidget, BarChartWidget
+from app.ui.styles import get_color
 from app.ui.widgets import HintBanner
 
 
@@ -179,7 +180,7 @@ class ReportsView(QWidget):
         patient_card.setObjectName("Card")
         patient_layout = QVBoxLayout(patient_card)
         self.lbl_doctor_drilldown_title = QLabel("<b>📋 تفاصيل المرضى المحولين:</b> (اختر طبيبًا من الجدول أعلى)")
-        self.lbl_doctor_drilldown_title.setStyleSheet("color: #0B4F6C; font-size: 13px;")
+        self.lbl_doctor_drilldown_title.setStyleSheet(f"color: {get_color('primary_text')}; font-size: 13px;")
         patient_layout.addWidget(self.lbl_doctor_drilldown_title)
 
         self.patients_table = QTableWidget()
@@ -264,7 +265,7 @@ class ReportsView(QWidget):
         drilldown_card.setObjectName("Card")
         drilldown_layout = QVBoxLayout(drilldown_card)
         self.lbl_staff_drilldown_title = QLabel("<b>📋 سجل عمليات الموظف:</b> (اختر موظفًا من الجدول أعلى)")
-        self.lbl_staff_drilldown_title.setStyleSheet("color: #0B4F6C; font-size: 13px;")
+        self.lbl_staff_drilldown_title.setStyleSheet(f"color: {get_color('primary_text')}; font-size: 13px;")
         drilldown_layout.addWidget(self.lbl_staff_drilldown_title)
 
         self.staff_patients_table = QTableWidget()

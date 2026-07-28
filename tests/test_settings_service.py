@@ -16,6 +16,22 @@ def test_get_settings_dashboard_data_includes_core_records(tmp_path, monkeypatch
     assert data["doctors"]
 
 
+def test_brand_colors_saved_and_retrieved(tmp_path, monkeypatch):
+    monkeypatch.setattr(db, "DATABASE_PATH", str(tmp_path / "brand_colors.db"))
+    db.init_schema()
+    from app.seed import seed_if_empty
+    seed_if_empty()
+
+    settings = catalog_service.get_lab_settings()
+    settings["brand_primary_color"] = "#0D9488"
+    settings["brand_secondary_color"] = "#0F766E"
+    catalog_service.save_lab_settings(settings)
+
+    updated = catalog_service.get_lab_settings()
+    assert updated["brand_primary_color"] == "#0D9488"
+    assert updated["brand_secondary_color"] == "#0F766E"
+
+
 def test_referral_and_doctor_updates_are_persisted(tmp_path, monkeypatch):
     monkeypatch.setattr(db, "DATABASE_PATH", str(tmp_path / "settings_laplis.db"))
     db.init_schema()

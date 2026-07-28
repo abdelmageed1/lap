@@ -24,6 +24,23 @@ from app.ui.users_view import UsersView
 from app.ui.visits_view import VisitsView
 
 
+class DynamicStackedWidget(QStackedWidget):
+    """QStackedWidget that calculates sizeHint based ONLY on the currently active page.
+    This prevents short pages (e.g. UsersView) from displaying unnecessary scrollbars.
+    """
+    def sizeHint(self):
+        curr = self.currentWidget()
+        if curr:
+            return curr.sizeHint()
+        return super().sizeHint()
+
+    def minimumSizeHint(self):
+        curr = self.currentWidget()
+        if curr:
+            return curr.minimumSizeHint()
+        return super().minimumSizeHint()
+
+
 class MainWindow(QWidget):
     def __init__(self, user, on_logout):
         super().__init__()
@@ -78,7 +95,7 @@ class MainWindow(QWidget):
 
         self.nav_buttons = {}
         self.pages = {}
-        self.stack = QStackedWidget()
+        self.stack = DynamicStackedWidget()
 
         # Grouped with section headers so the sidebar reads as "daily work" vs. "administration"
         # instead of one flat list of unrelated screen names.
@@ -123,10 +140,10 @@ class MainWindow(QWidget):
         sidebar_layout.addStretch()
 
         user_label = QLabel(user.full_name)
-        user_label.setStyleSheet("color: white; padding: 8px 16px; font-weight: bold;")
+        user_label.setObjectName("SidebarUser")
         sidebar_layout.addWidget(user_label)
         role_label = QLabel(user.role_name)
-        role_label.setStyleSheet("color: #CBD5E1; padding: 0 16px 8px 16px; font-size: 10px;")
+        role_label.setObjectName("SidebarRole")
         sidebar_layout.addWidget(role_label)
 
         from app.ui.styles import apply_theme, get_saved_theme
@@ -174,6 +191,7 @@ class MainWindow(QWidget):
                 view.refresh()
 
         self.stack.setCurrentWidget(view)
+        self.stack.updateGeometry()
 
         for key, button in self.nav_buttons.items():
             button.setObjectName("NavButtonActive" if key == module_key else "NavButton")

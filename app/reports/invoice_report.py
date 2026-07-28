@@ -2,12 +2,12 @@
 import os
 from datetime import datetime
 
-from reportlab.lib.colors import white as WHITE
+from reportlab.lib.colors import HexColor, white as WHITE
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
 from app.config import INVOICES_DIR
-from app.reports.pdf_base import (BRAND_DARK, BRAND_GRAY, BRAND_RED, BRAND_TEAL, FONT_BOLD, FONT_REGULAR,
+from app.reports.pdf_base import (BRAND_DARK, BRAND_GRAY, BRAND_RED, FONT_BOLD, FONT_REGULAR,
                                    draw_rtl_label_value, draw_rtl_text, ensure_fonts_registered)
 
 PAGE_W, PAGE_H = A4
@@ -21,8 +21,19 @@ def generate_invoice_pdf(visit: dict, orders: list, lab_settings: dict) -> str:
     path = os.path.join(INVOICES_DIR, f"invoice-{visit['invoice_number']}.pdf")
     c = canvas.Canvas(path, pagesize=A4)
 
+    primary_hex = lab_settings.get("brand_primary_color") or "#0B4F6C"
+    secondary_hex = lab_settings.get("brand_secondary_color") or "#146C8E"
+    try:
+        brand_primary = HexColor(primary_hex)
+    except Exception:
+        brand_primary = HexColor("#0B4F6C")
+    try:
+        brand_secondary = HexColor(secondary_hex)
+    except Exception:
+        brand_secondary = HexColor("#146C8E")
+
     y = PAGE_H - 50
-    draw_rtl_text(c, RIGHT, y, lab_settings.get("lab_name") or "المعمل", font=FONT_BOLD, size=20, color=BRAND_DARK)
+    draw_rtl_text(c, RIGHT, y, lab_settings.get("lab_name") or "المعمل", font=FONT_BOLD, size=20, color=brand_primary)
     y -= 22
     if lab_settings.get("tagline"):
         draw_rtl_text(c, RIGHT, y, lab_settings["tagline"], size=11, color=BRAND_GRAY)
@@ -34,13 +45,13 @@ def generate_invoice_pdf(visit: dict, orders: list, lab_settings: dict) -> str:
         draw_rtl_text(c, RIGHT, y, lab_settings["phone_numbers"], size=9, color=BRAND_GRAY)
         y -= 13
 
-    c.setStrokeColor(BRAND_TEAL)
-    c.setLineWidth(1.2)
+    c.setStrokeColor(brand_secondary)
+    c.setLineWidth(1.5)
     y -= 6
     c.line(LEFT, y, RIGHT, y)
     y -= 26
 
-    draw_rtl_text(c, RIGHT, y, f"فاتورة رقم {visit['invoice_number']}", font=FONT_BOLD, size=14, color=BRAND_TEAL)
+    draw_rtl_text(c, RIGHT, y, f"فاتورة رقم {visit['invoice_number']}", font=FONT_BOLD, size=14, color=brand_primary)
     y -= 20
 
     info_lines = [("المريض", visit["patient_name"]),
@@ -58,7 +69,7 @@ def generate_invoice_pdf(visit: dict, orders: list, lab_settings: dict) -> str:
     # Table header (RTL columns: test name first/right-most, price second)
     col_name_right = RIGHT
     col_price_right = RIGHT - 320
-    c.setFillColor(BRAND_TEAL)
+    c.setFillColor(brand_primary)
     c.rect(LEFT, y - 4, RIGHT - LEFT, 20, fill=1, stroke=0)
     draw_rtl_text(c, col_name_right, y, "التحليل", font=FONT_BOLD, size=10, color=WHITE)
     draw_rtl_text(c, col_price_right, y, "السعر", font=FONT_BOLD, size=10, color=WHITE)
@@ -80,7 +91,7 @@ def generate_invoice_pdf(visit: dict, orders: list, lab_settings: dict) -> str:
     totals = [
         ("الإجمالي", visit["total_amount"], BRAND_DARK),
         ("الخصم", visit["discount_amount"], BRAND_GRAY),
-        ("المدفوع", visit["paid_amount"], BRAND_TEAL),
+        ("المدفوع", visit["paid_amount"], brand_primary),
         ("المتبقي", visit["balance"], BRAND_RED),
     ]
     for label, value, color in totals:

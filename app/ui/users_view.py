@@ -3,6 +3,7 @@ from PySide2.QtWidgets import (QCheckBox, QComboBox, QFrame, QGridLayout, QHBoxL
 
 
 from app.services import user_service
+from app.ui.styles import get_color
 from app.ui.widgets import HintBanner
 from app.utils.audit import log_action
 
@@ -27,7 +28,7 @@ class UsersView(QWidget):
 
     def _label_bold(self, text):
         label = QLabel(text)
-        label.setStyleSheet("font-weight: bold; color: #0B4F6C;")
+        label.setStyleSheet(f"font-weight: bold; color: {get_color('primary_text')};")
         return label
 
     # ---- Users tab ----
@@ -66,6 +67,8 @@ class UsersView(QWidget):
         list_layout = QVBoxLayout(list_card)
         list_layout.addWidget(self._label_bold("المستخدمون المتاحون بالسيستم"))
         self.users_list = QListWidget()
+        self.users_list.setMaximumHeight(160)
+        self.users_list.setMinimumHeight(110)
         self.users_list.itemClicked.connect(self.on_select_user)
         list_layout.addWidget(self.users_list)
 
@@ -76,8 +79,8 @@ class UsersView(QWidget):
         btn_update_username = QPushButton("تغيير اسم الدخول 🔑")
         btn_update_username.setToolTip("تعديل اسم الدخول المستخدم لتسجيل الدخول للنظام (Username)")
         btn_update_username.clicked.connect(self.update_selected_username)
-        edit_username_row.addWidget(self.edit_username_edit)
-        edit_username_row.addWidget(btn_update_username)
+        edit_username_row.addWidget(self.edit_username_edit, 2)
+        edit_username_row.addWidget(btn_update_username, 1)
         list_layout.addLayout(edit_username_row)
 
         # Edit Fullname Row
@@ -87,10 +90,9 @@ class UsersView(QWidget):
         btn_update_fullname = QPushButton("تغيير الاسم بالكامل ✏️")
         btn_update_fullname.setToolTip("تعديل الاسم بالكامل المعروض للمستخدم في السجلات والطباعة")
         btn_update_fullname.clicked.connect(self.update_selected_user_fullname)
-        edit_fullname_row.addWidget(self.edit_fullname_edit)
-        edit_fullname_row.addWidget(btn_update_fullname)
+        edit_fullname_row.addWidget(self.edit_fullname_edit, 2)
+        edit_fullname_row.addWidget(btn_update_fullname, 1)
         list_layout.addLayout(edit_fullname_row)
-
 
         selected_row = QHBoxLayout()
         self.toggle_active_button = QPushButton("تعطيل / تفعيل")
@@ -112,24 +114,13 @@ class UsersView(QWidget):
         delete_row = QHBoxLayout()
         self.delete_user_button = QPushButton("حذف حساب المستخدم 🗑️")
         self.delete_user_button.setToolTip("حذف الحساب نهائيًا من السيستم (يتطلب موافقة وتأكيد كلمة سر الأدمن)")
-        self.delete_user_button.setStyleSheet("""
-            QPushButton {
-                background-color: #DC2626;
-                color: white;
-                font-weight: bold;
-                border-radius: 6px;
-                padding: 6px 14px;
-            }
-            QPushButton:hover {
-                background-color: #B91C1C;
-            }
-        """)
+        self.delete_user_button.setObjectName("Danger")
         self.delete_user_button.clicked.connect(self.delete_selected_user)
         delete_row.addWidget(self.delete_user_button)
-        list_layout.addLayout(delete_row)
 
         self.selected_user_message = QLabel("")
-        list_layout.addWidget(self.selected_user_message)
+        delete_row.addWidget(self.selected_user_message, 1)
+        list_layout.addLayout(delete_row)
 
         layout.addWidget(list_card, 1)
 
@@ -158,17 +149,17 @@ class UsersView(QWidget):
         self.edit_username_edit.setText(selected_user["username"])
         self.edit_fullname_edit.setText(selected_user["full_name"])
         self.selected_user_message.setText(f"محدَّد: {selected_user['username']} ({selected_user['full_name']})")
-        self.selected_user_message.setStyleSheet("color: #6B7280;")
+        self.selected_user_message.setStyleSheet(f"color: {get_color('text_muted')};")
 
     def update_selected_username(self):
         if self.selected_user_id is None:
             self.selected_user_message.setText("اختر مستخدمًا أولًا")
-            self.selected_user_message.setStyleSheet("color: #C62828;")
+            self.selected_user_message.setStyleSheet(f"color: {get_color('danger')};")
             return
         new_username = self.edit_username_edit.text().strip()
         if not new_username:
             self.selected_user_message.setText("أدخل اسم الدخول الجديد (Username)")
-            self.selected_user_message.setStyleSheet("color: #C62828;")
+            self.selected_user_message.setStyleSheet(f"color: {get_color('danger')};")
             return
 
         from app.services import auth_service
@@ -183,7 +174,7 @@ class UsersView(QWidget):
 
         ok, msg = user_service.update_username(self.selected_user_id, new_username)
         self.selected_user_message.setText(msg)
-        self.selected_user_message.setStyleSheet("color: #146C8E;" if ok else "color: #C62828;")
+        self.selected_user_message.setStyleSheet(f"color: {get_color('primary')};" if ok else f"color: {get_color('danger')};")
         if ok:
             self.refresh_users()
 
@@ -191,24 +182,24 @@ class UsersView(QWidget):
     def update_selected_user_fullname(self):
         if self.selected_user_id is None:
             self.selected_user_message.setText("اختر مستخدمًا أولًا")
-            self.selected_user_message.setStyleSheet("color: #C62828;")
+            self.selected_user_message.setStyleSheet(f"color: {get_color('danger')};")
             return
         new_name = self.edit_fullname_edit.text().strip()
         if not new_name:
             self.selected_user_message.setText("أدخل الاسم بالكامل الجديد")
-            self.selected_user_message.setStyleSheet("color: #C62828;")
+            self.selected_user_message.setStyleSheet(f"color: {get_color('danger')};")
             return
 
         ok, msg = user_service.update_user_full_name(self.selected_user_id, new_name)
         self.selected_user_message.setText(msg)
-        self.selected_user_message.setStyleSheet("color: #146C8E;" if ok else "color: #C62828;")
+        self.selected_user_message.setStyleSheet(f"color: {get_color('primary')};" if ok else f"color: {get_color('danger')};")
         if ok:
             self.refresh_users()
 
     def delete_selected_user(self):
         if self.selected_user_id is None:
             self.selected_user_message.setText("اختر مستخدمًا أولًا")
-            self.selected_user_message.setStyleSheet("color: #C62828;")
+            self.selected_user_message.setStyleSheet(f"color: {get_color('danger')};")
             return
         current = next((u for u in self.users if u["id"] == self.selected_user_id), None)
         if not current:
@@ -356,6 +347,7 @@ class UsersView(QWidget):
         roles_layout.addLayout(add_row)
 
         self.roles_list = QListWidget()
+        self.roles_list.setMaximumHeight(200)
         self.roles_list.itemClicked.connect(self.show_permissions)
         roles_layout.addWidget(self.roles_list)
         layout.addWidget(roles_card, 1)

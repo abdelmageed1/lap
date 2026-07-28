@@ -4,10 +4,10 @@ import os
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
-from reportlab.lib.colors import white as WHITE
+from reportlab.lib.colors import HexColor, white as WHITE
 
 from app.config import REPORTS_DIR
-from app.reports.pdf_base import (BRAND_DARK, BRAND_GRAY, BRAND_RED, BRAND_TEAL, FONT_BOLD,
+from app.reports.pdf_base import (BRAND_DARK, BRAND_GRAY, BRAND_RED, FONT_BOLD,
                                    draw_rtl_label_value, draw_rtl_text, ensure_fonts_registered)
 from app.services.result_service import FLAG_LABELS
 
@@ -35,20 +35,31 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
     path = os.path.join(REPORTS_DIR, filename)
     c = canvas.Canvas(path, pagesize=A4)
 
+    primary_hex = lab_settings.get("brand_primary_color") or "#0B4F6C"
+    secondary_hex = lab_settings.get("brand_secondary_color") or "#146C8E"
+    try:
+        brand_primary = HexColor(primary_hex)
+    except Exception:
+        brand_primary = HexColor("#0B4F6C")
+    try:
+        brand_secondary = HexColor(secondary_hex)
+    except Exception:
+        brand_secondary = HexColor("#146C8E")
 
     y = PAGE_H - 50
-    draw_rtl_text(c, RIGHT, y, lab_settings.get("lab_name") or "المعمل", font=FONT_BOLD, size=18, color=BRAND_DARK)
+    draw_rtl_text(c, RIGHT, y, lab_settings.get("lab_name") or "المعمل", font=FONT_BOLD, size=18, color=brand_primary)
     y -= 20
     if lab_settings.get("tagline"):
         draw_rtl_text(c, RIGHT, y, lab_settings["tagline"], size=10, color=BRAND_GRAY)
         y -= 16
 
-    c.setStrokeColor(BRAND_TEAL)
+    c.setStrokeColor(brand_secondary)
+    c.setLineWidth(1.5)
     y -= 4
     c.line(LEFT, y, RIGHT, y)
     y -= 22
 
-    draw_rtl_label_value(c, RIGHT, y, "تقرير نتيجة", test_name, font=FONT_BOLD, size=13, color=BRAND_TEAL)
+    draw_rtl_label_value(c, RIGHT, y, "تقرير نتيجة", test_name, font=FONT_BOLD, size=13, color=brand_primary)
     y -= 18
     age_display = f"{age_years:.0f} سنة" if age_years is not None else "-"
     gender_display = "ذكر" if gender == "Male" else "أنثى"
@@ -62,7 +73,7 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
     col_value_right = RIGHT - 220
     col_name_right = RIGHT - 320
 
-    c.setFillColor(BRAND_TEAL)
+    c.setFillColor(brand_primary)
     c.rect(LEFT, y - 4, RIGHT - LEFT, 20, fill=1, stroke=0)
     draw_rtl_text(c, col_name_right, y, "المعيار", font=FONT_BOLD, size=9.5, color=WHITE)
     draw_rtl_text(c, col_value_right, y, "القيمة", font=FONT_BOLD, size=9.5, color=WHITE)

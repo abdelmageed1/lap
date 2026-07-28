@@ -15,27 +15,27 @@ except ImportError:
 from app.config import BACKUPS_DIR, get_exports_patients_dir
 from app.ui.animated_button import AnimatedButton
 from app.ui.dashboard_table_dialog import DashboardVisitsTableDialog
-from app.ui.styles import get_saved_theme
+from app.ui import styles
+from app.ui.styles import get_color, get_saved_theme
 from app.ui.widgets import HintBanner
 from app.services import result_service, visit_service
 from app.services.result_service import STATUS_LABELS
 
 
-
 class StatCard(QFrame):
     clicked = Signal()
 
-    def __init__(self, title: str, icon_str: str = "📊", accent_color: str = "#146C8E", tooltip: str = ""):
+    def __init__(self, title: str, icon_str: str = "📊", accent_color: str = None, tooltip: str = ""):
         super().__init__()
         self.setObjectName("Card")
         self.setCursor(Qt.PointingHandCursor)
         if tooltip:
             self.setToolTip(tooltip)
 
-        self.accent_color = accent_color
+        self.accent_color = accent_color or get_color("primary")
         self.setStyleSheet(f"""
             QFrame#Card {{
-                border-right: 5px solid {accent_color};
+                border-right: 5px solid {self.accent_color};
             }}
         """)
 
@@ -55,11 +55,11 @@ class StatCard(QFrame):
         layout.addLayout(header_layout)
 
         self.value_label = QLabel("0")
-        self.value_label.setStyleSheet(f"font-size: 22px; font-weight: bold; color: {accent_color}; margin-top: 4px;")
+        self.value_label.setStyleSheet(f"font-size: 22px; font-weight: bold; color: {self.accent_color}; margin-top: 4px;")
         layout.addWidget(self.value_label)
 
         hint = QLabel("اضغط للتفاصيل 🠄")
-        hint.setStyleSheet("color: #9CA3AF; font-size: 10px;")
+        hint.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 10px;")
         layout.addWidget(hint)
 
     def set_value(self, text: str):
@@ -79,13 +79,13 @@ class DetailDialog(QDialog):
 
         layout = QVBoxLayout(self)
         heading = QLabel(title)
-        heading.setStyleSheet("font-weight: bold; font-size: 14px; color: #146C8E;")
+        heading.setStyleSheet(f"font-weight: bold; font-size: 14px; color: {get_color('primary_text')};")
         layout.addWidget(heading)
 
         # Live Search bar
         self.search_edit = QLineEdit()
         self.search_edit.setPlaceholderText("🔍 ابحث في النتائج (بالاسم، الفاتورة، أو المبلغ)...")
-        self.search_edit.setStyleSheet("padding: 7px 10px; border-radius: 6px; border: 1px solid #CBD5E1;")
+        self.search_edit.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')};")
         self.search_edit.textChanged.connect(self.filter_items)
         layout.addWidget(self.search_edit)
 
@@ -116,7 +116,7 @@ class ReferralReportDialog(QDialog):
 
         layout = QVBoxLayout(self)
         title = QLabel("إحصائيات وإيرادات الجهات والأطباء المحولين")
-        title.setStyleSheet("font-weight: bold; font-size: 15px; color: #0B4F6C;")
+        title.setStyleSheet(f"font-weight: bold; font-size: 15px; color: {get_color('primary_text')};")
         layout.addWidget(title)
 
         self.table = QTableWidget()
@@ -258,7 +258,14 @@ class DashboardView(QWidget):
         self.table.setMinimumHeight(140)
         layout.addWidget(self.table)
 
+        styles.register_theme_listener(self.on_theme_changed)
         self.refresh()
+
+    def on_theme_changed(self, new_theme: str):
+        try:
+            self.refresh()
+        except Exception:
+            pass
 
     def on_period_changed(self, index):
         self.days_filter = 7 if index == 0 else 30
@@ -355,7 +362,7 @@ class DashboardView(QWidget):
             bal = v['total_amount'] - v['paid_amount']
             item_bal = QTableWidgetItem(f"{bal:.2f}")
             if bal > 0.01:
-                item_bal.setForeground(QColor("#EF4444"))
+                item_bal.setForeground(QColor(get_color("danger")))
             self.table.setItem(row, 4, item_bal)
 
     def export_summary(self):

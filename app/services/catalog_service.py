@@ -434,11 +434,13 @@ def save_lab_settings(settings: dict) -> None:
     try:
         conn.execute(
             "UPDATE lab_settings SET lab_name=?, tagline=?, address=?, phone_numbers=?, "
-            "footer_signature1=?, footer_signature2=?, digital_seal_text=?, app_title=? WHERE id=1",
+            "footer_signature1=?, footer_signature2=?, digital_seal_text=?, app_title=?, "
+            "brand_primary_color=?, brand_secondary_color=? WHERE id=1",
             (settings.get("lab_name"), settings.get("tagline"), settings.get("address"),
              settings.get("phone_numbers"), settings.get("footer_signature1"),
              settings.get("footer_signature2"), settings.get("digital_seal_text"),
-             settings.get("app_title")),
+             settings.get("app_title"), settings.get("brand_primary_color", "#0B4F6C"),
+             settings.get("brand_secondary_color", "#146C8E")),
         )
         try:
             log_action('lab_settings', 1, 'update', conn=conn)

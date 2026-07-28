@@ -7,6 +7,8 @@ from PySide2.QtCore import Qt
 
 from app.config import get_storage_root, set_storage_root, get_pdf_reports_dir, get_pdf_invoices_dir, get_exports_patients_dir, get_exports_catalog_dir, get_backups_dir
 from app.services import catalog_service
+from app.ui.animated_button import AnimatedButton
+from app.ui.styles import get_color
 from app.ui.widgets import HintBanner
 
 
@@ -23,6 +25,7 @@ class SettingsView(QWidget):
         layout.addWidget(HintBanner("إدارة بيانات المعمل الأساسية مثل الاسم والعنوان والجهات والأطباء."))
 
         self._build_general_section(layout)
+        self._build_branding_section(layout)
         self._build_catalog_section(layout)
         self._build_storage_section(layout)
         self._build_catalog_io_section(layout)
@@ -77,6 +80,64 @@ class SettingsView(QWidget):
         card_layout.addWidget(self.seal_text_edit)
 
         layout.addWidget(card)
+
+    def _build_branding_section(self, layout):
+        card = QFrame()
+        card.setObjectName("Card")
+        card_layout = QVBoxLayout(card)
+        
+        lbl_title = QLabel("🎨 الهوية البصرية والألوان الرسمية للمعمل (PDF & Header)")
+        lbl_title.setStyleSheet(f"font-weight: bold; color: {get_color('primary_text')}; font-size: 13px;")
+        card_layout.addWidget(lbl_title)
+
+        hint = QLabel("تتحكم هذه الألوان في ترويسة هيدر التقرير، خطوط الاعتماد، وأشرطة جداول نتائج الـ PDF والتطبيق.")
+        hint.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 11px;")
+        card_layout.addWidget(hint)
+
+        colors_layout = QHBoxLayout()
+        
+        col1 = QVBoxLayout()
+        col1.addWidget(QLabel("اللون الرئيسي (Primary Brand Color):"))
+        self.brand_primary_edit = QLineEdit("#0B4F6C")
+        self.brand_primary_edit.setPlaceholderText("كود اللون الأساسي مثل #0B4F6C")
+        col1.addWidget(self.brand_primary_edit)
+        colors_layout.addLayout(col1)
+
+        col2 = QVBoxLayout()
+        col2.addWidget(QLabel("اللون الفرعي (Secondary Accent Color):"))
+        self.brand_secondary_edit = QLineEdit("#146C8E")
+        self.brand_secondary_edit.setPlaceholderText("كود اللون الفرعي مثل #146C8E")
+        col2.addWidget(self.brand_secondary_edit)
+        colors_layout.addLayout(col2)
+
+        card_layout.addLayout(colors_layout)
+
+        preset_label = QLabel("اختيار سريع لنماذج ألوان المعامل الجاهزة:")
+        preset_label.setStyleSheet(f"font-size: 11px; font-weight: bold; color: {get_color('text_main')}; margin-top: 6px;")
+        card_layout.addWidget(preset_label)
+
+        presets_layout = QHBoxLayout()
+        presets = [
+            ("🔵 كحلي نيلي", "#0B4F6C", "#146C8E"),
+            ("🟢 زمردي تيل", "#0D9488", "#0F766E"),
+            ("🔷 أزرق ملكي", "#1E40AF", "#1D4ED8"),
+            ("🟣 بنفسجي فخم", "#6D28D9", "#7C3AED"),
+            ("🔴 أحمر قرمزي", "#991B1B", "#B91C1C"),
+            ("🔘 رمادي أنيق", "#334155", "#475569"),
+        ]
+
+        for name, p_hex, s_hex in presets:
+            btn = QPushButton(name)
+            btn.setStyleSheet(f"background-color: {p_hex}; color: #FFFFFF; font-weight: bold; border-radius: 4px; padding: 4px 8px;")
+            btn.clicked.connect(lambda checked=False, p=p_hex, s=s_hex: self._set_brand_colors(p, s))
+            presets_layout.addWidget(btn)
+
+        card_layout.addLayout(presets_layout)
+        layout.addWidget(card)
+
+    def _set_brand_colors(self, primary: str, secondary: str):
+        self.brand_primary_edit.setText(primary)
+        self.brand_secondary_edit.setText(secondary)
 
 
 
@@ -149,22 +210,19 @@ class SettingsView(QWidget):
         card.setObjectName("Card")
         cl = QVBoxLayout(card)
         header = QLabel("📁 إعدادات مسار التخزين")
-        header.setStyleSheet("font-weight: bold; font-size: 14px; color: #0F172A;")
+        header.setStyleSheet(f"font-weight: bold; font-size: 14px; color: {get_color('primary_text')};")
         cl.addWidget(header)
         cl.addWidget(QLabel("المسار الجذر الحالي لجميع الملفات المُصدَّرة والنسخ الاحتياطية وملفات PDF:"))
 
         self.storage_root_label = QLabel(get_storage_root())
         self.storage_root_label.setStyleSheet(
-            "background:#F1F5F9; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; color:#1E3A5F;"
+            f"background:{get_color('bg_subtle')}; border:1px solid {get_color('border')}; border-radius:6px; padding:6px 10px; color:{get_color('text_emphasis')};"
         )
         self.storage_root_label.setWordWrap(True)
         cl.addWidget(self.storage_root_label)
 
-        btn_change = QPushButton("تغيير مسار التخزين 📁")
-        btn_change.setStyleSheet(
-            "QPushButton{background:#1E40AF;color:white;font-weight:bold;border-radius:6px;padding:6px 14px;}"
-            "QPushButton:hover{background:#1D4ED8;}"
-        )
+        btn_change = AnimatedButton("تغيير مسار التخزين 📁")
+        btn_change.setObjectName("Primary")
         btn_change.clicked.connect(self.on_change_storage_root)
         cl.addWidget(btn_change)
 
@@ -176,7 +234,7 @@ class SettingsView(QWidget):
         self.lbl_backups = QLabel()
         for lbl in [self.lbl_pdf_reports, self.lbl_pdf_invoices,
                     self.lbl_exports_patients, self.lbl_exports_catalog, self.lbl_backups]:
-            lbl.setStyleSheet("color:#374151; padding: 2px 0;")
+            lbl.setStyleSheet(f"color:{get_color('text_main')}; padding: 2px 0;")
             cl.addWidget(lbl)
 
         self._refresh_storage_labels()
@@ -207,7 +265,7 @@ class SettingsView(QWidget):
         card.setObjectName("Card")
         cl = QVBoxLayout(card)
         header = QLabel("🧪 تصدير واستيراد كتالوج التحاليل")
-        header.setStyleSheet("font-weight: bold; font-size: 14px; color: #0F172A;")
+        header.setStyleSheet(f"font-weight: bold; font-size: 14px; color: {get_color('primary_text')};")
         cl.addWidget(header)
         cl.addWidget(QLabel(
             "تصدير كامل كتالوج التحاليل (الأقسام، التحاليل، المعلمات، المدى الطبيعي، الأسعار) إلى ملف JSON،"
@@ -291,8 +349,8 @@ class SettingsView(QWidget):
         self.app_title_edit.setText(
             settings.get("app_title") or "LapLIS - نظام إدارة معمل التحاليل الطبية"
         )
-
-
+        self.brand_primary_edit.setText(settings.get("brand_primary_color") or "#0B4F6C")
+        self.brand_secondary_edit.setText(settings.get("brand_secondary_color") or "#146C8E")
 
         self.department_combo.clear()
         self.department_combo.addItem("- اختر قسم -", None)
@@ -409,6 +467,8 @@ class SettingsView(QWidget):
             "footer_signature2": self.signature2_edit.text().strip(),
             "digital_seal_text": self.seal_text_edit.text().strip(),
             "app_title": new_title,
+            "brand_primary_color": self.brand_primary_edit.text().strip() or "#0B4F6C",
+            "brand_secondary_color": self.brand_secondary_edit.text().strip() or "#146C8E",
         }
         catalog_service.save_lab_settings(settings)
         if self.window():

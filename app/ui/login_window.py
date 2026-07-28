@@ -37,15 +37,16 @@ class LoginWindow(QWidget):
             logo_label.setAlignment(Qt.AlignCenter)
             card_layout.addWidget(logo_label)
 
+        from app.ui.styles import get_color
         title = QLabel(settings.get("lab_name") or "المعمل")
-        title.setStyleSheet("font-size: 18px; font-weight: bold; color: #0B4F6C;")
+        title.setStyleSheet(f"font-size: 18px; font-weight: bold; color: {get_color('primary_text')};")
         title.setWordWrap(True)
         title.setAlignment(Qt.AlignCenter)
         card_layout.addWidget(title)
 
         if settings.get("tagline"):
             tagline = QLabel(settings["tagline"])
-            tagline.setStyleSheet("color: #6B7280; font-size: 11px;")
+            tagline.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 11px;")
             tagline.setAlignment(Qt.AlignCenter)
             card_layout.addWidget(tagline)
 
@@ -70,12 +71,12 @@ class LoginWindow(QWidget):
         card_layout.addWidget(login_button)
 
         self.error_label = QLabel("")
-        self.error_label.setStyleSheet("color: #C62828;")
+        self.error_label.setStyleSheet(f"color: {get_color('danger')};")
         self.error_label.setAlignment(Qt.AlignCenter)
         card_layout.addWidget(self.error_label)
 
         hint = QLabel("بيانات الدخول الافتراضية: admin / Admin@123")
-        hint.setStyleSheet("color: #9CA3AF; font-size: 10px;")
+        hint.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 10px;")
         hint.setAlignment(Qt.AlignCenter)
         card_layout.addWidget(hint)
 

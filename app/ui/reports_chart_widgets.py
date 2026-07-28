@@ -47,18 +47,19 @@ class VisualProgressBar(QProgressBar):
     """Styled progress bar for displaying percentages with color coding."""
     def __init__(self, color_hex: str = "#0D9488"):
         super().__init__()
+        from app.ui.styles import get_color
         self.setTextVisible(True)
         self.setRange(0, 100)
         self.setFixedHeight(18)
         self.setStyleSheet(f"""
             QProgressBar {{
-                border: 1px solid #CBD5E1;
+                border: 1px solid {get_color('border')};
                 border-radius: 9px;
                 text-align: center;
-                color: #0F172A;
+                color: {get_color('text_main')};
                 font-weight: bold;
                 font-size: 10px;
-                background-color: #F1F5F9;
+                background-color: {get_color('bg_subtle')};
             }}
             QProgressBar::chunk {{
                 background-color: {color_hex};
@@ -139,6 +140,7 @@ class BarChartWidget(QWidget):
         self.update()
 
     def paintEvent(self, event):
+        from app.ui.styles import get_color
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
 
@@ -146,13 +148,13 @@ class BarChartWidget(QWidget):
         w = rect.width()
 
         # Title
-        painter.setPen(QColor("#0F172A"))
+        painter.setPen(QColor(get_color("primary_text")))
         painter.setFont(QFont("Segoe UI", 11, QFont.Bold))
         painter.drawText(10, 20, self.title)
 
         if not self.items:
             painter.setFont(QFont("Segoe UI", 10))
-            painter.setPen(QColor("#94A3B8"))
+            painter.setPen(QColor(get_color("text_muted")))
             painter.drawText(10, 60, "لا تتوفر بيانات للعرض خلال الفترة المحددة.")
             return
 
@@ -166,17 +168,17 @@ class BarChartWidget(QWidget):
             lbl = item.get("label", "")
             val = item.get("value", 0)
             disp = item.get("display_val", str(val))
-            color = QColor(item.get("color", "#0F766E"))
+            color = QColor(item.get("color", get_color("primary")))
 
             # Draw Label (RTL friendly)
-            painter.setPen(QColor("#1E293B"))
+            painter.setPen(QColor(get_color("text_main")))
             painter.setFont(QFont("Segoe UI", 9, QFont.Bold))
             painter.drawText(10, y + 15, lbl[:20])
 
             # Draw Bar Background
             bar_x = max_label_w
             painter.setPen(Qt.NoPen)
-            painter.setBrush(QBrush(QColor("#F1F5F9")))
+            painter.setBrush(QBrush(QColor(get_color("bg_subtle"))))
             painter.drawRoundedRect(bar_x, y, chart_w, bar_height, 5, 5)
 
             # Draw Bar Fill
@@ -186,7 +188,7 @@ class BarChartWidget(QWidget):
                 painter.drawRoundedRect(bar_x, y, max(fill_w, 8), bar_height, 5, 5)
 
             # Draw Value Label
-            painter.setPen(QColor("#0F172A"))
+            painter.setPen(QColor(get_color("text_emphasis")))
             painter.setFont(QFont("Segoe UI", 9, QFont.Bold))
             painter.drawText(bar_x + chart_w + 10, y + 15, disp)
 

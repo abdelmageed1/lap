@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 from PySide2.QtCore import QDate, Qt
+from PySide2.QtGui import QColor, QFont
 from PySide2.QtWidgets import (QCheckBox, QDateEdit, QDialog, QFileDialog, QFrame, QGridLayout, QHBoxLayout, QHeaderView, QLabel, QLineEdit, QListWidget,
                                 QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
@@ -10,17 +11,48 @@ from app.services import auth_service, catalog_service, result_service, visit_se
 from app.services.result_service import FLAG_LABELS
 from app.ui.animated_button import AnimatedButton
 from app.ui.widgets import HintBanner
-
+from app.ui.styles import get_color, get_saved_theme
 
 
 def _build_history_tree(patient_id: int, start_date: str = None, end_date: str = None) -> QTreeWidget:
     tree = QTreeWidget()
     tree.setHeaderLabels(["البيان", "القيمة", "الوحدة", "المدى الطبيعي", "الحالة"])
-    tree.setColumnWidth(0, 180)
-    tree.setColumnWidth(1, 90)
-    tree.setColumnWidth(2, 90)
-    tree.setColumnWidth(3, 140)
-    tree.setColumnWidth(4, 110)
+    
+    tree.setTextElideMode(Qt.ElideNone)
+    tree.setIndentation(14)
+    
+    header = tree.header()
+    header.setSectionResizeMode(0, QHeaderView.Stretch)
+    header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
+    header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
+    
+    tree.setStyleSheet(f"""
+        QTreeWidget {{
+            background-color: {get_color('bg_card')};
+            border: 1px solid {get_color('border')};
+            border-radius: 8px;
+            color: {get_color('text_main')};
+            font-size: 13px;
+        }}
+        QTreeWidget::item {{
+            padding: 6px 8px;
+        }}
+        QTreeWidget::item:selected {{
+            background-color: {get_color('accent_bg')};
+            color: {get_color('accent')};
+            font-weight: bold;
+        }}
+        QHeaderView::section {{
+            background-color: {get_color('primary')};
+            color: #FFFFFF;
+            font-weight: bold;
+            padding: 8px 10px;
+            border: none;
+            font-size: 13px;
+        }}
+    """)
 
     history = result_service.get_patient_history(patient_id, start_date=start_date, end_date=end_date)
     if not history:
@@ -29,18 +61,53 @@ def _build_history_tree(patient_id: int, start_date: str = None, end_date: str =
         tree.addTopLevelItem(placeholder)
         return tree
 
+    FLAG_BADGES = {
+        "High": "🔴 مرتفع ⬆️",
+        "H": "🔴 مرتفع ⬆️",
+        "Low": "🟡 منخفض ⬇️",
+        "L": "🟡 منخفض ⬇️",
+        "Normal": "🟢 طبيعي",
+        "N": "🟢 طبيعي",
+        "Panic": "⚡ حرج 🚨",
+        "Critical": "⚡ حرج 🚨",
+    }
+
+    theme = get_saved_theme()
+    is_dark = theme == "dark"
+
+    visit_bg = QColor("#1E293B") if is_dark else QColor("#F1F5F9")
+    visit_fg = QColor("#38BDF8") if is_dark else QColor("#0369A1")
+
+    test_bg = QColor("#0F172A") if is_dark else QColor("#F8FAFC")
+    test_fg = QColor("#F8FAFC") if is_dark else QColor("#0F172A")
+
     for visit in history:
         date_display = (visit.get("visit_date") or "")[:16].replace("T", " ")
-        visit_item = QTreeWidgetItem([f"زيارة رقم {visit['invoice_number']} - {date_display}"])
+        visit_text = f"📅 زيارة رقم #{visit['invoice_number']}  │  🕒 التاريخ: {date_display}"
+        visit_item = QTreeWidgetItem([visit_text])
         visit_item.setFirstColumnSpanned(True)
+
+        visit_font = QFont()
+        visit_font.setBold(True)
+        visit_font.setPointSize(10)
+        visit_item.setFont(0, visit_font)
+        visit_item.setBackground(0, visit_bg)
+        visit_item.setForeground(0, visit_fg)
 
         tests = {}
         for r in visit.get("results", []):
             tests.setdefault(r["test_name"], []).append(r)
 
         for test_name, rows in tests.items():
-            test_item = QTreeWidgetItem(visit_item, [test_name])
+            test_item = QTreeWidgetItem(visit_item, [f"🧪 {test_name}"])
             test_item.setFirstColumnSpanned(True)
+
+            test_font = QFont()
+            test_font.setBold(True)
+            test_item.setFont(0, test_font)
+            test_item.setBackground(0, test_bg)
+            test_item.setForeground(0, test_fg)
+
             for r in rows:
                 if r.get("numeric_value") is not None:
                     value_display = str(r["numeric_value"])
@@ -56,14 +123,31 @@ def _build_history_tree(patient_id: int, start_date: str = None, end_date: str =
                 else:
                     range_display = "-"
 
-                flag_display = FLAG_LABELS.get(r.get("flag"), r.get("flag") or "")
-                QTreeWidgetItem(test_item, [
+                raw_flag = r.get("flag") or ""
+                flag_display = FLAG_BADGES.get(raw_flag, FLAG_LABELS.get(raw_flag, raw_flag or "🟢 طبيعي"))
+
+                param_item = QTreeWidgetItem(test_item, [
                     r["parameter_name"],
                     value_display,
-                    r.get("unit") or "",
+                    r.get("unit") or "-",
                     range_display,
                     flag_display
                 ])
+
+                # Color code flag column
+                if "مرتفع" in flag_display or "High" in raw_flag or raw_flag == "H":
+                    param_item.setForeground(4, QColor("#EF4444") if is_dark else QColor("#DC2626"))
+                    param_item.setForeground(1, QColor("#EF4444") if is_dark else QColor("#DC2626"))
+                elif "منخفض" in flag_display or "Low" in raw_flag or raw_flag == "L":
+                    param_item.setForeground(4, QColor("#F59E0B") if is_dark else QColor("#D97706"))
+                    param_item.setForeground(1, QColor("#F59E0B") if is_dark else QColor("#D97706"))
+                elif "حرج" in flag_display or "Panic" in raw_flag:
+                    param_item.setForeground(4, QColor("#F87171") if is_dark else QColor("#991B1B"))
+                    param_item.setForeground(1, QColor("#F87171") if is_dark else QColor("#991B1B"))
+                else:
+                    param_item.setForeground(4, QColor("#4ADE80") if is_dark else QColor("#166534"))
+
+            test_item.setExpanded(True)
 
         if not tests:
             QTreeWidgetItem(visit_item, ["(لا توجد نتائج مُدخلة بعد لهذه الزيارة)"])
@@ -71,6 +155,7 @@ def _build_history_tree(patient_id: int, start_date: str = None, end_date: str =
         tree.addTopLevelItem(visit_item)
         visit_item.setExpanded(True)
 
+    tree.expandAll()
     return tree
 
 
@@ -90,7 +175,7 @@ class AdminPasswordConfirmDialog(QDialog):
             "أدخل كلمة سر الأدمن لتأكيد العملية:"
         )
         msg_label.setWordWrap(True)
-        msg_label.setStyleSheet("color: #1E293B; font-size: 13px;")
+        msg_label.setStyleSheet(f"color: {get_color('text_main')}; font-size: 13px;")
         layout.addWidget(msg_label)
 
         self.password_edit = QLineEdit()
@@ -104,18 +189,7 @@ class AdminPasswordConfirmDialog(QDialog):
         cancel_btn.clicked.connect(self.reject)
 
         confirm_btn = AnimatedButton("تأكيد الحذف")
-        confirm_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #DC2626;
-                color: white;
-                font-weight: bold;
-                border-radius: 6px;
-                padding: 6px 16px;
-            }
-            QPushButton:hover {
-                background-color: #B91C1C;
-            }
-        """)
+        confirm_btn.setObjectName("Danger")
         confirm_btn.clicked.connect(self.accept)
 
         btn_layout.addStretch()
@@ -147,12 +221,12 @@ class PatientHistoryDialog(QDialog):
             created_by_str = patient.get("created_by_name") or "غير محدد"
 
             card = QFrame()
-            card.setStyleSheet("""
-                QFrame {
-                    background-color: #F8FAFC;
-                    border: 1px solid #CBD5E1;
+            card.setStyleSheet(f"""
+                QFrame {{
+                    background-color: {get_color('bg_subtle')};
+                    border: 1px solid {get_color('border_light')};
                     border-radius: 8px;
-                }
+                }}
             """)
             p_layout = QGridLayout(card)
             p_layout.setContentsMargins(12, 10, 12, 10)
@@ -175,7 +249,7 @@ class PatientHistoryDialog(QDialog):
 class PatientHistoryView(QWidget):
     def _label_bold(self, text):
         label = QLabel(text)
-        label.setStyleSheet("font-weight: bold; color: #0B4F6C;")
+        label.setStyleSheet(f"font-weight: bold; color: {get_color('primary_text')};")
         return label
 
     def __init__(self, current_user=None):
@@ -269,8 +343,8 @@ class PatientHistoryView(QWidget):
         self.date_to.setEnabled(False)
 
         self.use_date_filter.toggled.connect(self.on_toggle_date_filter)
-        self.date_from.dateChanged.connect(lambda _: self.search())
-        self.date_to.dateChanged.connect(lambda _: self.search())
+        self.date_from.dateChanged.connect(lambda *args: self.search())
+        self.date_to.dateChanged.connect(lambda *args: self.search())
 
         date_filter_row.addWidget(self.use_date_filter)
         date_filter_row.addWidget(QLabel("من:"))
@@ -287,83 +361,86 @@ class PatientHistoryView(QWidget):
         self.patients_table.setSelectionMode(QTableWidget.SingleSelection)
         self.patients_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.patients_table.setAlternatingRowColors(True)
-        self.patients_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.patients_table.setStyleSheet("""
-            QTableWidget {
-                border: 1px solid #CBD5E1;
-                border-radius: 6px;
-                gridline-color: #E2E8F0;
+        self.patients_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.patients_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.patients_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.patients_table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        self.patients_table.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
+        self.patients_table.setStyleSheet(f"""
+            QTableWidget {{
+                border: 1px solid {get_color('border')};
+                border-radius: 8px;
+                gridline-color: {get_color('border')};
                 font-size: 12px;
-            }
-            QHeaderView::section {
-                background-color: #1E3A5F;
-                color: white;
+                background-color: {get_color('bg_card')};
+                color: {get_color('text_main')};
+            }}
+            QHeaderView::section {{
+                background-color: {get_color('primary')};
+                color: #FFFFFF;
                 font-weight: bold;
-                padding: 5px;
-            }
+                padding: 6px;
+                border: none;
+            }}
+            QTableWidget::item:selected {{
+                background-color: {get_color('accent_bg')};
+                color: {get_color('accent')};
+                font-weight: bold;
+            }}
         """)
         self.patients_table.itemSelectionChanged.connect(self.on_select_patient)
         left_layout.addWidget(self.patients_table)
-        columns.addWidget(left, 1)
+        columns.addWidget(left, 40)
 
         right = QFrame()
         right.setObjectName("Card")
         right_layout = QVBoxLayout(right)
+        right_layout.setSpacing(10)
 
         header_row = QHBoxLayout()
-        self.history_title = self._label_bold("اختر مريضًا من نتائج البحث لعرض سجله")
+        self.history_title = self._label_bold("👈 اختر مريضًا من نتائج البحث لعرض سجله")
         header_row.addWidget(self.history_title)
         header_row.addStretch()
+
+        # Quick Expand/Collapse Buttons
+        self.btn_expand_all = AnimatedButton("توسيع الكل 📂")
+        self.btn_expand_all.setToolTip("فتح وتوسيع كافة الزيارات والتحاليل في القائمة دون الحاجة للضغط")
+        self.btn_expand_all.clicked.connect(lambda: self.tree_placeholder.expandAll() if self.tree_placeholder else None)
+
+        self.btn_collapse_all = AnimatedButton("طي الكل 📁")
+        self.btn_collapse_all.setToolTip("طي كافة الزيارات والتحاليل")
+        self.btn_collapse_all.clicked.connect(lambda: self.tree_placeholder.collapseAll() if self.tree_placeholder else None)
+
+        header_row.addWidget(self.btn_expand_all)
+        header_row.addWidget(self.btn_collapse_all)
 
         # Print Lab Report Button
         self.btn_print_report = AnimatedButton("🖨️ طباعة تقرير النتيجة PDF")
         self.btn_print_report.setToolTip("توليد وطباعة تقرير نتائج التحاليل لهذا المريض بصيغة PDF")
-        self.btn_print_report.setStyleSheet("""
-            QPushButton {
-                background-color: #0D9488;
-                color: white;
-                font-weight: bold;
-                border-radius: 6px;
-                padding: 6px 14px;
-            }
-            QPushButton:hover {
-                background-color: #0F766E;
-            }
-        """)
+        self.btn_print_report.setObjectName("Primary")
         self.btn_print_report.setVisible(False)
         self.btn_print_report.clicked.connect(self.on_print_lab_report)
         header_row.addWidget(self.btn_print_report)
 
-        # Delete patient button (Only visible to Admin when a patient is selected)
+        # Delete patient button
         self.delete_patient_btn = AnimatedButton("حذف المريض 🗑️")
         self.delete_patient_btn.setToolTip("حذف هذا المريض وجميع زياراته ونتائجه بالكامل (يتطلب كلمة سر الأدمن)")
-        self.delete_patient_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #EF4444;
-                color: white;
-                font-weight: bold;
-                border-radius: 6px;
-                padding: 6px 14px;
-            }
-            QPushButton:hover {
-                background-color: #DC2626;
-            }
-        """)
+        self.delete_patient_btn.setObjectName("Danger")
         self.delete_patient_btn.setVisible(False)
         self.delete_patient_btn.clicked.connect(self.on_delete_patient)
         header_row.addWidget(self.delete_patient_btn)
 
         right_layout.addLayout(header_row)
 
-
         # Patient Info Profile Card
         self.patient_card = QFrame()
-        self.patient_card.setStyleSheet("""
-            QFrame {
-                background-color: #F8FAFC;
-                border: 1px solid #E2E8F0;
+        self.patient_card.setStyleSheet(f"""
+            QFrame {{
+                background-color: {get_color('bg_subtle')};
+                border: 1px solid {get_color('border')};
                 border-radius: 8px;
-            }
+                padding: 4px;
+            }}
         """)
         p_layout = QGridLayout(self.patient_card)
         p_layout.setContentsMargins(12, 10, 12, 10)
@@ -374,6 +451,9 @@ class PatientHistoryView(QWidget):
         self.lbl_gender_age = QLabel("<b>⚧ الجنس والسن:</b> -")
         self.lbl_visits = QLabel("<b>📊 الزيارات:</b> -")
         self.lbl_created_by = QLabel("<b>✍️ سجل بواسطة:</b> -")
+
+        for lbl in (self.lbl_name, self.lbl_phone, self.lbl_gender_age, self.lbl_visits, self.lbl_created_by):
+            lbl.setStyleSheet(f"color: {get_color('text_main')}; font-size: 13px; border: none; background: transparent;")
 
         p_layout.addWidget(self.lbl_name, 0, 0)
         p_layout.addWidget(self.lbl_phone, 0, 1)

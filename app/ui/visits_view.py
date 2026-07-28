@@ -12,10 +12,12 @@ from app.services import catalog_service, visit_service
 from app.services.result_service import STATUS_LABELS
 from app.ui.animated_button import AnimatedButton
 from app.ui.widgets import HintBanner
+from app.ui.styles import get_color
 
 
 class VisitsView(QWidget):
-    def __init__(self):
+    def __init__(self, current_user=None):
+        self.current_user = current_user
         super().__init__()
         self.visits = []
         self.selected_visit_id = None
@@ -45,7 +47,7 @@ class VisitsView(QWidget):
         self.search_edit.returnPressed.connect(self.search)
 
         self.unpaid_check = QCheckBox("مبالغ متبقية فقط")
-        self.unpaid_check.setStyleSheet("font-weight: bold; color: #0F172A;")
+        self.unpaid_check.setStyleSheet(f"font-weight: bold; color: {get_color('text_emphasis')};")
         self.unpaid_check.setToolTip("إظهار الزيارات التي لم تُسدَّد بالكامل فقط")
         self.unpaid_check.stateChanged.connect(self.search)
 
@@ -68,19 +70,19 @@ class VisitsView(QWidget):
         self.visits_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.visits_table.setAlternatingRowColors(True)
         self.visits_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.visits_table.setStyleSheet("""
-            QTableWidget {
-                border: 1px solid #CBD5E1;
+        self.visits_table.setStyleSheet(f"""
+            QTableWidget {{
+                border: 1px solid {get_color('border_light')};
                 border-radius: 6px;
-                gridline-color: #E2E8F0;
+                gridline-color: {get_color('border')};
                 font-size: 12px;
-            }
-            QHeaderView::section {
-                background-color: #1E3A5F;
+            }}
+            QHeaderView::section {{
+                background-color: {get_color('primary')};
                 color: white;
                 font-weight: bold;
                 padding: 5px;
-            }
+            }}
         """)
         self.visits_table.itemSelectionChanged.connect(self.on_select_visit_row)
         left_layout.addWidget(self.visits_table)
@@ -97,17 +99,17 @@ class VisitsView(QWidget):
         self.details_layout = QVBoxLayout(right)
 
         self.details_title = QLabel("اختر فاتورة من الجدول لعرض تفاصيلها")
-        self.details_title.setStyleSheet("font-weight: bold; font-size: 14px; color: #0B4F6C;")
+        self.details_title.setStyleSheet(f"font-weight: bold; font-size: 14px; color: {get_color('primary_text')};")
         self.details_layout.addWidget(self.details_title)
 
         # Financial Summary Profile Grid
         self.summary_card = QFrame()
-        self.summary_card.setStyleSheet("""
-            QFrame {
-                background-color: #F8FAFC;
-                border: 1px solid #E2E8F0;
+        self.summary_card.setStyleSheet(f"""
+            QFrame {{
+                background-color: {get_color('bg_subtle')};
+                border: 1px solid {get_color('border')};
                 border-radius: 8px;
-            }
+            }}
         """)
         s_layout = QGridLayout(self.summary_card)
         s_layout.setContentsMargins(10, 8, 10, 8)
@@ -138,24 +140,24 @@ class VisitsView(QWidget):
         self.tests_table.setHorizontalHeaderLabels(["التحليل", "السعر", "الحالة"])
         self.tests_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.tests_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tests_table.setStyleSheet("""
-            QTableWidget {
-                border: 1px solid #CBD5E1;
+        self.tests_table.setStyleSheet(f"""
+            QTableWidget {{
+                border: 1px solid {get_color('border_light')};
                 border-radius: 6px;
                 font-size: 12px;
-            }
-            QHeaderView::section {
-                background-color: #334155;
+            }}
+            QHeaderView::section {{
+                background-color: {get_color('primary')};
                 color: white;
                 font-weight: bold;
                 padding: 4px;
-            }
+            }}
         """)
         self.details_layout.addWidget(self.tests_table)
 
         # Payment Registration Card
         payment_box = QFrame()
-        payment_box.setStyleSheet("background-color: #F1F5F9; border-radius: 6px; padding: 6px;")
+        payment_box.setStyleSheet(f"background-color: {get_color('bg_subtle')}; border-radius: 6px; padding: 6px;")
         payment_layout = QHBoxLayout(payment_box)
         payment_layout.setContentsMargins(4, 4, 4, 4)
 
@@ -175,18 +177,7 @@ class VisitsView(QWidget):
 
         # Reprint Invoice PDF Button
         self.reprint_button = AnimatedButton("إعادة طباعة الفاتورة 🧾")
-        self.reprint_button.setStyleSheet("""
-            QPushButton {
-                background-color: #0D9488;
-                color: white;
-                font-weight: bold;
-                border-radius: 6px;
-                padding: 8px 16px;
-            }
-            QPushButton:hover {
-                background-color: #0F766E;
-            }
-        """)
+        self.reprint_button.setObjectName("Primary")
         self.reprint_button.clicked.connect(self.reprint_invoice)
         self.details_layout.addWidget(self.reprint_button)
 
@@ -223,9 +214,9 @@ class VisitsView(QWidget):
             bal = v["balance"]
             item_bal = QTableWidgetItem(f"{bal:.2f}")
             if bal > 0.01:
-                item_bal.setForeground(QColor("#EF4444"))
+                item_bal.setForeground(QColor(get_color("danger")))
             else:
-                item_bal.setForeground(QColor("#10B981"))
+                item_bal.setForeground(QColor(get_color("success")))
 
             for item in (item_inv, item_pat, item_date, item_tot, item_paid, item_bal):
                 item.setTextAlignment(Qt.AlignCenter)
@@ -259,7 +250,7 @@ class VisitsView(QWidget):
         self.lbl_paid.setText(f"<b>💵 المدفوع:</b> {details['paid_amount']:.2f} ج.م")
 
         bal = details['balance']
-        bal_color = "#EF4444" if bal > 0.01 else "#10B981"
+        bal_color = get_color("danger") if bal > 0.01 else get_color("success")
         self.lbl_balance.setText(f"<b>⚠️ المتبقي:</b> <font color='{bal_color}'>{bal:.2f} ج.م</font>")
 
         orders = details.get("orders", [])

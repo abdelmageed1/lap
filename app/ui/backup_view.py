@@ -6,6 +6,8 @@ from PySide2.QtWidgets import (QFrame, QHBoxLayout, QLabel, QListWidget, QMessag
 
 from app.config import BACKUPS_DIR
 from app.services import backup_service
+from app.ui.animated_button import AnimatedButton
+from app.ui.styles import get_color
 from app.ui.widgets import HintBanner, wrappable_path
 from app.utils.audit import log_action
 
@@ -57,7 +59,7 @@ class BackupView(QWidget):
 
     def _label_bold(self, text):
         label = QLabel(text)
-        label.setStyleSheet("font-weight: bold; color: #0B4F6C;")
+        label.setStyleSheet(f"font-weight: bold; color: {get_color('primary_text')};")
         return label
 
     def _open_path(self, path):
@@ -81,7 +83,7 @@ class BackupView(QWidget):
     def create_backup_now(self):
         path = backup_service.create_backup()
         self.message_label.setText(f"تم إنشاء نسخة احتياطية بنجاح في:\n{wrappable_path(path)}")
-        self.message_label.setStyleSheet("color: #146C8E;")
+        self.message_label.setStyleSheet(f"color: {get_color('primary')};")
         try:
             if self.current_user:
                 log_action('database', None, 'backup_create', user_id=self.current_user.user_id, details=path)
@@ -96,7 +98,7 @@ class BackupView(QWidget):
         row = self.backups_list.currentRow()
         if row < 0:
             self.message_label.setText("اختر نسخة احتياطية من القائمة أولًا")
-            self.message_label.setStyleSheet("color: #C62828;")
+            self.message_label.setStyleSheet(f"color: {get_color('danger')};")
             return
         backup = self.backups[row]
         # Built manually with addButton()/YesRole rather than QMessageBox.warning(..., Yes|No, No):
@@ -130,5 +132,5 @@ class BackupView(QWidget):
             f"تمت الاستعادة بنجاح. تم حفظ نسخة أمان من البيانات السابقة في:\n{wrappable_path(pre_restore_path)}\n\n"
             "أغلق التطبيق الآن وأعد تشغيله."
         )
-        self.message_label.setStyleSheet("color: #146C8E;")
+        self.message_label.setStyleSheet(f"color: {get_color('primary')};")
         self.refresh()

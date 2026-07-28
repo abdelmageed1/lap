@@ -3,13 +3,13 @@ import sys
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import (QComboBox, QDoubleSpinBox, QFrame, QHBoxLayout, QLabel, QLineEdit,
-                                QListWidget, QMessageBox, QPushButton, QVBoxLayout, QWidget)
+                                QListWidget, QMessageBox, QPushButton, QVBoxLayout, QWidget, QSpinBox)
 
 from app.reports.barcode_report import generate_sample_labels_pdf
 from app.reports.invoice_report import generate_invoice_pdf
 from app.services import catalog_service, visit_service
 from app.ui.animated_button import AnimatedButton
-from app.ui.patient_history_view import PatientHistoryDialog
+from app.ui.styles import get_color
 from app.ui.widgets import HintBanner, StepLabel
 
 
@@ -173,7 +173,7 @@ class ReceptionView(QWidget):
 
         self.total_label = QLabel("الإجمالي: 0.00")
         self.balance_label = QLabel("المتبقي: 0.00")
-        self.balance_label.setStyleSheet("color: #C62828; font-weight: bold;")
+        self.balance_label.setStyleSheet(f"color: {get_color('danger')}; font-weight: bold;")
         tests_layout.addWidget(self.total_label)
         tests_layout.addWidget(self.balance_label)
 
@@ -183,7 +183,7 @@ class ReceptionView(QWidget):
 
         self.status_banner = QLabel("")
         self.status_banner.setWordWrap(True)
-        self.status_banner.setStyleSheet("color: #0B4F6C; font-size: 11px;")
+        self.status_banner.setStyleSheet(f"color: {get_color('primary_text')}; font-size: 11px;")
         tests_layout.addWidget(self.status_banner)
 
         self.save_button = AnimatedButton("حفظ الزيارة وطباعة الفاتورة")
@@ -194,13 +194,13 @@ class ReceptionView(QWidget):
 
         columns.addWidget(tests_card, 1)
 
-        self.results_list.itemDoubleClicked.connect(lambda _: self.add_selected_test())
+        self.results_list.itemDoubleClicked.connect(lambda *args: self.add_selected_test())
 
         self.refresh_lookups()
 
     def _label_bold(self, text):
         label = QLabel(text)
-        label.setStyleSheet("font-weight: bold; color: #0B4F6C;")
+        label.setStyleSheet(f"font-weight: bold; color: {get_color('primary_text')};")
         return label
 
     def refresh_lookups(self):
@@ -230,6 +230,21 @@ class ReceptionView(QWidget):
         if row < 0 or row >= len(self.search_results):
             return
         test = self.search_results[row]
+
+        # Gender validation check (e.g. BHCG / Pregnancy test for Male patients)
+        gender = self.gender_combo.currentText().strip()
+        tname_upper = (test.get("name") or "").upper()
+        if gender in ("ذكر", "Male", "male") and any(w in tname_upper or w in (test.get("name") or "") for w in ["BHCG", "PREGNANCY", "حمل"]):
+            reply = QMessageBox.warning(
+                self,
+                "تنبيه نوع المريض",
+                f"تنبيه: التحليل «{test['name']}» مخصص للإناث عادةً، بينما نوع المريض المختار هو «ذكر».\nهل ترغب في الاستمرار وإضافة التحليل؟",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No
+            )
+            if reply == QMessageBox.No:
+                return
+
         source_id = self.source_combo.currentData()
         source_name = next((s["name"] for s in self.sources if s["id"] == source_id), "Individual")
         price = catalog_service.get_price(test["id"], source_name)
@@ -301,15 +316,15 @@ class ReceptionView(QWidget):
     def save_visit(self):
         if not self.name_edit.text().strip():
             self.message_label.setText("أدخل اسم المريض")
-            self.message_label.setStyleSheet("color: #C62828;")
+            self.message_label.setStyleSheet(f"color: {get_color('danger')};")
             return
         if not self.selected_tests:
             self.message_label.setText("أضف تحليلًا واحدًا على الأقل")
-            self.message_label.setStyleSheet("color: #C62828;")
+            self.message_label.setStyleSheet(f"color: {get_color('danger')};")
             return
         if self.phone_edit.text().strip() and not self.phone_edit.text().strip().replace("+", "").replace("-", "").replace(" ", "").isdigit():
             self.message_label.setText("رقم التليفون يجب أن يحتوى على أرقام فقط")
-            self.message_label.setStyleSheet("color: #C62828;")
+            self.message_label.setStyleSheet(f"color: {get_color('danger')};")
             return
 
         patient = {
@@ -329,7 +344,7 @@ class ReceptionView(QWidget):
             )
         except ValueError as exc:
             self.message_label.setText(str(exc))
-            self.message_label.setStyleSheet("color: #C62828;")
+            self.message_label.setStyleSheet(f"color: {get_color('danger')};")
             return
 
 
@@ -348,7 +363,7 @@ class ReceptionView(QWidget):
                 f"تم حفظ الزيارة برقم فاتورة {visit['invoice_number']} بنجاح. "
                 "تم فتح الفاتورة تلقائيًا للطباعة."
             )
-            self.message_label.setStyleSheet("color: #146C8E;")
+            self.message_label.setStyleSheet(f"color: {get_color('primary')};")
             self.status_banner.setText(f"تمت إضافة زيارة جديدة للمريض: {patient['full_name']}")
             self._open_file(invoice_path)
             self.reset_form()
@@ -357,7 +372,7 @@ class ReceptionView(QWidget):
         def _on_err(err):
             self.save_button.setEnabled(True)
             self.message_label.setText(f"حدث خطأ أثناء إنشاء التقارير: {err}")
-            self.message_label.setStyleSheet("color: #C62828;")
+            self.message_label.setStyleSheet(f"color: {get_color('danger')};")
 
         from app.utils.worker import run_in_background
         run_in_background(_build_pdfs, on_success=_on_done, on_error=_on_err)

@@ -138,7 +138,9 @@ CREATE TABLE IF NOT EXISTS lab_settings (
     footer_signature1 TEXT,
     footer_signature2 TEXT,
     digital_seal_text TEXT DEFAULT '🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً.',
-    app_title TEXT DEFAULT 'LapLIS - نظام إدارة معمل التحاليل الطبية'
+    app_title TEXT DEFAULT 'LapLIS - نظام إدارة معمل التحاليل الطبية',
+    brand_primary_color TEXT DEFAULT '#0B4F6C',
+    brand_secondary_color TEXT DEFAULT '#146C8E'
 );
 
 
@@ -182,6 +184,10 @@ def init_schema() -> None:
             conn.execute("ALTER TABLE lab_settings ADD COLUMN digital_seal_text TEXT DEFAULT '🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً.'")
         if "app_title" not in lab_cols:
             conn.execute("ALTER TABLE lab_settings ADD COLUMN app_title TEXT DEFAULT 'LapLIS - نظام إدارة معمل التحاليل الطبية'")
+        if "brand_primary_color" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN brand_primary_color TEXT DEFAULT '#0B4F6C'")
+        if "brand_secondary_color" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN brand_secondary_color TEXT DEFAULT '#146C8E'")
             
         conn.commit()
     finally:
