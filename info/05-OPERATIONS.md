@@ -106,6 +106,17 @@ docker run --rm -v "$(pwd)/dist:/output" laplis-win7-builder
 
 الـ Dockerfile يستخدم Wine + مثبِّت Python 3.9 الرسمي لـ Windows داخل Linux لإنتاج ملف exe حقيقي.
 
+### بناء نسخة 32-bit (x86)
+
+للحصول على ملف EXE يدعم Windows 7 32-bit، استخدم سكربت البناء مع المعمارية `x86`:
+
+```powershell
+.
+\scripts\build_exe.ps1 -Arch x86
+```
+
+هذه النسخة ستدعم أيضًا Windows 64-bit عبر WOW64، بينما لا يمكن تشغيل نسخة 64-bit على نظام Windows 32-bit.
+
 > ⚠️ اختبر الملف الناتج على Windows 7 فعلي (أو VM) قبل التوزيع.
 
 ---
