@@ -4,7 +4,7 @@ from app.ui.styles import apply_theme, get_saved_theme
 from PySide2.QtGui import QIcon, QPixmap
 from PySide2.QtWidgets import (QComboBox, QDialog, QFrame, QGridLayout, QHBoxLayout,
                                  QLabel, QListWidget, QMessageBox, QPushButton, QTableWidget,
-                                 QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView, QScrollArea, QStackedWidget)
+                                 QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView, QStackedWidget)
 from app.ui.animated_button import AnimatedButton
 
 from app.config import get_logo_path
@@ -165,10 +165,7 @@ class MainWindow(QWidget):
         # Apply saved theme on startup
         apply_theme(QApplication.instance(), get_saved_theme())
 
-        content_scroll = QScrollArea()
-        content_scroll.setWidgetResizable(True)
-        content_scroll.setWidget(self.stack)
-        root.addWidget(content_scroll, 1)
+        root.addWidget(self.stack, 1)
 
         self._loaded_views = {}
         if self.nav_buttons:

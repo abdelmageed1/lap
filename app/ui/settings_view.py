@@ -18,11 +18,28 @@ class SettingsView(QWidget):
         self.user = user
         self.setObjectName("SettingsView")
 
-        layout = QVBoxLayout(self)
+        # Outer layout: title + hint stay fixed at top, content scrolls below
+        outer_layout = QVBoxLayout(self)
+        outer_layout.setContentsMargins(0, 0, 0, 0)
+        outer_layout.setSpacing(0)
+
         title = QLabel("الإعدادات")
         title.setObjectName("PageTitle")
-        layout.addWidget(title)
-        layout.addWidget(HintBanner("إدارة بيانات المعمل الأساسية مثل الاسم والعنوان والجهات والأطباء."))
+        title.setContentsMargins(16, 12, 16, 4)
+        outer_layout.addWidget(title)
+        hint = HintBanner("إدارة بيانات المعمل الأساسية مثل الاسم والعنوان والجهات والأطباء.")
+        hint.setContentsMargins(16, 0, 16, 8)
+        outer_layout.addWidget(hint)
+
+        # Scrollable content area
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QScrollArea.NoFrame)
+
+        scroll_widget = QWidget()
+        layout = QVBoxLayout(scroll_widget)
+        layout.setContentsMargins(16, 8, 16, 16)
+        layout.setSpacing(12)
 
         self._build_general_section(layout)
         self._build_branding_section(layout)
@@ -30,6 +47,9 @@ class SettingsView(QWidget):
         self._build_storage_section(layout)
         self._build_catalog_io_section(layout)
         self._build_actions(layout)
+
+        scroll.setWidget(scroll_widget)
+        outer_layout.addWidget(scroll, 1)
         self.refresh()
 
     def _build_general_section(self, layout):
