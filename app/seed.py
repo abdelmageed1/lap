@@ -11,8 +11,9 @@ from app.db import get_connection
 
 MODULE_KEYS = [
     "Dashboard", "Reception", "Visits", "Results", "Catalog", "Pricing", "Settings", "Users",
-    "Audit", "PatientHistory", "Backup",
+    "Audit", "PatientHistory", "Backup", "Reports",
 ]
+
 
 
 def _load(name: str):
@@ -67,14 +68,19 @@ def _ensure_reference_defaults(conn) -> None:
     existing_sources = {r["name"] for r in conn.execute("SELECT name FROM referral_sources").fetchall()}
     for name in ["فردي", "تأمين", "جهة خارجية"]:
         if name not in existing_sources:
-            conn.execute("INSERT INTO referral_sources (name) VALUES (?)", (name,))
+            conn.execute("INSERT INTO referral_sources (name, is_active) VALUES (?, 1)", (name,))
+        else:
+            conn.execute("UPDATE referral_sources SET is_active = 1 WHERE name = ?", (name,))
 
     existing_doctors = {r["full_name"] for r in conn.execute("SELECT full_name FROM doctors").fetchall()}
     for name in ["د. مصطفى الزناتي", "د. أحمد محمد", "د. سارة علي"]:
         if name not in existing_doctors:
-            conn.execute("INSERT INTO doctors (full_name) VALUES (?)", (name,))
+            conn.execute("INSERT INTO doctors (full_name, is_active) VALUES (?, 1)", (name,))
+        else:
+            conn.execute("UPDATE doctors SET is_active = 1 WHERE full_name = ?", (name,))
 
     conn.commit()
+
 
 
 def _backfill_missing_module_permissions(conn) -> None:

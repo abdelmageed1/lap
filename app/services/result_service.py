@@ -28,36 +28,75 @@ def _select_range(ranges: list, sex: str, age_years: float):
     return specific[0] if specific else candidates[0]
 
 
-def get_pending_orders(limit: int = 100, offset: int = 0):
+def get_pending_orders(query: str = "", limit: int = 100, offset: int = 0):
     """Orders still being entered (not yet fully entered/sent for review)."""
     conn = get_connection()
     try:
-        rows = conn.execute(
-            "SELECT o.id, t.name test_name, p.full_name patient_name FROM visit_test_orders o "
+        sql = (
+            "SELECT o.id, t.name test_name, p.full_name patient_name, v.invoice_number "
+            "FROM visit_test_orders o "
             "JOIN tests t ON t.id = o.test_id JOIN visits v ON v.id = o.visit_id "
             "JOIN patients p ON p.id = v.patient_id WHERE o.status IN ('Ordered', 'InProgress') "
-            "ORDER BY o.id LIMIT ? OFFSET ?",
-            (limit, offset),
-        ).fetchall()
+        )
+        params = []
+        if query and query.strip():
+            like = f"%{query.strip()}%"
+            sql += " AND (p.full_name LIKE ? OR CAST(v.invoice_number AS TEXT) LIKE ? OR t.name LIKE ?)"
+            params.extend([like, like, like])
+        sql += " ORDER BY o.id DESC LIMIT ? OFFSET ?"
+        params.extend([limit, offset])
+        rows = conn.execute(sql, tuple(params)).fetchall()
         return [dict(r) for r in rows]
     finally:
         conn.close()
 
 
-def get_orders_pending_review(limit: int = 100, offset: int = 0):
+def get_orders_pending_review(query: str = "", limit: int = 100, offset: int = 0):
     """Orders fully entered and awaiting a reviewer's approval before they can be printed."""
     conn = get_connection()
     try:
-        rows = conn.execute(
-            "SELECT o.id, t.name test_name, p.full_name patient_name FROM visit_test_orders o "
+        sql = (
+            "SELECT o.id, t.name test_name, p.full_name patient_name, v.invoice_number "
+            "FROM visit_test_orders o "
             "JOIN tests t ON t.id = o.test_id JOIN visits v ON v.id = o.visit_id "
             "JOIN patients p ON p.id = v.patient_id WHERE o.status = 'Completed' "
-            "ORDER BY o.id LIMIT ? OFFSET ?",
-            (limit, offset),
-        ).fetchall()
+        )
+        params = []
+        if query and query.strip():
+            like = f"%{query.strip()}%"
+            sql += " AND (p.full_name LIKE ? OR CAST(v.invoice_number AS TEXT) LIKE ? OR t.name LIKE ?)"
+            params.extend([like, like, like])
+        sql += " ORDER BY o.id DESC LIMIT ? OFFSET ?"
+        params.extend([limit, offset])
+        rows = conn.execute(sql, tuple(params)).fetchall()
         return [dict(r) for r in rows]
     finally:
         conn.close()
+
+
+def get_reviewed_orders(query: str = "", limit: int = 100, offset: int = 0):
+    """Orders that have already been approved and reviewed."""
+    conn = get_connection()
+    try:
+        sql = (
+            "SELECT o.id, t.name test_name, p.full_name patient_name, v.invoice_number "
+            "FROM visit_test_orders o "
+            "JOIN tests t ON t.id = o.test_id JOIN visits v ON v.id = o.visit_id "
+            "JOIN patients p ON p.id = v.patient_id WHERE o.status = 'Reviewed' "
+        )
+        params = []
+        if query and query.strip():
+            like = f"%{query.strip()}%"
+            sql += " AND (p.full_name LIKE ? OR CAST(v.invoice_number AS TEXT) LIKE ? OR t.name LIKE ?)"
+            params.extend([like, like, like])
+        sql += " ORDER BY o.id DESC LIMIT ? OFFSET ?"
+        params.extend([limit, offset])
+        rows = conn.execute(sql, tuple(params)).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
 
 
 def get_order_entry_view(order_id: int):
@@ -234,6 +273,29 @@ def send_back_for_edit(order_id: int, user_id=None) -> None:
         conn.close()
 
 
+def reopen_reviewed_order(order_id: int, user_id=None, reason: str = "") -> tuple[bool, str]:
+    """Admin function: Re-opens an already approved/reviewed order back to InProgress for editing."""
+    conn = get_connection()
+    try:
+        order = conn.execute("SELECT status FROM visit_test_orders WHERE id = ?", (order_id,)).fetchone()
+        if not order:
+            return False, "طلب التحليل غير موجود"
+        conn.execute("UPDATE visit_test_orders SET status = 'InProgress' WHERE id = ?", (order_id,))
+        try:
+            log_action('visit_test_orders', order_id, 'reopen_approved_result', user_id=user_id,
+                       details=f"سبب إعادة الفتح: {reason or 'بواسطة الأدمن'}", conn=conn)
+        except Exception:
+            pass
+        conn.commit()
+        return True, "تم إعادة فتح النتائج بنجاح ويمكن تعديلها الآن"
+    except Exception as e:
+        conn.rollback()
+        return False, f"حدث خطأ أثناء إعادة الفتح: {str(e)}"
+    finally:
+        conn.close()
+
+
+
 def get_patient_result_summary(patient_id: int):
     """Return a compact summary for a patient: whether any results are available and the latest test name."""
     conn = get_connection()
@@ -313,3 +375,60 @@ def get_patient_history(patient_id: int, start_date: str = None, end_date: str =
         return history
     finally:
         conn.close()
+
+
+def get_order_print_details(order_id: int):
+    """Retrieves full order and parameter details prepared for PDF lab report generation."""
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            "SELECT o.id AS order_id, o.visit_id, t.name AS test_name, v.invoice_number, "
+            "p.full_name AS patient_name, p.gender, p.age_years "
+            "FROM visit_test_orders o "
+            "JOIN tests t ON t.id = o.test_id "
+            "JOIN visits v ON v.id = o.visit_id "
+            "JOIN patients p ON p.id = v.patient_id "
+            "WHERE o.id = ?",
+            (order_id,),
+        ).fetchone()
+
+        if not row:
+            return None
+
+        order_info = dict(row)
+        sex = order_info["gender"]
+        age = order_info["age_years"] or 0
+
+        rows = conn.execute(
+            "SELECT r.*, param.name AS parameter_name, param.unit "
+            "FROM result_values r "
+            "JOIN test_parameters param ON param.id = r.parameter_id "
+            "WHERE r.visit_test_order_id = ? "
+            "ORDER BY param.display_order",
+            (order_id,),
+        ).fetchall()
+
+        params_list = []
+        for r in rows:
+            r = dict(r)
+            ranges = [dict(x) for x in conn.execute(
+                "SELECT * FROM parameter_reference_ranges WHERE parameter_id = ?",
+                (r["parameter_id"],)
+            ).fetchall()]
+            matched = _select_range(ranges, sex, age)
+            params_list.append({
+                "name": r["parameter_name"],
+                "unit": r.get("unit") or "",
+                "numeric_value": r.get("numeric_value"),
+                "text_value": r.get("text_value"),
+                "range_low": matched["low_value"] if matched else None,
+                "range_high": matched["high_value"] if matched else None,
+                "range_text": matched["normal_text"] if matched else None,
+                "flag": r.get("flag", "Normal"),
+            })
+
+        order_info["parameters"] = params_list
+        return order_info
+    finally:
+        conn.close()
+

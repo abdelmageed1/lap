@@ -136,8 +136,11 @@ CREATE TABLE IF NOT EXISTS lab_settings (
     address TEXT,
     phone_numbers TEXT,
     footer_signature1 TEXT,
-    footer_signature2 TEXT
+    footer_signature2 TEXT,
+    digital_seal_text TEXT DEFAULT '🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً.',
+    app_title TEXT DEFAULT 'LapLIS - نظام إدارة معمل التحاليل الطبية'
 );
+
 
 CREATE TABLE IF NOT EXISTS audit_logs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -170,6 +173,17 @@ def init_schema() -> None:
     conn = get_connection()
     try:
         conn.executescript(SCHEMA)
+        columns = [r["name"] for r in conn.execute("PRAGMA table_info(patients)").fetchall()]
+        if "created_by_user_id" not in columns:
+            conn.execute("ALTER TABLE patients ADD COLUMN created_by_user_id INTEGER REFERENCES users(id)")
+        
+        lab_cols = [r["name"] for r in conn.execute("PRAGMA table_info(lab_settings)").fetchall()]
+        if "digital_seal_text" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN digital_seal_text TEXT DEFAULT '🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً.'")
+        if "app_title" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN app_title TEXT DEFAULT 'LapLIS - نظام إدارة معمل التحاليل الطبية'")
+            
         conn.commit()
     finally:
         conn.close()
+

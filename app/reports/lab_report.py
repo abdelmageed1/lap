@@ -17,12 +17,24 @@ RIGHT = PAGE_W - MARGIN
 LEFT = MARGIN
 
 
+def _sanitize_filename(text: str) -> str:
+    if not text:
+        return "file"
+    for ch in ['\\', '/', ':', '*', '?', '"', '<', '>', '|']:
+        text = text.replace(ch, "_")
+    return text.strip().replace(" ", "_")
+
+
 def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name: str,
                              parameters_with_values: list, lab_settings: dict, invoice_number: int) -> str:
     """parameters_with_values: list of dicts with name, unit, numeric_value/text_value, range_low/high/text, flag."""
     ensure_fonts_registered()
-    path = os.path.join(REPORTS_DIR, f"lab-report-{invoice_number}-{test_name}.pdf".replace(" ", "_"))
+    safe_test = _sanitize_filename(test_name)
+    safe_patient = _sanitize_filename(patient_name)
+    filename = f"{safe_test}_{invoice_number}_{safe_patient}.pdf"
+    path = os.path.join(REPORTS_DIR, filename)
     c = canvas.Canvas(path, pagesize=A4)
+
 
     y = PAGE_H - 50
     draw_rtl_text(c, RIGHT, y, lab_settings.get("lab_name") or "المعمل", font=FONT_BOLD, size=18, color=BRAND_DARK)
@@ -84,8 +96,18 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
     c.setStrokeColor(BRAND_GRAY)
     c.line(LEFT, y, RIGHT, y)
     y -= 16
-    draw_rtl_text(c, RIGHT, y, "هذا التقرير مُعتمَد إلكترونيًا ولا يحتاج توقيعًا يدويًا.", size=8, color=BRAND_GRAY)
+    sig1 = lab_settings.get("footer_signature1") or "مدير المعمل / التوقيع الإلكتروني"
+    sig2 = lab_settings.get("footer_signature2") or ""
+    draw_rtl_text(c, RIGHT, y, f"توقيع واعتماد: {sig1}", font=FONT_BOLD, size=9.5, color=BRAND_DARK)
+    if sig2:
+        draw_rtl_text(c, LEFT + 160, y, f"المراجع: {sig2}", font=FONT_BOLD, size=9.5, color=BRAND_DARK)
+    y -= 14
+    seal_text = lab_settings.get("digital_seal_text") or "🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً."
+    draw_rtl_text(c, RIGHT, y, seal_text, size=8, color=BRAND_GRAY)
 
     c.showPage()
+
+
     c.save()
     return path
+

@@ -38,6 +38,10 @@ class CurrentUser:
         p = self._permissions.get(module_key)
         return bool(p and p["can_edit"])
 
+    def can_delete(self, module_key: str) -> bool:
+        p = self._permissions.get(module_key)
+        return bool(p and p["can_delete"])
+
 
 def login(username: str, password: str) -> CurrentUser | None:
     conn = get_connection()
@@ -70,3 +74,33 @@ def change_password(user_id: int, current_password: str, new_password: str) -> t
         return True, "تم تغيير كلمة المرور بنجاح"
     finally:
         conn.close()
+
+
+def verify_admin_password(password: str, user_id: int = None) -> bool:
+    """Verifies if the given password belongs to an active Admin user (or the current user if admin)."""
+    if not password:
+        return False
+    conn = get_connection()
+    try:
+        if user_id:
+            row = conn.execute(
+                "SELECT u.password_hash, u.is_active, r.name role_name "
+                "FROM users u JOIN roles r ON r.id = u.role_id WHERE u.id = ?",
+                (user_id,)
+            ).fetchone()
+            if row and row["is_active"]:
+                if bcrypt.checkpw(password.encode("utf-8"), row["password_hash"].encode("utf-8")):
+                    return True
+
+        admin_rows = conn.execute(
+            "SELECT u.password_hash FROM users u "
+            "JOIN roles r ON r.id = u.role_id "
+            "WHERE u.is_active = 1 AND (r.name IN ('مدير النظام', 'Admin') OR u.username = 'admin')"
+        ).fetchall()
+        for r in admin_rows:
+            if bcrypt.checkpw(password.encode("utf-8"), r["password_hash"].encode("utf-8")):
+                return True
+        return False
+    finally:
+        conn.close()
+

@@ -1,8 +1,11 @@
-from PySide2.QtWidgets import (QComboBox, QFrame, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
-                                QPushButton, QTextEdit, QVBoxLayout, QWidget)
+import os
+from datetime import datetime
 
+from PySide2.QtWidgets import (QComboBox, QFileDialog, QFrame, QHBoxLayout, QLabel, QLineEdit,
+                                QMessageBox, QPushButton, QScrollArea, QTextEdit, QVBoxLayout, QWidget)
 from PySide2.QtCore import Qt
 
+from app.config import get_storage_root, set_storage_root, get_pdf_reports_dir, get_pdf_invoices_dir, get_exports_patients_dir, get_exports_catalog_dir, get_backups_dir
 from app.services import catalog_service
 from app.ui.widgets import HintBanner
 
@@ -21,6 +24,8 @@ class SettingsView(QWidget):
 
         self._build_general_section(layout)
         self._build_catalog_section(layout)
+        self._build_storage_section(layout)
+        self._build_catalog_io_section(layout)
         self._build_actions(layout)
         self.refresh()
 
@@ -52,16 +57,28 @@ class SettingsView(QWidget):
         card_layout.addWidget(self.phone_edit)
 
         self.signature1_edit = QLineEdit()
-        self.signature1_edit.setPlaceholderText("التوقيع 1")
-        card_layout.addWidget(QLabel("توقيع الصفحة الأولى"))
+        self.signature1_edit.setPlaceholderText("مثال: د. أحمد - مدير المعمل")
+        card_layout.addWidget(QLabel("توقيع واسم معتمد التقرير (توقيع 1)"))
         card_layout.addWidget(self.signature1_edit)
 
         self.signature2_edit = QLineEdit()
-        self.signature2_edit.setPlaceholderText("التوقيع 2")
-        card_layout.addWidget(QLabel("توقيع الصفحة الثانية"))
+        self.signature2_edit.setPlaceholderText("مثال: الفني المراجع")
+        card_layout.addWidget(QLabel("توقيع واسم المراجع (توقيع 2)"))
         card_layout.addWidget(self.signature2_edit)
 
+        self.app_title_edit = QLineEdit()
+        self.app_title_edit.setPlaceholderText("مثال: LapLIS - نظام إدارة معمل التحاليل الطبية")
+        card_layout.addWidget(QLabel("عنوان النافذة الرئيسي (شريط العنوان العلوي)"))
+        card_layout.addWidget(self.app_title_edit)
+
+        self.seal_text_edit = QLineEdit()
+        self.seal_text_edit.setPlaceholderText("🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً.")
+        card_layout.addWidget(QLabel("نص الاعتماد والختم الرقمي (أسفل التقرير)"))
+        card_layout.addWidget(self.seal_text_edit)
+
         layout.addWidget(card)
+
+
 
     def _build_catalog_section(self, layout):
         card = QFrame()
@@ -127,6 +144,126 @@ class SettingsView(QWidget):
 
         layout.addWidget(card)
 
+    def _build_storage_section(self, layout):
+        card = QFrame()
+        card.setObjectName("Card")
+        cl = QVBoxLayout(card)
+        header = QLabel("📁 إعدادات مسار التخزين")
+        header.setStyleSheet("font-weight: bold; font-size: 14px; color: #0F172A;")
+        cl.addWidget(header)
+        cl.addWidget(QLabel("المسار الجذر الحالي لجميع الملفات المُصدَّرة والنسخ الاحتياطية وملفات PDF:"))
+
+        self.storage_root_label = QLabel(get_storage_root())
+        self.storage_root_label.setStyleSheet(
+            "background:#F1F5F9; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; color:#1E3A5F;"
+        )
+        self.storage_root_label.setWordWrap(True)
+        cl.addWidget(self.storage_root_label)
+
+        btn_change = QPushButton("تغيير مسار التخزين 📁")
+        btn_change.setStyleSheet(
+            "QPushButton{background:#1E40AF;color:white;font-weight:bold;border-radius:6px;padding:6px 14px;}"
+            "QPushButton:hover{background:#1D4ED8;}"
+        )
+        btn_change.clicked.connect(self.on_change_storage_root)
+        cl.addWidget(btn_change)
+
+        # Sub-folder map labels
+        self.lbl_pdf_reports = QLabel()
+        self.lbl_pdf_invoices = QLabel()
+        self.lbl_exports_patients = QLabel()
+        self.lbl_exports_catalog = QLabel()
+        self.lbl_backups = QLabel()
+        for lbl in [self.lbl_pdf_reports, self.lbl_pdf_invoices,
+                    self.lbl_exports_patients, self.lbl_exports_catalog, self.lbl_backups]:
+            lbl.setStyleSheet("color:#374151; padding: 2px 0;")
+            cl.addWidget(lbl)
+
+        self._refresh_storage_labels()
+        layout.addWidget(card)
+
+    def _refresh_storage_labels(self):
+        self.storage_root_label.setText(get_storage_root())
+        self.lbl_pdf_reports.setText(f"📄 تقارير PDF:       {get_pdf_reports_dir()}")
+        self.lbl_pdf_invoices.setText(f"🧾 فواتير PDF:       {get_pdf_invoices_dir()}")
+        self.lbl_exports_patients.setText(f"👥 بيانات المرضى CSV: {get_exports_patients_dir()}")
+        self.lbl_exports_catalog.setText(f"🧪 كتالوج التحاليل:  {get_exports_catalog_dir()}")
+        self.lbl_backups.setText(f"💾 النسخ الاحتياطية:  {get_backups_dir()}")
+
+    def on_change_storage_root(self):
+        current = get_storage_root()
+        chosen = QFileDialog.getExistingDirectory(self, "اختر مسار التخزين الجذر", current)
+        if not chosen:
+            return
+        set_storage_root(chosen)
+        self._refresh_storage_labels()
+        QMessageBox.information(
+            self, "تم تغيير المسار",
+            f"تم تغيير مسار التخزين بنجاح إلى:\n{chosen}\n\nجميع الملفات الجديدة ستُحفظ في هذا المسار."
+        )
+
+    def _build_catalog_io_section(self, layout):
+        card = QFrame()
+        card.setObjectName("Card")
+        cl = QVBoxLayout(card)
+        header = QLabel("🧪 تصدير واستيراد كتالوج التحاليل")
+        header.setStyleSheet("font-weight: bold; font-size: 14px; color: #0F172A;")
+        cl.addWidget(header)
+        cl.addWidget(QLabel(
+            "تصدير كامل كتالوج التحاليل (الأقسام، التحاليل، المعلمات، المدى الطبيعي، الأسعار) إلى ملف JSON،"
+            " أو استيراده من ملف لنسخه إلى نظام آخر."
+        ))
+
+        row_btns = QHBoxLayout()
+
+        btn_export_cat = QPushButton("تصدير كتالوج التحاليل 📤")
+        btn_export_cat.setStyleSheet(
+            "QPushButton{background:#0D9488;color:white;font-weight:bold;border-radius:6px;padding:6px 14px;}"
+            "QPushButton:hover{background:#0F766E;}"
+        )
+        btn_export_cat.clicked.connect(self.on_export_catalog)
+        row_btns.addWidget(btn_export_cat)
+
+        btn_import_cat = QPushButton("استيراد كتالوج من ملف 📥")
+        btn_import_cat.setStyleSheet(
+            "QPushButton{background:#0284C7;color:white;font-weight:bold;border-radius:6px;padding:6px 14px;}"
+            "QPushButton:hover{background:#0369A1;}"
+        )
+        btn_import_cat.clicked.connect(self.on_import_catalog)
+        row_btns.addWidget(btn_import_cat)
+        row_btns.addStretch()
+        cl.addLayout(row_btns)
+        layout.addWidget(card)
+
+    def on_export_catalog(self):
+        stamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+        default_path = os.path.join(get_exports_catalog_dir(), f"catalog_{stamp}.json")
+        path, _ = QFileDialog.getSaveFileName(
+            self, "تصدير كتالوج التحاليل", default_path, "JSON Files (*.json)"
+        )
+        if not path:
+            return
+        try:
+            count, msg = catalog_service.export_catalog_to_json(path)
+            QMessageBox.information(
+                self, "✅ تم التصدير بنجاح",
+                f"{msg}\n\n📁 مسار الحفظ:\n{path}"
+            )
+        except Exception as exc:
+            QMessageBox.critical(self, "خطأ بالتصدير", f"تعذر تصدير الكتالوج: {exc}")
+
+    def on_import_catalog(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "استيراد كتالوج تحاليل", get_exports_catalog_dir(), "JSON Files (*.json)"
+        )
+        if not path:
+            return
+        added, updated, errors, msg = catalog_service.import_catalog_from_json(path)
+        detail = msg
+        if errors:
+            detail += "\n\nأخطاء:\n" + "\n".join(errors[:10])
+        QMessageBox.information(self, "نتيجة الاستيراد", detail)
+
     def _build_actions(self, layout):
         row = QHBoxLayout()
         save_button = QPushButton("حفظ الإعدادات")
@@ -148,6 +285,14 @@ class SettingsView(QWidget):
         self.phone_edit.setText(settings.get("phone_numbers") or "")
         self.signature1_edit.setText(settings.get("footer_signature1") or "")
         self.signature2_edit.setText(settings.get("footer_signature2") or "")
+        self.seal_text_edit.setText(
+            settings.get("digital_seal_text") or "🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً."
+        )
+        self.app_title_edit.setText(
+            settings.get("app_title") or "LapLIS - نظام إدارة معمل التحاليل الطبية"
+        )
+
+
 
         self.department_combo.clear()
         self.department_combo.addItem("- اختر قسم -", None)
@@ -254,6 +399,7 @@ class SettingsView(QWidget):
         QMessageBox.information(self, "تم الحذف", "تم حذف الطبيب من العرض")
 
     def save_settings(self):
+        new_title = self.app_title_edit.text().strip() or "LapLIS - نظام إدارة معمل التحاليل الطبية"
         settings = {
             "lab_name": self.lab_name_edit.text().strip(),
             "tagline": self.tagline_edit.text().strip(),
@@ -261,7 +407,13 @@ class SettingsView(QWidget):
             "phone_numbers": self.phone_edit.text().strip(),
             "footer_signature1": self.signature1_edit.text().strip(),
             "footer_signature2": self.signature2_edit.text().strip(),
+            "digital_seal_text": self.seal_text_edit.text().strip(),
+            "app_title": new_title,
         }
         catalog_service.save_lab_settings(settings)
+        if self.window():
+            self.window().setWindowTitle(new_title)
         QMessageBox.information(self, "تم الحفظ", "تم حفظ إعدادات المعمل بنجاح")
         self.refresh()
+
+

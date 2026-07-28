@@ -16,7 +16,9 @@ from app.ui.dashboard_view import DashboardView
 from app.ui.patient_history_view import PatientHistoryView
 from app.ui.patient_tracker_widget import PatientTrackerWidget
 from app.ui.reception_view import ReceptionView
+from app.ui.reports_view import ReportsView
 from app.ui.results_view import ResultsView
+
 from app.ui.settings_view import SettingsView
 from app.ui.users_view import UsersView
 from app.ui.visits_view import VisitsView
@@ -27,9 +29,13 @@ class MainWindow(QWidget):
         super().__init__()
         self.user = user
         self.on_logout = on_logout
-        self.setWindowTitle("LapLIS")
+        settings = catalog_service.get_lab_settings()
+        app_title = settings.get("app_title") or settings.get("lab_name") or "LapLIS"
+        self.setWindowTitle(app_title)
+
 
         logo_path = get_logo_path()
+
         if logo_path:
             self.setWindowIcon(QIcon(logo_path))
 
@@ -89,11 +95,13 @@ class MainWindow(QWidget):
             ]),
             ("الإدارة", [
                 ("Catalog", "كتالوج التحاليل", CatalogView),
+                ("Reports", "التقارير والإحصائيات", ReportsView),
                 ("Settings", "الإعدادات", SettingsView),
                 ("Users", "المستخدمون والأدوار", UsersView),
                 ("Audit", "سجل التدقيق", AuditLogView),
                 ("Backup", "النسخ الاحتياطي والاستعادة", BackupView),
             ]),
+
         ]
 
         for section_title, items in nav_groups:

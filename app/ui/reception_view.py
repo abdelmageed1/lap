@@ -14,14 +14,16 @@ from app.ui.widgets import HintBanner, StepLabel
 
 
 class ReceptionView(QWidget):
-    def __init__(self):
+    def __init__(self, current_user=None):
         super().__init__()
+        self.current_user = current_user
         self.selected_tests = []  # list of (test_id, name, price)
         self.search_results = []
         self.doctors = []
         self.sources = []
         self.selected_existing_patient_id = None
         self._phone_matches = []
+
 
         outer = QVBoxLayout(self)
         title = QLabel("استقبال / تسجيل زيارة جديدة")
@@ -216,11 +218,12 @@ class ReceptionView(QWidget):
     def on_search_changed(self, text):
         self.results_list.clear()
         self.search_results = []
-        if len(text.strip()) < 2:
+        if len(text.strip()) < 1:
             return
         self.search_results = catalog_service.search_tests(text.strip())
         for t in self.search_results:
             self.results_list.addItem(f"{t['name']} ({t.get('abbreviation') or ''})")
+
 
     def add_selected_test(self):
         row = self.results_list.currentRow()
@@ -292,6 +295,9 @@ class ReceptionView(QWidget):
         dialog = PatientHistoryDialog(match["id"], match["full_name"], parent=self)
         dialog.exec_()
 
+    def _current_user_id(self):
+        return getattr(self.current_user, "user_id", None) if self.current_user else None
+
     def save_visit(self):
         if not self.name_edit.text().strip():
             self.message_label.setText("أدخل اسم المريض")
@@ -319,34 +325,34 @@ class ReceptionView(QWidget):
                 patient, self.doctor_combo.currentData(), self.source_combo.currentData(),
                 test_ids, self.discount_spin.value(), self.payment_spin.value(),
                 existing_patient_id=self.selected_existing_patient_id,
+                user_id=self._current_user_id(),
             )
         except ValueError as exc:
             self.message_label.setText(str(exc))
             self.message_label.setStyleSheet("color: #C62828;")
             return
 
-        self.message_label.setText("جاري إعداد الفاتورة وملصقات الباركود...")
+
+        self.message_label.setText("جاري إعداد الفاتورة...")
         self.save_button.setEnabled(False)
 
         def _build_pdfs():
             details = visit_service.get_visit_details(visit["id"])
             settings = catalog_service.get_lab_settings()
             inv_p = generate_invoice_pdf(details, details["orders"], settings)
-            lbl_p = generate_sample_labels_pdf(details["patient_name"], visit["invoice_number"], details["orders"])
-            return inv_p, lbl_p
+            return inv_p
 
-        def _on_done(paths):
+        def _on_done(invoice_path):
             self.save_button.setEnabled(True)
-            invoice_path, labels_path = paths
             self.message_label.setText(
                 f"تم حفظ الزيارة برقم فاتورة {visit['invoice_number']} بنجاح. "
-                "تم فتح الفاتورة وملصقات باركود العينات تلقائيًا للطباعة."
+                "تم فتح الفاتورة تلقائيًا للطباعة."
             )
             self.message_label.setStyleSheet("color: #146C8E;")
             self.status_banner.setText(f"تمت إضافة زيارة جديدة للمريض: {patient['full_name']}")
             self._open_file(invoice_path)
-            self._open_file(labels_path)
             self.reset_form()
+
 
         def _on_err(err):
             self.save_button.setEnabled(True)

@@ -18,7 +18,9 @@ MODULE_DISPLAY_NAMES = {
     "Audit": "سجل التدقيق",
     "PatientHistory": "سجل المريض",
     "Backup": "النسخ الاحتياطي والاستعادة",
+    "Reports": "التقارير والإحصائيات",
 }
+
 
 
 def get_roles():
@@ -173,3 +175,63 @@ def reset_password(user_id: int, new_password: str) -> None:
             pass
     finally:
         conn.close()
+
+
+def update_user_full_name(user_id: int, full_name: str) -> tuple[bool, str]:
+    if not full_name.strip():
+        return False, "الاسم بالكامل مطلوب"
+    conn = get_connection()
+    try:
+        conn.execute("UPDATE users SET full_name = ? WHERE id = ?", (full_name.strip(), user_id))
+        conn.commit()
+        try:
+            log_action('users', user_id, 'update', details=f'full_name={full_name}')
+        except Exception:
+            pass
+        return True, "تم تغيير اسم المستخدم بنجاح"
+    finally:
+        conn.close()
+
+
+def update_username(user_id: int, new_username: str) -> tuple[bool, str]:
+    username = (new_username or "").strip()
+    if not username:
+        return False, "اسم الدخول (اسم المستخدم) مطلوب"
+    conn = get_connection()
+    try:
+        existing = conn.execute("SELECT id FROM users WHERE username = ? AND id != ?", (username, user_id)).fetchone()
+        if existing:
+            return False, "اسم الدخول هذا مستخدم بالفعل لحساب آخر"
+        conn.execute("UPDATE users SET username = ? WHERE id = ?", (username, user_id))
+        conn.commit()
+        try:
+            log_action('users', user_id, 'update', details=f'username={username}')
+        except Exception:
+            pass
+        return True, "تم تغيير اسم الدخول بنجاح"
+    finally:
+        conn.close()
+
+
+
+def delete_user(user_id: int, current_user_id: int = None) -> tuple[bool, str]:
+    conn = get_connection()
+    try:
+        user = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+        if not user:
+            return False, "المستخدم غير موجود"
+        if user["username"].lower() == "admin":
+            return False, "لا يمكن حذف حساب المسؤول الرئيسي (admin)"
+        if current_user_id and user_id == current_user_id:
+            return False, "لا يمكن حذف الحساب المسجّل به حالياً"
+
+        conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
+        conn.commit()
+        try:
+            log_action('users', user_id, 'delete', details=f"deleted_username={user['username']}")
+        except Exception:
+            pass
+        return True, "تم حذف حساب المستخدم بنجاح"
+    finally:
+        conn.close()
+

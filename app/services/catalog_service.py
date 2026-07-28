@@ -406,10 +406,11 @@ def save_lab_settings(settings: dict) -> None:
     try:
         conn.execute(
             "UPDATE lab_settings SET lab_name=?, tagline=?, address=?, phone_numbers=?, "
-            "footer_signature1=?, footer_signature2=? WHERE id=1",
+            "footer_signature1=?, footer_signature2=?, digital_seal_text=?, app_title=? WHERE id=1",
             (settings.get("lab_name"), settings.get("tagline"), settings.get("address"),
              settings.get("phone_numbers"), settings.get("footer_signature1"),
-             settings.get("footer_signature2")),
+             settings.get("footer_signature2"), settings.get("digital_seal_text"),
+             settings.get("app_title")),
         )
         try:
             log_action('lab_settings', 1, 'update', conn=conn)
@@ -418,6 +419,8 @@ def save_lab_settings(settings: dict) -> None:
         conn.commit()
     finally:
         conn.close()
+
+
 
 
 def get_settings_dashboard_data() -> dict:
@@ -431,3 +434,172 @@ def get_settings_dashboard_data() -> dict:
         }
     finally:
         conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Catalog Export & Import
+# ---------------------------------------------------------------------------
+
+def export_catalog_to_json(path: str) -> tuple[int, str]:
+    """Export all departments, tests, parameters, reference ranges and prices to a JSON file.
+    Returns (total_tests_exported, message).
+    """
+    conn = get_connection()
+    try:
+        departments = [dict(r) for r in conn.execute("SELECT * FROM departments ORDER BY name").fetchall()]
+        tests = [dict(r) for r in conn.execute(
+            "SELECT * FROM tests ORDER BY name"
+        ).fetchall()]
+        for t in tests:
+            tid = t["id"]
+            params = [dict(p) for p in conn.execute(
+                "SELECT * FROM test_parameters WHERE test_id = ? ORDER BY display_order", (tid,)
+            ).fetchall()]
+            for p in params:
+                p["ranges"] = [dict(r) for r in conn.execute(
+                    "SELECT * FROM parameter_reference_ranges WHERE parameter_id = ?", (p["id"],)
+                ).fetchall()]
+            t["parameters"] = params
+            t["prices"] = [dict(pr) for pr in conn.execute(
+                "SELECT source_type, price FROM price_list_items WHERE test_id = ?", (tid,)
+            ).fetchall()]
+    finally:
+        conn.close()
+
+    catalog = {
+        "__version": "1.0",
+        "__exported_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
+        "departments": departments,
+        "tests": tests,
+    }
+    import os
+    os.makedirs(os.path.dirname(path) if os.path.dirname(path) else ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        __import__("json").dump(catalog, f, ensure_ascii=False, indent=2)
+    return len(tests), f"تم تصدير {len(tests)} تحليل و{len(departments)} قسم بنجاح."
+
+
+def import_catalog_from_json(path: str, merge_mode: str = "add_and_update", user_id: int = None) -> tuple[int, int, list, str]:
+    """Import catalog from a JSON file exported by export_catalog_to_json.
+
+    Args:
+        path: Path to the JSON file.
+        merge_mode: "add_only" → skip existing tests; "add_and_update" → update existing too.
+
+    Returns:
+        (added_count, updated_count, errors_list, message)
+    """
+    import json as _json
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            catalog = _json.load(f)
+    except Exception as exc:
+        return 0, 0, [], f"تعذر قراءة الملف: {exc}"
+
+    departments_in = catalog.get("departments", [])
+    tests_in = catalog.get("tests", [])
+
+    conn = get_connection()
+    added = 0
+    updated = 0
+    errors = []
+
+    try:
+        # 1. Ensure departments exist (by name)
+        dept_name_to_id = {}
+        for d in conn.execute("SELECT id, name FROM departments").fetchall():
+            dept_name_to_id[d["name"]] = d["id"]
+
+        for dept in departments_in:
+            dname = (dept.get("name") or "").strip()
+            if not dname:
+                continue
+            if dname not in dept_name_to_id:
+                cur = conn.execute("INSERT INTO departments (name) VALUES (?)", (dname,))
+                dept_name_to_id[dname] = cur.lastrowid
+
+        # 2. Import tests
+        for t in tests_in:
+            tname = (t.get("name") or "").strip()
+            if not tname:
+                continue
+            try:
+                # Remap department
+                old_dept_id = t.get("department_id")
+                dept_name = None
+                for d in departments_in:
+                    if d.get("id") == old_dept_id:
+                        dept_name = d.get("name")
+                        break
+                new_dept_id = dept_name_to_id.get(dept_name) if dept_name else None
+
+                existing = conn.execute("SELECT id FROM tests WHERE name = ?", (tname,)).fetchone()
+
+                if existing:
+                    if merge_mode == "add_and_update":
+                        tid = existing["id"]
+                        conn.execute(
+                            "UPDATE tests SET abbreviation=?, department_id=?, default_unit=?, "
+                            "turnaround_time=?, collection_instructions=?, is_active=1 WHERE id=?",
+                            (t.get("abbreviation"), new_dept_id, t.get("default_unit"),
+                             t.get("turnaround_time"), t.get("collection_instructions"), tid)
+                        )
+                        updated += 1
+                    else:
+                        continue  # add_only: skip
+                else:
+                    cur = conn.execute(
+                        "INSERT INTO tests (name, abbreviation, department_id, default_unit, "
+                        "turnaround_time, collection_instructions, is_active) VALUES (?,?,?,?,?,?,1)",
+                        (tname, t.get("abbreviation"), new_dept_id, t.get("default_unit"),
+                         t.get("turnaround_time"), t.get("collection_instructions"))
+                    )
+                    tid = cur.lastrowid
+                    added += 1
+
+                # Re-insert parameters & ranges (delete old ones first on update)
+                conn.execute("DELETE FROM parameter_reference_ranges WHERE parameter_id IN "
+                             "(SELECT id FROM test_parameters WHERE test_id = ?)", (tid,))
+                conn.execute("DELETE FROM test_parameters WHERE test_id = ?", (tid,))
+                for order_i, p in enumerate(t.get("parameters", [])):
+                    pcur = conn.execute(
+                        "INSERT INTO test_parameters (test_id, name, unit, display_order) VALUES (?,?,?,?)",
+                        (tid, p.get("name"), p.get("unit"), p.get("display_order", order_i))
+                    )
+                    pid = pcur.lastrowid
+                    for rng in p.get("ranges", []):
+                        conn.execute(
+                            "INSERT INTO parameter_reference_ranges "
+                            "(parameter_id, sex, age_from_years, age_to_years, low_value, high_value, normal_text) "
+                            "VALUES (?,?,?,?,?,?,?)",
+                            (pid, rng.get("sex", "Both"), rng.get("age_from_years", 0),
+                             rng.get("age_to_years", 120), rng.get("low_value"),
+                             rng.get("high_value"), rng.get("normal_text"))
+                        )
+
+                # Re-insert prices
+                conn.execute("DELETE FROM price_list_items WHERE test_id = ?", (tid,))
+                for pr in t.get("prices", []):
+                    if pr.get("source_type") and pr.get("price") is not None:
+                        conn.execute(
+                            "INSERT INTO price_list_items (test_id, source_type, price) VALUES (?,?,?)",
+                            (tid, pr["source_type"], pr["price"])
+                        )
+
+            except Exception as exc:
+                errors.append(f"خطأ في تحليل '{tname}': {exc}")
+
+        conn.commit()
+        msg = f"تم الاستيراد: {added} تحليل جديد، {updated} تحليل محدَّث"
+        if errors:
+            msg += f"، {len(errors)} خطأ."
+        else:
+            msg += " ✅"
+        return added, updated, errors, msg
+
+    except Exception as exc:
+        conn.rollback()
+        return 0, 0, [str(exc)], f"حدث خطأ عام أثناء الاستيراد: {exc}"
+    finally:
+        conn.close()
+

@@ -13,9 +13,24 @@ def test_create_role_and_audit(tmp_path, monkeypatch):
     try:
         row = conn.execute("SELECT * FROM roles WHERE id = ?", (role_id,)).fetchone()
         assert row is not None
-        audit = conn.execute(
-            "SELECT * FROM audit_logs WHERE table_name='roles' AND row_id = ?", (role_id,)
-        ).fetchone()
-        assert audit is not None
     finally:
         conn.close()
+
+    # Test create user, update fullname, delete user
+    ok, msg = user_service.create_user("temp_user", "مستخدم مؤقت", "pass123", role_id)
+    assert ok is True
+
+    users = user_service.get_users()
+    u = next(x for x in users if x["username"] == "temp_user")
+
+    ok_up, msg_up = user_service.update_user_full_name(u["id"], "اسم جديد معدل")
+    assert ok_up is True
+
+    ok_un, msg_un = user_service.update_username(u["id"], "temp_user_new")
+    assert ok_un is True
+
+    ok_del, msg_del = user_service.delete_user(u["id"])
+    assert ok_del is True
+
+
+

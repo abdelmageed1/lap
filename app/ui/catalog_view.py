@@ -1,5 +1,10 @@
-from PySide2.QtWidgets import (QComboBox, QDoubleSpinBox, QFrame, QHBoxLayout, QLabel, QLineEdit,
-                                QListWidget, QPushButton, QCheckBox, QTabWidget, QVBoxLayout, QWidget)
+from PySide2.QtCore import Qt
+from PySide2.QtWidgets import (
+    QAbstractItemView, QCheckBox, QComboBox, QDoubleSpinBox, QFrame,
+    QHBoxLayout, QHeaderView, QLabel, QLineEdit, QListWidget,
+    QMessageBox, QPushButton, QTabWidget, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget
+)
 
 from app.services import catalog_service
 from app.ui.widgets import HintBanner
@@ -13,45 +18,52 @@ class CatalogView(QWidget):
         super().__init__()
         self.current_user = current_user
         outer = QVBoxLayout(self)
-        title = QLabel("كتالوج التحاليل والإعدادات")
+        
+        title = QLabel("📋 كتالوج التحاليل وإدارة النظام")
         title.setObjectName("PageTitle")
         outer.addWidget(title)
+        
         outer.addWidget(HintBanner(
-            "هنا تتحكم في كل بيانات التحاليل: «التحاليل والأسعار والمعايير» لتعديل تحليل موجود، "
-            "«تحليل جديد» لإضافة تحليل من الصفر، «الأقسام» لتصنيف التحاليل (كيمياء، هيماتولوجي...)، "
-            "و«الأطباء وجهات الإحالة» لإدارة قوائم الاستقبال."
+            "تتيح لك هذه الشاشة إدارة كتالوج التحاليل بالكامل: تعديل الأسماء والأقسام، إضافة وتحديد المعايير والمدى الطبيعي، "
+            "ضبط أسعار جهات الإحالة المختلفة، وإدارة قوائم الأطباء والأقسام الطبية."
         ))
 
         tabs = QTabWidget()
         outer.addWidget(tabs)
-        tabs.addTab(self._build_tests_tab(), "التحاليل والأسعار والمعايير")
-        tabs.addTab(self._build_new_test_tab(), "تحليل جديد")
-        tabs.addTab(self._build_departments_tab(), "الأقسام")
-        tabs.addTab(self._build_sources_tab(), "الأطباء وجهات الإحالة")
+        tabs.addTab(self._build_tests_tab(), "🧪 التحاليل والأسعار والمعايير")
+        tabs.addTab(self._build_new_test_tab(), "➕ تحليل جديد")
+        tabs.addTab(self._build_departments_tab(), "🏛️ الأقسام الطبية")
+        tabs.addTab(self._build_sources_tab(), "👨‍⚕️ الأطباء وجهات الإحالة")
 
     def _label_bold(self, text):
         label = QLabel(text)
-        label.setStyleSheet("font-weight: bold; color: #0B4F6C;")
+        label.setStyleSheet("font-weight: bold; color: #0B4F6C; font-size: 14px;")
         return label
 
     def refresh(self):
         self.refresh_departments()
         self.refresh_doctors_sources()
         self._reload_department_combo()
+        self.search_tests()
 
     # ================= Tests, parameters, ranges, prices =================
     def _build_tests_tab(self):
         widget = QWidget()
         layout = QHBoxLayout(widget)
+        layout.setContentsMargins(6, 6, 6, 6)
 
-        # --- Column 1: search ---
+        # --- Column 1: Search & Tests List ---
         left = QFrame()
         left.setObjectName("Card")
         left_layout = QVBoxLayout(left)
-        left_layout.addWidget(self._label_bold("بحث عن تحليل"))
+        left_layout.addWidget(self._label_bold("🔍 قائمة التحاليل والاختبارات"))
+
+        # Filter row 1: Text search
         search_row = QHBoxLayout()
         self.test_search_edit = QLineEdit()
         self.test_search_edit.setPlaceholderText("اسم التحليل أو الاختصار...")
+        self.test_search_edit.returnPressed.connect(self.search_tests)
+        
         search_button = QPushButton("بحث")
         search_button.setObjectName("Primary")
         search_button.clicked.connect(self.search_tests)
@@ -59,120 +71,181 @@ class CatalogView(QWidget):
         search_row.addWidget(search_button)
         left_layout.addLayout(search_row)
 
+        # Filter row 2: Department dropdown filter
+        filter_dept_row = QHBoxLayout()
+        filter_dept_row.addWidget(QLabel("القسم:"))
+        self.filter_dept_combo = QComboBox()
+        self.filter_dept_combo.currentIndexChanged.connect(self.search_tests)
+        filter_dept_row.addWidget(self.filter_dept_combo, 1)
+        left_layout.addLayout(filter_dept_row)
+
         self.include_inactive_check = QCheckBox("إظهار التحاليل المعطَّلة أيضًا")
         self.include_inactive_check.setToolTip("التحاليل المعطَّلة لا تظهر في الاستقبال، لكنها تبقى محفوظة هنا")
         self.include_inactive_check.stateChanged.connect(self.search_tests)
         left_layout.addWidget(self.include_inactive_check)
 
-        self.test_list = QListWidget()
-        self.test_list.itemClicked.connect(self.show_test_details)
-        left_layout.addWidget(self.test_list)
-        layout.addWidget(left, 1)
+        # Tests Table
+        self.test_table = QTableWidget()
+        self.test_table.setColumnCount(4)
+        self.test_table.setHorizontalHeaderLabels(["اسم التحليل", "الاختصار", "القسم", "الحالة"])
+        self.test_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.test_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.test_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.test_table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        self.test_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.test_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.test_table.setAlternatingRowColors(True)
+        self.test_table.itemClicked.connect(self.show_test_details)
+        left_layout.addWidget(self.test_table)
 
-        # --- Column 2: test details + parameters ---
+        self.test_count_label = QLabel("العدد: 0")
+        self.test_count_label.setStyleSheet("color: #666; font-size: 11px;")
+        left_layout.addWidget(self.test_count_label)
+
+        # Alias for backward compatibility
+        self.test_list = self.test_table
+
+        layout.addWidget(left, 35)
+
+        # --- Column 2: Test details + Parameters + Prices ---
         middle = QFrame()
         middle.setObjectName("Card")
         middle_layout = QVBoxLayout(middle)
+        
         self.test_details_title = self._label_bold("اختر تحليلًا لعرض تفاصيله")
         middle_layout.addWidget(self.test_details_title)
 
         edit_row1 = QHBoxLayout()
-        edit_row1.addWidget(QLabel("الاسم"))
+        edit_row1.addWidget(QLabel("الاسم:"))
         self.edit_name = QLineEdit()
         edit_row1.addWidget(self.edit_name)
         middle_layout.addLayout(edit_row1)
 
         edit_row2 = QHBoxLayout()
-        edit_row2.addWidget(QLabel("الاختصار"))
+        edit_row2.addWidget(QLabel("الاختصار:"))
         self.edit_abbr = QLineEdit()
-        edit_row2.addWidget(self.edit_abbr)
-        edit_row2.addWidget(QLabel("القسم"))
+        edit_row2.addWidget(self.edit_abbr, 1)
+        edit_row2.addWidget(QLabel("القسم:"))
         self.edit_department_combo = QComboBox()
-        edit_row2.addWidget(self.edit_department_combo)
+        edit_row2.addWidget(self.edit_department_combo, 2)
         middle_layout.addLayout(edit_row2)
 
         test_buttons_row = QHBoxLayout()
-        save_test_button = QPushButton("حفظ تعديلات التحليل")
+        save_test_button = QPushButton("حفظ تعديلات التحليل 💾")
         save_test_button.setObjectName("Primary")
         save_test_button.clicked.connect(self.save_test_edits)
         test_buttons_row.addWidget(save_test_button)
-        deactivate_test_button = QPushButton("تعطيل التحليل")
-        deactivate_test_button.setToolTip("يخفي التحليل من شاشة الاستقبال دون حذف بياناته أو نتائجه السابقة")
-        deactivate_test_button.clicked.connect(self.deactivate_selected_test)
-        test_buttons_row.addWidget(deactivate_test_button)
+
+        self.deactivate_test_button = QPushButton("تعطيل التحليل ⛔")
+        self.deactivate_test_button.setToolTip("يخفي التحليل من شاشة الاستقبال دون حذف بياناته أو نتائجه السابقة")
+        self.deactivate_test_button.clicked.connect(self.deactivate_selected_test)
+        test_buttons_row.addWidget(self.deactivate_test_button)
         middle_layout.addLayout(test_buttons_row)
 
-        middle_layout.addWidget(self._label_bold("المعايير"))
-        self.parameters_list = QListWidget()
-        self.parameters_list.setToolTip("اضغط على معيار لعرض وتعديل مداه الطبيعي في العمود الأيمن")
-        self.parameters_list.itemClicked.connect(self.show_parameter_ranges)
-        self.parameters_list.setMaximumHeight(160)
-        middle_layout.addWidget(self.parameters_list)
+        middle_layout.addWidget(self._label_bold("📏 المعايير (Parameters)"))
+        
+        self.parameters_table = QTableWidget()
+        self.parameters_table.setColumnCount(3)
+        self.parameters_table.setHorizontalHeaderLabels(["المعيار", "الوحدة", "نوع البيانات"])
+        self.parameters_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.parameters_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.parameters_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.parameters_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.parameters_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.parameters_table.setAlternatingRowColors(True)
+        self.parameters_table.setMaximumHeight(160)
+        self.parameters_table.itemClicked.connect(self.show_parameter_ranges)
+        middle_layout.addWidget(self.parameters_table)
+
+        # Alias for backward compatibility
+        self.parameters_list = self.parameters_table
 
         param_row = QHBoxLayout()
         self.new_param_name_edit = QLineEdit()
         self.new_param_name_edit.setPlaceholderText("اسم المعيار")
-        param_row.addWidget(self.new_param_name_edit)
+        param_row.addWidget(self.new_param_name_edit, 2)
+        
         self.new_param_unit_edit = QLineEdit()
         self.new_param_unit_edit.setPlaceholderText("الوحدة")
-        param_row.addWidget(self.new_param_unit_edit)
+        param_row.addWidget(self.new_param_unit_edit, 1)
+        
         self.new_param_type_combo = QComboBox()
         self.new_param_type_combo.addItems(DATA_TYPES)
         self.new_param_type_combo.setToolTip("Numeric لقيمة رقمية بمدى طبيعي، Text لقيمة نصية حرة")
-        param_row.addWidget(self.new_param_type_combo)
-        add_param_button = QPushButton("إضافة معيار")
+        param_row.addWidget(self.new_param_type_combo, 1)
+        
+        add_param_button = QPushButton("إضافة معيار ➕")
         add_param_button.setObjectName("Primary")
         add_param_button.clicked.connect(self.add_parameter)
         param_row.addWidget(add_param_button)
         middle_layout.addLayout(param_row)
-        delete_param_button = QPushButton("حذف المعيار المحدَّد")
+
+        delete_param_button = QPushButton("حذف المعيار المحدَّد 🗑️")
         delete_param_button.clicked.connect(self.delete_selected_parameter)
         middle_layout.addWidget(delete_param_button)
 
-        middle_layout.addWidget(self._label_bold("الأسعار"))
+        middle_layout.addWidget(self._label_bold("💰 أسعار جهات الإحالة"))
         price_row = QHBoxLayout()
-        price_row.addWidget(QLabel("جهة الإحالة"))
+        price_row.addWidget(QLabel("جهة الإحالة:"))
         self.price_source_combo = QComboBox()
         self.price_source_combo.setToolTip("سعر مختلف لكل جهة إحالة - يُطبَّق تلقائيًا في الاستقبال")
-        price_row.addWidget(self.price_source_combo)
-        price_row.addWidget(QLabel("السعر"))
+        price_row.addWidget(self.price_source_combo, 2)
+        
+        price_row.addWidget(QLabel("السعر:"))
         self.price_spin = QDoubleSpinBox()
         self.price_spin.setRange(0, 100000)
-        price_row.addWidget(self.price_spin)
-        save_price_button = QPushButton("حفظ السعر")
+        self.price_spin.setSuffix(" ج.م")
+        price_row.addWidget(self.price_spin, 1)
+        
+        save_price_button = QPushButton("حفظ السعر 💾")
         save_price_button.setObjectName("Primary")
         save_price_button.setToolTip("يحفظ أو يحدِّث سعر هذا التحليل لجهة الإحالة المختارة")
         save_price_button.clicked.connect(self.save_price)
         price_row.addWidget(save_price_button)
         middle_layout.addLayout(price_row)
+
         self.test_message = QLabel("")
         middle_layout.addWidget(self.test_message)
 
-        layout.addWidget(middle, 2)
+        layout.addWidget(middle, 35)
 
-        # --- Column 3: reference ranges for the selected parameter ---
+        # --- Column 3: Reference Ranges ---
         right = QFrame()
         right.setObjectName("Card")
         right_layout = QVBoxLayout(right)
+        
         self.ranges_title = self._label_bold("اختر معيارًا لعرض مداه الطبيعي")
         right_layout.addWidget(self.ranges_title)
-        self.ranges_list = QListWidget()
-        right_layout.addWidget(self.ranges_list)
+
+        self.ranges_table = QTableWidget()
+        self.ranges_table.setColumnCount(3)
+        self.ranges_table.setHorizontalHeaderLabels(["النوع", "السن", "المدى الطبيعي"])
+        self.ranges_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.ranges_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.ranges_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+        self.ranges_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.ranges_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.ranges_table.setAlternatingRowColors(True)
+        right_layout.addWidget(self.ranges_table)
+
+        # Alias for backward compatibility
+        self.ranges_list = self.ranges_table
 
         range_row1 = QHBoxLayout()
-        range_row1.addWidget(QLabel("النوع"))
+        range_row1.addWidget(QLabel("النوع:"))
         self.range_sex_combo = QComboBox()
         self.range_sex_combo.addItems(SEX_OPTIONS)
         self.range_sex_combo.setToolTip("اختر Both لو المدى الطبيعي نفسه للذكر والأنثى")
-        range_row1.addWidget(self.range_sex_combo)
+        range_row1.addWidget(self.range_sex_combo, 1)
         right_layout.addLayout(range_row1)
 
         range_row2 = QHBoxLayout()
-        range_row2.addWidget(QLabel("من سن"))
+        range_row2.addWidget(QLabel("من سن:"))
         self.range_age_from = QDoubleSpinBox()
         self.range_age_from.setRange(0, 120)
         range_row2.addWidget(self.range_age_from)
-        range_row2.addWidget(QLabel("إلى سن"))
+        
+        range_row2.addWidget(QLabel("إلى سن:"))
         self.range_age_to = QDoubleSpinBox()
         self.range_age_to.setRange(0, 120)
         self.range_age_to.setValue(120)
@@ -180,11 +253,12 @@ class CatalogView(QWidget):
         right_layout.addLayout(range_row2)
 
         range_row3 = QHBoxLayout()
-        range_row3.addWidget(QLabel("من قيمة"))
+        range_row3.addWidget(QLabel("من قيمة:"))
         self.range_low = QDoubleSpinBox()
         self.range_low.setRange(-100000, 100000)
         range_row3.addWidget(self.range_low)
-        range_row3.addWidget(QLabel("إلى قيمة"))
+        
+        range_row3.addWidget(QLabel("إلى قيمة:"))
         self.range_high = QDoubleSpinBox()
         self.range_high.setRange(-100000, 100000)
         range_row3.addWidget(self.range_high)
@@ -197,66 +271,123 @@ class CatalogView(QWidget):
         )
         right_layout.addWidget(self.range_normal_text_edit)
 
-        add_range_button = QPushButton("إضافة مدى طبيعي")
+        add_range_button = QPushButton("إضافة مدى طبيعي ➕")
         add_range_button.setObjectName("Primary")
         add_range_button.setToolTip("يضيف مدى طبيعي جديدًا لهذا المعيار حسب النوع والسن المحدَّدين أعلاه")
         add_range_button.clicked.connect(self.add_range)
         right_layout.addWidget(add_range_button)
-        delete_range_button = QPushButton("حذف المدى المحدَّد")
+
+        delete_range_button = QPushButton("حذف المدى المحدَّد 🗑️")
         delete_range_button.clicked.connect(self.delete_selected_range)
         right_layout.addWidget(delete_range_button)
         right_layout.addStretch()
 
-        layout.addWidget(right, 2)
+        layout.addWidget(right, 30)
 
         self.selected_test = None
         self.selected_parameter_id = None
         self.test_search_results = []
         self._reload_sources_combo()
         self._reload_department_combo()
+        self.search_tests()
         return widget
 
     def search_tests(self):
-        self.test_search_results = catalog_service.search_tests(
-            self.test_search_edit.text().strip(), include_inactive=self.include_inactive_check.isChecked()
-        )
-        self.test_list.clear()
-        for t in self.test_search_results:
-            suffix = "" if t["is_active"] else " (معطَّل)"
-            self.test_list.addItem(f"{t['name']} ({t.get('department_name') or ''}){suffix}")
+        query = self.test_search_edit.text().strip()
+        dept_id = self.filter_dept_combo.currentData() if hasattr(self, "filter_dept_combo") else None
+        include_inactive = self.include_inactive_check.isChecked()
 
-    def show_test_details(self, item):
-        row = self.test_list.row(item)
+        self.test_search_results = catalog_service.search_tests(
+            query, department_id=dept_id, include_inactive=include_inactive
+        )
+
+        self.test_table.setRowCount(0)
+        for row_idx, t in enumerate(self.test_search_results):
+            self.test_table.insertRow(row_idx)
+            
+            # Name
+            item_name = QTableWidgetItem(t['name'])
+            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.test_table.setItem(row_idx, 0, item_name)
+            
+            # Abbr
+            item_abbr = QTableWidgetItem(t.get('abbreviation') or "-")
+            item_abbr.setTextAlignment(Qt.AlignCenter)
+            self.test_table.setItem(row_idx, 1, item_abbr)
+            
+            # Dept
+            item_dept = QTableWidgetItem(t.get('department_name') or "-")
+            item_dept.setTextAlignment(Qt.AlignCenter)
+            self.test_table.setItem(row_idx, 2, item_dept)
+            
+            # Status
+            status_text = "🟢 نشط" if t['is_active'] else "🔴 معطَّل"
+            item_status = QTableWidgetItem(status_text)
+            item_status.setTextAlignment(Qt.AlignCenter)
+            if not t['is_active']:
+                item_status.setForeground(Qt.red)
+            self.test_table.setItem(row_idx, 3, item_status)
+
+        if hasattr(self, "test_count_label"):
+            self.test_count_label.setText(f"العدد الإجمالي: {len(self.test_search_results)} تحليل")
+
+    def show_test_details(self, *args):
+        row = self.test_table.currentRow()
+        if row < 0 or row >= len(self.test_search_results):
+            return
         test_id = self.test_search_results[row]["id"]
         self._load_test_details(test_id)
 
     def _load_test_details(self, test_id, reselect_parameter_id=None):
         details = catalog_service.get_test_with_details(test_id)
+        if not details:
+            return
         self.selected_test = details
         self.selected_parameter_id = None
-        self.test_details_title.setText(details["name"])
+        
+        status_suffix = "" if details.get("is_active", 1) else " (معطَّل)"
+        self.test_details_title.setText(f"🧪 {details['name']}{status_suffix}")
         self.edit_name.setText(details["name"])
         self.edit_abbr.setText(details.get("abbreviation") or "")
+        
         idx = self.edit_department_combo.findData(details.get("department_id"))
         self.edit_department_combo.setCurrentIndex(idx if idx >= 0 else 0)
 
-        self.parameters_list.clear()
-        for p in details["parameters"]:
-            self.parameters_list.addItem(f"{p['name']} ({p.get('unit') or ''}) [{p['data_type']}]")
+        # Update button text according to active status
+        if hasattr(self, "deactivate_test_button"):
+            if details.get("is_active", 1):
+                self.deactivate_test_button.setText("تعطيل التحليل ⛔")
+            else:
+                self.deactivate_test_button.setText("إعادة تفعيل التحليل ❇️")
 
-        self.ranges_list.clear()
+        # Load parameters into parameters_table
+        self.parameters_table.setRowCount(0)
+        for row_idx, p in enumerate(details["parameters"]):
+            self.parameters_table.insertRow(row_idx)
+            
+            item_pname = QTableWidgetItem(p['name'])
+            item_pname.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.parameters_table.setItem(row_idx, 0, item_pname)
+            
+            item_punit = QTableWidgetItem(p.get('unit') or "-")
+            item_punit.setTextAlignment(Qt.AlignCenter)
+            self.parameters_table.setItem(row_idx, 1, item_punit)
+            
+            type_label = "رقمي 🔢" if p['data_type'] == 'Numeric' else "نصي 📝"
+            item_ptype = QTableWidgetItem(type_label)
+            item_ptype.setTextAlignment(Qt.AlignCenter)
+            self.parameters_table.setItem(row_idx, 2, item_ptype)
+
+        self.ranges_table.setRowCount(0)
         self.ranges_title.setText("اختر معيارًا لعرض مداه الطبيعي")
         self.price_spin.setValue(0)
         self.test_message.setText("")
 
-        # Re-select the parameter that was active before this reload (e.g. after adding/deleting
-        # one of its reference ranges) so the ranges panel shows the change immediately, instead of
-        # going blank and making it look like the add/delete button did nothing.
         if reselect_parameter_id is not None:
             for i, p in enumerate(details["parameters"]):
                 if p["id"] == reselect_parameter_id:
-                    self.parameters_list.setCurrentRow(i)
-                    self.show_parameter_ranges(self.parameters_list.item(i))
+                    self.parameters_table.setCurrentCell(i, 0)
+                    self.show_parameter_ranges()
                     break
 
     def save_test_edits(self):
@@ -272,7 +403,7 @@ class CatalogView(QWidget):
             "collection_instructions": self.selected_test.get("collection_instructions"),
             "is_active": self.selected_test.get("is_active", 1),
         })
-        self.test_message.setText("تم حفظ تعديلات التحليل")
+        self.test_message.setText("تم حفظ تعديلات التحليل بنجاح")
         self.test_message.setStyleSheet("color: #146C8E;")
         self.search_tests()
         self._load_test_details(self.selected_test["id"])
@@ -280,10 +411,18 @@ class CatalogView(QWidget):
     def deactivate_selected_test(self):
         if self.selected_test is None:
             return
-        catalog_service.deactivate_test(self.selected_test["id"])
-        self.test_message.setText("تم تعطيل التحليل")
-        self.test_message.setStyleSheet("color: #C62828;")
+        current_status = self.selected_test.get("is_active", 1)
+        if current_status:
+            catalog_service.deactivate_test(self.selected_test["id"])
+            self.test_message.setText("تم تعطيل التحليل بنجاح")
+            self.test_message.setStyleSheet("color: #C62828;")
+        else:
+            self.selected_test["is_active"] = 1
+            catalog_service.save_test(self.selected_test)
+            self.test_message.setText("تمت إعادة تفعيل التحليل بنجاح")
+            self.test_message.setStyleSheet("color: #146C8E;")
         self.search_tests()
+        self._load_test_details(self.selected_test["id"])
 
     def add_parameter(self):
         if self.selected_test is None:
@@ -301,24 +440,44 @@ class CatalogView(QWidget):
         self._load_test_details(self.selected_test["id"])
 
     def delete_selected_parameter(self):
-        if self.selected_parameter_id is None:
+        row = self.parameters_table.currentRow()
+        if row < 0 or self.selected_test is None or row >= len(self.selected_test["parameters"]):
             return
-        catalog_service.delete_parameter(self.selected_parameter_id)
+        param_id = self.selected_test["parameters"][row]["id"]
+        catalog_service.delete_parameter(param_id)
         self._load_test_details(self.selected_test["id"])
 
-    def show_parameter_ranges(self, item):
-        row = self.parameters_list.row(item)
+    def show_parameter_ranges(self, *args):
+        row = self.parameters_table.currentRow()
+        if row < 0 or self.selected_test is None or row >= len(self.selected_test["parameters"]):
+            return
         param = self.selected_test["parameters"][row]
         self.selected_parameter_id = param["id"]
-        self.ranges_title.setText(f"المدى الطبيعي: {param['name']}")
-        self.ranges_list.clear()
+        self.ranges_title.setText(f"📐 المدى الطبيعي للمعيار: {param['name']}")
+        
+        self.ranges_table.setRowCount(0)
         self._current_ranges = param["ranges"]
-        for r in param["ranges"]:
+        for row_idx, r in enumerate(param["ranges"]):
+            self.ranges_table.insertRow(row_idx)
+            
+            sex_map = {"Both": "الجميع 🚻", "Male": "ذكور ♂️", "Female": "إناث ♀️"}
+            sex_str = sex_map.get(r['sex'], r['sex'])
+            item_sex = QTableWidgetItem(sex_str)
+            item_sex.setTextAlignment(Qt.AlignCenter)
+            self.ranges_table.setItem(row_idx, 0, item_sex)
+            
+            age_str = f"{r['age_from_years']} - {r['age_to_years']} سنة"
+            item_age = QTableWidgetItem(age_str)
+            item_age.setTextAlignment(Qt.AlignCenter)
+            self.ranges_table.setItem(row_idx, 1, item_age)
+            
             if r["low_value"] is not None:
-                value_text = f"{r['low_value']} - {r['high_value']}"
+                val_str = f"{r['low_value']} إلى {r['high_value']}"
             else:
-                value_text = r.get("normal_text") or ""
-            self.ranges_list.addItem(f"{r['sex']} | {r['age_from_years']}-{r['age_to_years']} سنة | {value_text}")
+                val_str = r.get("normal_text") or "-"
+            item_val = QTableWidgetItem(val_str)
+            item_val.setTextAlignment(Qt.AlignCenter)
+            self.ranges_table.setItem(row_idx, 2, item_val)
 
     def add_range(self):
         if self.selected_parameter_id is None:
@@ -338,7 +497,7 @@ class CatalogView(QWidget):
         self._load_test_details(self.selected_test["id"], reselect_parameter_id=parameter_id)
 
     def delete_selected_range(self):
-        row = self.ranges_list.currentRow()
+        row = self.ranges_table.currentRow()
         if row < 0 or not getattr(self, "_current_ranges", None):
             return
         range_id = self._current_ranges[row]["id"]
@@ -352,14 +511,31 @@ class CatalogView(QWidget):
             self.price_source_combo.addItem(s["name"])
 
     def _reload_department_combo(self):
-        current = getattr(self, "edit_department_combo", None)
+        depts = catalog_service.get_departments()
+        
+        # Filter combo in search bar
+        if hasattr(self, "filter_dept_combo"):
+            curr_data = self.filter_dept_combo.currentData()
+            self.filter_dept_combo.blockSignals(True)
+            self.filter_dept_combo.clear()
+            self.filter_dept_combo.addItem("جميع الأقسام 🏛️", None)
+            for d in depts:
+                self.filter_dept_combo.addItem(d["name"], d["id"])
+            idx = self.filter_dept_combo.findData(curr_data)
+            self.filter_dept_combo.setCurrentIndex(idx if idx >= 0 else 0)
+            self.filter_dept_combo.blockSignals(False)
+
+        # Edit and new test combos
         combos = [c for c in [getattr(self, "edit_department_combo", None),
                                getattr(self, "new_test_department_combo", None)] if c is not None]
         for combo in combos:
+            curr_data = combo.currentData()
             combo.clear()
-            combo.addItem("-", None)
-            for d in catalog_service.get_departments():
+            combo.addItem("- بدون قسم -", None)
+            for d in depts:
                 combo.addItem(d["name"], d["id"])
+            idx = combo.findData(curr_data)
+            combo.setCurrentIndex(idx if idx >= 0 else 0)
 
     def save_price(self):
         if self.selected_test is None:
@@ -369,7 +545,7 @@ class CatalogView(QWidget):
             "source_type": self.price_source_combo.currentText(),
             "price": self.price_spin.value(),
         })
-        self.test_message.setText("تم حفظ السعر")
+        self.test_message.setText("تم حفظ السعر بنجاح")
         self.test_message.setStyleSheet("color: #146C8E;")
 
     # ================= New test =================
@@ -379,33 +555,39 @@ class CatalogView(QWidget):
         card = QFrame()
         card.setObjectName("Card")
         form = QVBoxLayout(card)
-        form.addWidget(self._label_bold("إضافة تحليل جديد بالكامل"))
+        form.addWidget(self._label_bold("➕ إضافة تحليل جديد بالكامل"))
 
-        form.addWidget(QLabel("اسم التحليل"))
+        form.addWidget(QLabel("اسم التحليل:"))
         self.new_test_name_edit = QLineEdit()
+        self.new_test_name_edit.setPlaceholderText("مثال: Complete Blood Count")
         form.addWidget(self.new_test_name_edit)
 
         row = QHBoxLayout()
         col1 = QVBoxLayout()
-        col1.addWidget(QLabel("الاختصار"))
+        col1.addWidget(QLabel("الاختصار:"))
         self.new_test_abbr_edit = QLineEdit()
+        self.new_test_abbr_edit.setPlaceholderText("مثال: CBC")
         col1.addWidget(self.new_test_abbr_edit)
+        
         col2 = QVBoxLayout()
-        col2.addWidget(QLabel("القسم"))
+        col2.addWidget(QLabel("القسم الطبي:"))
         self.new_test_department_combo = QComboBox()
         col2.addWidget(self.new_test_department_combo)
+        
         row.addLayout(col1)
         row.addLayout(col2)
         form.addLayout(row)
 
-        form.addWidget(QLabel("الوحدة الافتراضية (اختياري)"))
+        form.addWidget(QLabel("الوحدة الافتراضية (اختياري):"))
         self.new_test_unit_edit = QLineEdit()
+        self.new_test_unit_edit.setPlaceholderText("مثال: mg/dL, g/dL, %")
         form.addWidget(self.new_test_unit_edit)
 
-        create_button = QPushButton("إنشاء التحليل")
+        create_button = QPushButton("إنشاء التحليل 🚀")
         create_button.setObjectName("Primary")
         create_button.clicked.connect(self.create_new_test)
         form.addWidget(create_button)
+        
         self.new_test_message = QLabel("")
         form.addWidget(self.new_test_message)
         form.addStretch()
@@ -417,7 +599,7 @@ class CatalogView(QWidget):
     def create_new_test(self):
         name = self.new_test_name_edit.text().strip()
         if not name:
-            self.new_test_message.setText("أدخل اسم التحليل")
+            self.new_test_message.setText("برجاء إدخال اسم التحليل")
             self.new_test_message.setStyleSheet("color: #C62828;")
             return
         test_id = catalog_service.save_test({
@@ -426,36 +608,56 @@ class CatalogView(QWidget):
             "department_id": self.new_test_department_combo.currentData(),
             "default_unit": self.new_test_unit_edit.text().strip() or None,
         })
-        # Every test needs at least one parameter to be usable in result entry.
         catalog_service.save_parameter({"test_id": test_id, "name": "النتيجة", "data_type": "Text"})
-        self.new_test_message.setText(f"تم إنشاء التحليل بنجاح (رقم {test_id}). عدّل معاييره من تبويب «التحاليل والأسعار والمعايير».")
+        self.new_test_message.setText(f"تم إنشاء التحليل بنجاح (رقم {test_id}). يمكنك إضافة المعايير والأسعار من تبويب «التحاليل والأسعار والمعايير».")
         self.new_test_message.setStyleSheet("color: #146C8E;")
         self.new_test_name_edit.clear()
         self.new_test_abbr_edit.clear()
         self.new_test_unit_edit.clear()
+        self.search_tests()
 
     # ================= Departments =================
     def _build_departments_tab(self):
         widget = QWidget()
         layout = QVBoxLayout(widget)
+        
+        card = QFrame()
+        card.setObjectName("Card")
+        card_layout = QVBoxLayout(card)
+        card_layout.addWidget(self._label_bold("🏛️ إدارة الأقسام الطبية"))
+
         add_row = QHBoxLayout()
         self.new_department_edit = QLineEdit()
-        self.new_department_edit.setPlaceholderText("اسم القسم الجديد")
-        add_button = QPushButton("إضافة")
+        self.new_department_edit.setPlaceholderText("اسم القسم الجديد (مثال: كيمياء الدم، الهيماتولوجي...)")
+        add_button = QPushButton("إضافة قسم ➕")
         add_button.setObjectName("Primary")
         add_button.clicked.connect(self.add_department)
-        add_row.addWidget(self.new_department_edit)
-        add_row.addWidget(add_button)
-        layout.addLayout(add_row)
+        add_row.addWidget(self.new_department_edit, 3)
+        add_row.addWidget(add_button, 1)
+        card_layout.addLayout(add_row)
 
-        self.departments_list = QListWidget()
-        layout.addWidget(self.departments_list)
-        delete_dept_button = QPushButton("حذف القسم المحدَّد")
+        self.departments_table = QTableWidget()
+        self.departments_table.setColumnCount(2)
+        self.departments_table.setHorizontalHeaderLabels(["#", "اسم القسم"])
+        self.departments_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.departments_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.departments_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.departments_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.departments_table.setAlternatingRowColors(True)
+        card_layout.addWidget(self.departments_table)
+
+        # Alias for backward compatibility
+        self.departments_list = self.departments_table
+
+        delete_dept_button = QPushButton("حذف القسم المحدَّد 🗑️")
         delete_dept_button.setToolTip("لا يمكن حذف قسم مرتبط بتحاليل موجودة - عدِّل قسم كل تحليل أولًا")
         delete_dept_button.clicked.connect(self.delete_selected_department)
-        layout.addWidget(delete_dept_button)
+        card_layout.addWidget(delete_dept_button)
+        
         self.department_message = QLabel("")
-        layout.addWidget(self.department_message)
+        card_layout.addWidget(self.department_message)
+
+        layout.addWidget(card)
 
         self._departments = []
         self.refresh_departments()
@@ -463,9 +665,17 @@ class CatalogView(QWidget):
 
     def refresh_departments(self):
         self._departments = catalog_service.get_departments()
-        self.departments_list.clear()
-        for d in self._departments:
-            self.departments_list.addItem(d["name"])
+        self.departments_table.setRowCount(0)
+        for row_idx, d in enumerate(self._departments):
+            self.departments_table.insertRow(row_idx)
+            
+            item_id = QTableWidgetItem(str(d["id"]))
+            item_id.setTextAlignment(Qt.AlignCenter)
+            self.departments_table.setItem(row_idx, 0, item_id)
+            
+            item_name = QTableWidgetItem(d["name"])
+            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.departments_table.setItem(row_idx, 1, item_name)
 
     def add_department(self):
         name = self.new_department_edit.text().strip()
@@ -477,8 +687,8 @@ class CatalogView(QWidget):
         self._reload_department_combo()
 
     def delete_selected_department(self):
-        row = self.departments_list.currentRow()
-        if row < 0:
+        row = self.departments_table.currentRow()
+        if row < 0 or row >= len(self._departments):
             return
         department_id = self._departments[row]["id"]
         ok, message = catalog_service.delete_department(department_id)
@@ -488,48 +698,76 @@ class CatalogView(QWidget):
             self.refresh_departments()
             self._reload_department_combo()
 
-    # ================= Doctors & referral sources =================
+    # ================= Doctors & Referral Sources =================
     def _build_sources_tab(self):
         widget = QWidget()
         layout = QHBoxLayout(widget)
 
+        # Doctors Box
         doctors_box = QFrame()
         doctors_box.setObjectName("Card")
         doctors_layout = QVBoxLayout(doctors_box)
-        doctors_layout.addWidget(self._label_bold("الأطباء المحوِّلون"))
+        doctors_layout.addWidget(self._label_bold("👨‍⚕️ الأطباء المحوِّلون"))
+        
         doc_row = QHBoxLayout()
         self.new_doctor_edit = QLineEdit()
-        self.new_doctor_edit.setPlaceholderText("اسم الطبيب الجديد")
-        doc_add = QPushButton("إضافة")
+        self.new_doctor_edit.setPlaceholderText("اسم الطبيب الجديد...")
+        doc_add = QPushButton("إضافة ➕")
         doc_add.setObjectName("Primary")
         doc_add.clicked.connect(self.add_doctor)
         doc_row.addWidget(self.new_doctor_edit)
         doc_row.addWidget(doc_add)
         doctors_layout.addLayout(doc_row)
-        self.doctors_list = QListWidget()
-        doctors_layout.addWidget(self.doctors_list)
-        deactivate_doctor_button = QPushButton("تعطيل الطبيب المحدَّد")
+
+        self.doctors_table = QTableWidget()
+        self.doctors_table.setColumnCount(2)
+        self.doctors_table.setHorizontalHeaderLabels(["#", "اسم الطبيب"])
+        self.doctors_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.doctors_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.doctors_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.doctors_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.doctors_table.setAlternatingRowColors(True)
+        doctors_layout.addWidget(self.doctors_table)
+
+        # Alias for backward compatibility
+        self.doctors_list = self.doctors_table
+
+        deactivate_doctor_button = QPushButton("تعطيل الطبيب المحدَّد ⛔")
         deactivate_doctor_button.setToolTip("يخفي الطبيب من قائمة الاستقبال دون حذف زياراته السابقة")
         deactivate_doctor_button.clicked.connect(self.deactivate_selected_doctor)
         doctors_layout.addWidget(deactivate_doctor_button)
         layout.addWidget(doctors_box)
 
+        # Referral Sources Box
         sources_box = QFrame()
         sources_box.setObjectName("Card")
         sources_layout = QVBoxLayout(sources_box)
-        sources_layout.addWidget(self._label_bold("جهات الإحالة"))
+        sources_layout.addWidget(self._label_bold("🏢 جهات الإحالة والمؤسسات"))
+        
         src_row = QHBoxLayout()
         self.new_source_edit = QLineEdit()
-        self.new_source_edit.setPlaceholderText("اسم جهة الإحالة الجديدة")
-        src_add = QPushButton("إضافة")
+        self.new_source_edit.setPlaceholderText("اسم جهة الإحالة الجديدة...")
+        src_add = QPushButton("إضافة ➕")
         src_add.setObjectName("Primary")
         src_add.clicked.connect(self.add_source)
         src_row.addWidget(self.new_source_edit)
         src_row.addWidget(src_add)
         sources_layout.addLayout(src_row)
-        self.sources_list = QListWidget()
-        sources_layout.addWidget(self.sources_list)
-        deactivate_source_button = QPushButton("تعطيل جهة الإحالة المحدَّدة")
+
+        self.sources_table = QTableWidget()
+        self.sources_table.setColumnCount(2)
+        self.sources_table.setHorizontalHeaderLabels(["#", "اسم الجهة"])
+        self.sources_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.sources_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.sources_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.sources_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.sources_table.setAlternatingRowColors(True)
+        sources_layout.addWidget(self.sources_table)
+
+        # Alias for backward compatibility
+        self.sources_list = self.sources_table
+
+        deactivate_source_button = QPushButton("تعطيل جهة الإحالة المحدَّدة ⛔")
         deactivate_source_button.clicked.connect(self.deactivate_selected_source)
         sources_layout.addWidget(deactivate_source_button)
         layout.addWidget(sources_box)
@@ -541,13 +779,30 @@ class CatalogView(QWidget):
 
     def refresh_doctors_sources(self):
         self._doctors = catalog_service.get_doctors()
-        self.doctors_list.clear()
-        for d in self._doctors:
-            self.doctors_list.addItem(d["full_name"])
+        self.doctors_table.setRowCount(0)
+        for row_idx, d in enumerate(self._doctors):
+            self.doctors_table.insertRow(row_idx)
+            
+            item_id = QTableWidgetItem(str(d["id"]))
+            item_id.setTextAlignment(Qt.AlignCenter)
+            self.doctors_table.setItem(row_idx, 0, item_id)
+            
+            item_name = QTableWidgetItem(d["full_name"])
+            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.doctors_table.setItem(row_idx, 1, item_name)
+
         self._sources = catalog_service.get_referral_sources()
-        self.sources_list.clear()
-        for s in self._sources:
-            self.sources_list.addItem(s["name"])
+        self.sources_table.setRowCount(0)
+        for row_idx, s in enumerate(self._sources):
+            self.sources_table.insertRow(row_idx)
+            
+            item_id = QTableWidgetItem(str(s["id"]))
+            item_id.setTextAlignment(Qt.AlignCenter)
+            self.sources_table.setItem(row_idx, 0, item_id)
+            
+            item_name = QTableWidgetItem(s["name"])
+            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.sources_table.setItem(row_idx, 1, item_name)
 
     def add_doctor(self):
         name = self.new_doctor_edit.text().strip()
@@ -558,8 +813,8 @@ class CatalogView(QWidget):
         self.refresh_doctors_sources()
 
     def deactivate_selected_doctor(self):
-        row = self.doctors_list.currentRow()
-        if row < 0:
+        row = self.doctors_table.currentRow()
+        if row < 0 or row >= len(self._doctors):
             return
         catalog_service.deactivate_doctor(self._doctors[row]["id"])
         self.refresh_doctors_sources()
@@ -574,8 +829,8 @@ class CatalogView(QWidget):
         self._reload_sources_combo()
 
     def deactivate_selected_source(self):
-        row = self.sources_list.currentRow()
-        if row < 0:
+        row = self.sources_table.currentRow()
+        if row < 0 or row >= len(self._sources):
             return
         catalog_service.deactivate_referral_source(self._sources[row]["id"])
         self.refresh_doctors_sources()

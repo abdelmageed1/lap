@@ -1,5 +1,6 @@
 from PySide2.QtWidgets import (QCheckBox, QComboBox, QFrame, QGridLayout, QHBoxLayout, QLabel,
-                                QLineEdit, QListWidget, QPushButton, QTabWidget, QVBoxLayout, QWidget)
+                                QLineEdit, QListWidget, QMessageBox, QPushButton, QTabWidget, QVBoxLayout, QWidget)
+
 
 from app.services import user_service
 from app.ui.widgets import HintBanner
@@ -63,10 +64,33 @@ class UsersView(QWidget):
         list_card = QFrame()
         list_card.setObjectName("Card")
         list_layout = QVBoxLayout(list_card)
-        list_layout.addWidget(self._label_bold("المستخدمون"))
+        list_layout.addWidget(self._label_bold("المستخدمون المتاحون بالسيستم"))
         self.users_list = QListWidget()
         self.users_list.itemClicked.connect(self.on_select_user)
         list_layout.addWidget(self.users_list)
+
+        # Edit Username Row (اسم الدخول)
+        edit_username_row = QHBoxLayout()
+        self.edit_username_edit = QLineEdit()
+        self.edit_username_edit.setPlaceholderText("تعديل اسم الدخول (Username) للمستخدم المحدَّد...")
+        btn_update_username = QPushButton("تغيير اسم الدخول 🔑")
+        btn_update_username.setToolTip("تعديل اسم الدخول المستخدم لتسجيل الدخول للنظام (Username)")
+        btn_update_username.clicked.connect(self.update_selected_username)
+        edit_username_row.addWidget(self.edit_username_edit)
+        edit_username_row.addWidget(btn_update_username)
+        list_layout.addLayout(edit_username_row)
+
+        # Edit Fullname Row
+        edit_fullname_row = QHBoxLayout()
+        self.edit_fullname_edit = QLineEdit()
+        self.edit_fullname_edit.setPlaceholderText("تعديل الاسم بالكامل للمستخدم المحدَّد...")
+        btn_update_fullname = QPushButton("تغيير الاسم بالكامل ✏️")
+        btn_update_fullname.setToolTip("تعديل الاسم بالكامل المعروض للمستخدم في السجلات والطباعة")
+        btn_update_fullname.clicked.connect(self.update_selected_user_fullname)
+        edit_fullname_row.addWidget(self.edit_fullname_edit)
+        edit_fullname_row.addWidget(btn_update_fullname)
+        list_layout.addLayout(edit_fullname_row)
+
 
         selected_row = QHBoxLayout()
         self.toggle_active_button = QPushButton("تعطيل / تفعيل")
@@ -83,6 +107,26 @@ class UsersView(QWidget):
         reset_button.clicked.connect(self.reset_selected_user_password)
         selected_row.addWidget(reset_button)
         list_layout.addLayout(selected_row)
+
+        # Delete User Row
+        delete_row = QHBoxLayout()
+        self.delete_user_button = QPushButton("حذف حساب المستخدم 🗑️")
+        self.delete_user_button.setToolTip("حذف الحساب نهائيًا من السيستم (يتطلب موافقة وتأكيد كلمة سر الأدمن)")
+        self.delete_user_button.setStyleSheet("""
+            QPushButton {
+                background-color: #DC2626;
+                color: white;
+                font-weight: bold;
+                border-radius: 6px;
+                padding: 6px 14px;
+            }
+            QPushButton:hover {
+                background-color: #B91C1C;
+            }
+        """)
+        self.delete_user_button.clicked.connect(self.delete_selected_user)
+        delete_row.addWidget(self.delete_user_button)
+        list_layout.addLayout(delete_row)
 
         self.selected_user_message = QLabel("")
         list_layout.addWidget(self.selected_user_message)
@@ -110,8 +154,101 @@ class UsersView(QWidget):
     def on_select_user(self, item):
         row = self.users_list.row(item)
         self.selected_user_id = self.users[row]["id"]
-        self.selected_user_message.setText(f"محدَّد: {self.users[row]['username']}")
+        selected_user = self.users[row]
+        self.edit_username_edit.setText(selected_user["username"])
+        self.edit_fullname_edit.setText(selected_user["full_name"])
+        self.selected_user_message.setText(f"محدَّد: {selected_user['username']} ({selected_user['full_name']})")
         self.selected_user_message.setStyleSheet("color: #6B7280;")
+
+    def update_selected_username(self):
+        if self.selected_user_id is None:
+            self.selected_user_message.setText("اختر مستخدمًا أولًا")
+            self.selected_user_message.setStyleSheet("color: #C62828;")
+            return
+        new_username = self.edit_username_edit.text().strip()
+        if not new_username:
+            self.selected_user_message.setText("أدخل اسم الدخول الجديد (Username)")
+            self.selected_user_message.setStyleSheet("color: #C62828;")
+            return
+
+        from app.services import auth_service
+        from app.ui.patient_history_view import AdminPasswordConfirmDialog
+        dlg = AdminPasswordConfirmDialog(f"تأكيد تغيير اسم الدخول لـ {new_username}", self)
+        if dlg.exec_() != dlg.Accepted:
+            return
+        curr_uid = getattr(self.current_user, "user_id", None) if self.current_user else None
+        if not auth_service.verify_admin_password(dlg.get_password().strip(), user_id=curr_uid):
+            QMessageBox.warning(self, "خطأ الأمان", "كلمة سر الأدمن غير صحيحة! تعذر تغيير اسم الدخول.")
+            return
+
+        ok, msg = user_service.update_username(self.selected_user_id, new_username)
+        self.selected_user_message.setText(msg)
+        self.selected_user_message.setStyleSheet("color: #146C8E;" if ok else "color: #C62828;")
+        if ok:
+            self.refresh_users()
+
+
+    def update_selected_user_fullname(self):
+        if self.selected_user_id is None:
+            self.selected_user_message.setText("اختر مستخدمًا أولًا")
+            self.selected_user_message.setStyleSheet("color: #C62828;")
+            return
+        new_name = self.edit_fullname_edit.text().strip()
+        if not new_name:
+            self.selected_user_message.setText("أدخل الاسم بالكامل الجديد")
+            self.selected_user_message.setStyleSheet("color: #C62828;")
+            return
+
+        ok, msg = user_service.update_user_full_name(self.selected_user_id, new_name)
+        self.selected_user_message.setText(msg)
+        self.selected_user_message.setStyleSheet("color: #146C8E;" if ok else "color: #C62828;")
+        if ok:
+            self.refresh_users()
+
+    def delete_selected_user(self):
+        if self.selected_user_id is None:
+            self.selected_user_message.setText("اختر مستخدمًا أولًا")
+            self.selected_user_message.setStyleSheet("color: #C62828;")
+            return
+        current = next((u for u in self.users if u["id"] == self.selected_user_id), None)
+        if not current:
+            return
+
+        if current["username"].lower() == "admin":
+            QMessageBox.warning(self, "تنبيه الأمان", "لا يمكن حذف حساب المسؤول الرئيسي (admin).")
+            return
+
+        curr_uid = getattr(self.current_user, "user_id", None) if self.current_user else None
+        if curr_uid and self.selected_user_id == curr_uid:
+            QMessageBox.warning(self, "تنبيه الأمان", "لا يمكن حذف الحساب الذي تستخدمه حالياً للنظام.")
+            return
+
+        confirm = QMessageBox.question(
+            self, "تأكيد حذف المستخدم",
+            f"هل أنت تأكد من رغبتك في حذف حساب المستخدم النهائي ({current['full_name']} - {current['username']})؟",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+        )
+        if confirm != QMessageBox.Yes:
+            return
+
+        from app.services import auth_service
+        from app.ui.patient_history_view import AdminPasswordConfirmDialog
+        dlg = AdminPasswordConfirmDialog(f"تأكيد كلمة سر الأدمن لحذف حساب {current['username']}", self)
+        if dlg.exec_() != dlg.Accepted:
+            return
+        if not auth_service.verify_admin_password(dlg.get_password().strip(), user_id=curr_uid):
+            QMessageBox.warning(self, "خطأ الأمان", "كلمة سر الأدمن غير صحيحة! تعذر إتمام الحذف.")
+            return
+
+        ok, msg = user_service.delete_user(self.selected_user_id, current_user_id=curr_uid)
+        if ok:
+            QMessageBox.information(self, "تم الحذف", msg)
+            self.selected_user_id = None
+            self.edit_fullname_edit.clear()
+            self.refresh_users()
+        else:
+            QMessageBox.warning(self, "خطأ الحذف", msg)
+
 
     def toggle_selected_user_active(self):
         if self.selected_user_id is None:
@@ -125,6 +262,17 @@ class UsersView(QWidget):
             self.selected_user_message.setText("لا يمكن تعطيل حساب admin")
             self.selected_user_message.setStyleSheet("color: #C62828;")
             return
+
+        from app.services import auth_service
+        from app.ui.patient_history_view import AdminPasswordConfirmDialog
+        dlg = AdminPasswordConfirmDialog(f"تعديل حالة حساب {current['username']}", self)
+        if dlg.exec_() != dlg.Accepted:
+            return
+        user_id = getattr(self.current_user, "user_id", None) if self.current_user else None
+        if not auth_service.verify_admin_password(dlg.get_password().strip(), user_id=user_id):
+            QMessageBox.warning(self, "خطأ الأمان", "كلمة سر الأدمن غير صحيحة! تعذر إتمام التغيير.")
+            return
+
         new_active = not current["is_active"]
         user_service.set_user_active(self.selected_user_id, new_active)
         self.refresh_users()
@@ -147,15 +295,27 @@ class UsersView(QWidget):
             self.selected_user_message.setText("أدخل كلمة المرور الجديدة")
             self.selected_user_message.setStyleSheet("color: #C62828;")
             return
+
+        from app.services import auth_service
+        from app.ui.patient_history_view import AdminPasswordConfirmDialog
+        dlg = AdminPasswordConfirmDialog("إعادة تعيين كلمة المرور للمستخدم", self)
+        if dlg.exec_() != dlg.Accepted:
+            return
+        user_id = getattr(self.current_user, "user_id", None) if self.current_user else None
+        if not auth_service.verify_admin_password(dlg.get_password().strip(), user_id=user_id):
+            QMessageBox.warning(self, "خطأ الأمان", "كلمة سر الأدمن غير صحيحة! تعذر تعيين كلمة المرور.")
+            return
+
         user_service.reset_password(self.selected_user_id, new_password)
         self.new_password_edit.clear()
-        self.selected_user_message.setText("تم تغيير كلمة المرور")
+        self.selected_user_message.setText("تم تغيير كلمة المرور بنجاح")
         self.selected_user_message.setStyleSheet("color: #146C8E;")
         try:
             if self.current_user:
                 log_action('users', self.selected_user_id, 'ui_reset_password', user_id=self.current_user.user_id)
         except Exception:
             pass
+
 
     def add_user(self):
         username = self.username_edit.text().strip()

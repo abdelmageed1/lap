@@ -3,7 +3,7 @@ import os
 
 from PySide2.QtCore import Qt, Signal
 from PySide2.QtGui import QColor, QPainter
-from PySide2.QtWidgets import (QComboBox, QDialog, QFrame, QGridLayout, QHBoxLayout,
+from PySide2.QtWidgets import (QComboBox, QDialog, QFileDialog, QFrame, QGridLayout, QHBoxLayout,
                                 QLabel, QLineEdit, QListWidget, QMessageBox, QPushButton, QTableWidget,
                                 QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView)
 from app.ui.animated_button import AnimatedButton
@@ -12,11 +12,14 @@ try:
 except ImportError:
     from PySide6.QtCharts import QtCharts
 
-from app.config import BACKUPS_DIR
+from app.config import BACKUPS_DIR, get_exports_patients_dir
+from app.ui.animated_button import AnimatedButton
+from app.ui.dashboard_table_dialog import DashboardVisitsTableDialog
 from app.ui.styles import get_saved_theme
 from app.ui.widgets import HintBanner
 from app.services import result_service, visit_service
 from app.services.result_service import STATUS_LABELS
+
 
 
 class StatCard(QFrame):
@@ -105,42 +108,99 @@ class DetailDialog(QDialog):
             self.listw.addItem("لا توجد بيانات مطابقة للبحث")
 
 
+class ReferralReportDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("تقرير الأطباء والجهات المحوّلة 📊")
+        self.resize(750, 500)
+
+        layout = QVBoxLayout(self)
+        title = QLabel("إحصائيات وإيرادات الجهات والأطباء المحولين")
+        title.setStyleSheet("font-weight: bold; font-size: 15px; color: #0B4F6C;")
+        layout.addWidget(title)
+
+        self.table = QTableWidget()
+        self.table.setColumnCount(7)
+        self.table.setHorizontalHeaderLabels([
+            "جهة الإحالة", "اسم الطبيب", "عدد الزيارات", "إجمالي المبالغ", "إجمالي الخصم", "المدفوع", "المتبقي"
+        ])
+        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
+        layout.addWidget(self.table)
+
+        btn_row = QHBoxLayout()
+        export_btn = AnimatedButton("تصدير إلى CSV 📊")
+        export_btn.clicked.connect(self.export_csv)
+        close_btn = AnimatedButton("إغلاق")
+        close_btn.clicked.connect(self.accept)
+
+        btn_row.addWidget(export_btn)
+        btn_row.addStretch()
+        btn_row.addWidget(close_btn)
+        layout.addLayout(btn_row)
+
+        self.load_data()
+
+    def load_data(self):
+        self.report_data = visit_service.get_referral_financial_report()
+        self.table.setRowCount(len(self.report_data))
+        for i, r in enumerate(self.report_data):
+            self.table.setItem(i, 0, QTableWidgetItem(r["referral_source"]))
+            self.table.setItem(i, 1, QTableWidgetItem(r["doctor_name"]))
+            self.table.setItem(i, 2, QTableWidgetItem(str(r["visit_count"])))
+            self.table.setItem(i, 3, QTableWidgetItem(f"{r['total_amount']:.2f}"))
+            self.table.setItem(i, 4, QTableWidgetItem(f"{r['total_discount']:.2f}"))
+            self.table.setItem(i, 5, QTableWidgetItem(f"{r['total_paid']:.2f}"))
+            self.table.setItem(i, 6, QTableWidgetItem(f"{r['total_balance']:.2f}"))
+        self.table.resizeColumnsToContents()
+
+    def export_csv(self):
+        os.makedirs(BACKUPS_DIR, exist_ok=True)
+        path = os.path.join(BACKUPS_DIR, "referral_doctors_financial_report.csv")
+        with open(path, "w", encoding="utf-8-sig", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["جهة الإحالة", "اسم الطبيب", "عدد الزيارات", "إجمالي المبالغ", "إجمالي الخصم", "المدفوع", "المتبقي"])
+            for r in self.report_data:
+                writer.writerow([
+                    r["referral_source"], r["doctor_name"], r["visit_count"],
+                    f"{r['total_amount']:.2f}", f"{r['total_discount']:.2f}",
+                    f"{r['total_paid']:.2f}", f"{r['total_balance']:.2f}"
+                ])
+        QMessageBox.information(self, "تم التصدير", f"تم تصدير التقرير المالي للأطباء والجهات بنجاح إلى:\n{path}")
+
+
 class DashboardView(QWidget):
-    def __init__(self):
+    def __init__(self, current_user=None):
         super().__init__()
+        self.current_user = current_user
+        self.setObjectName("DashboardView")
         self.days_filter = 7
 
         layout = QVBoxLayout(self)
-        layout.setSpacing(10)
 
-        # Header Title & Filter Bar
-        header_row = QHBoxLayout()
-        title = QLabel("لوحة المتابعة والتحليلات")
+        header_layout = QHBoxLayout()
+        title = QLabel("لوحة المتابعة")
         title.setObjectName("PageTitle")
-        header_row.addWidget(title)
-        header_row.addStretch()
+        header_layout.addWidget(title)
+        header_layout.addStretch()
 
-        # Period Combo Filter
-        self.period_combo = QComboBox()
-        self.period_combo.addItems(["آخر 7 أيام", "آخر 30 يوماً"])
-        self.period_combo.setFixedWidth(140)
-        self.period_combo.currentIndexChanged.connect(self.on_period_changed)
-        header_row.addWidget(self.period_combo)
+        referral_report_btn = AnimatedButton("تقرير الأطباء والجهات 📊")
+        referral_report_btn.setToolTip("عرض التقرير المالي والإحصائي للجهات والأطباء المحولين مع التصدير")
+        referral_report_btn.clicked.connect(self.show_referral_report)
+        header_layout.addWidget(referral_report_btn)
 
-        # Refresh & Export Buttons
-        refresh_button = AnimatedButton("تحديث 🔄")
-        refresh_button.setObjectName("Primary")
-        refresh_button.clicked.connect(self.refresh)
-        header_row.addWidget(refresh_button)
+        period_combo = QComboBox()
+        period_combo.addItems(["آخر 7 أيام", "آخر 30 يومًا"])
+        period_combo.currentIndexChanged.connect(self.on_period_changed)
+        header_layout.addWidget(period_combo)
 
-        export_button = AnimatedButton("تصدير CSV 📊")
-        export_button.clicked.connect(self.export_summary)
-        header_row.addWidget(export_button)
+        export_btn = AnimatedButton("تصدير ملخص 📥")
+        export_btn.setToolTip("حفظ ملف CSV يحتوى على كافة الأرقام والإيرادات الحالية لتسهيل المراجعة المحاسبية")
+        export_btn.clicked.connect(self.export_summary)
+        header_layout.addWidget(export_btn)
 
-        layout.addLayout(header_row)
-
+        layout.addLayout(header_layout)
         layout.addWidget(HintBanner(
-            "تحليلات وإحصائيات المعمل اللحظية. اضغط على أي بطاقة لعرض التفاصيل الكاملة، أو تابع الحركة والرسوم البيانية أدناه."
+            "نظرة عامة على نشاط المعمل اليومي والأسبوعي والشهري، وإحصائيات الزيارات والإيرادات المباشرة والمتبقية."
         ))
 
         # Top 4 Hero Cards
@@ -300,50 +360,55 @@ class DashboardView(QWidget):
 
     def export_summary(self):
         snap = visit_service.dashboard_snapshot()
-        os.makedirs(BACKUPS_DIR, exist_ok=True)
-        path = os.path.join(BACKUPS_DIR, "dashboard_summary.csv")
-        with open(path, "w", encoding="utf-8-sig", newline="") as handle:
-            writer = csv.writer(handle)
-            writer.writerow(["المؤشر", "القيمة"])
-            writer.writerow(["زيارات اليوم", snap["visits_today"]])
-            writer.writerow(["إيرادات اليوم", f"{snap['revenue_today']:.2f}"])
-            writer.writerow(["زيارات آخر 7 أيام", snap["visits_week"]])
-            writer.writerow(["إيرادات آخر 7 أيام", f"{snap['revenue_week']:.2f}"])
-            writer.writerow(["زيارات هذا الشهر", snap["visits_month"]])
-            writer.writerow(["إيرادات هذا الشهر", f"{snap['revenue_month']:.2f}"])
-            writer.writerow(["مبالغ متبقية", f"{snap['outstanding']:.2f}"])
-            writer.writerow(["نتائج قيد الانتظار", snap["pending_results"]])
-            writer.writerow(["إجمالي المرضى", snap["total_patients"]])
-        QMessageBox.information(self, "تم التصدير", f"تم حفظ الملخص في:\n{path}")
+        from datetime import datetime as _dt
+        stamp = _dt.now().strftime("%Y-%m-%d_%H-%M")
+        default_path = os.path.join(get_exports_patients_dir(), f"dashboard_summary_{stamp}.csv")
+        path, _ = QFileDialog.getSaveFileName(
+            self, "تصدير ملخص الداشبورد", default_path, "CSV Files (*.csv)"
+        )
+        if not path:
+            return
+        try:
+            with open(path, "w", encoding="utf-8-sig", newline="") as handle:
+                writer = csv.writer(handle)
+                writer.writerow(["المؤشر", "القيمة"])
+                writer.writerow(["زيارات اليوم", snap["visits_today"]])
+                writer.writerow(["إيرادات اليوم", f"{snap['revenue_today']:.2f}"])
+                writer.writerow(["زيارات آخر 7 أيام", snap["visits_week"]])
+                writer.writerow(["إيرادات آخر 7 أيام", f"{snap['revenue_week']:.2f}"])
+                writer.writerow(["زيارات هذا الشهر", snap["visits_month"]])
+                writer.writerow(["إيرادات هذا الشهر", f"{snap['revenue_month']:.2f}"])
+                writer.writerow(["مبالغ متبقية", f"{snap['outstanding']:.2f}"])
+                writer.writerow(["نتائج قيد الانتظار", snap["pending_results"]])
+                writer.writerow(["إجمالي المرضى", snap["total_patients"]])
+            QMessageBox.information(
+                self, "✅ تم التصدير بنجاح",
+                f"تم تصدير ملخص الداشبورد بنجاح!\n\n"
+                f"📁 مسار الحفظ:\n{path}"
+            )
+        except Exception as exc:
+            QMessageBox.critical(self, "خطأ في التصدير", f"تعذر حفظ الملف:\n{exc}")
 
     def show_todays_visits(self):
+
         visits = visit_service.get_todays_visits()
-        lines = [
-            f"فاتورة {v['invoice_number']} - {v['patient_name']} - "
-            f"الإجمالي {v['total_amount']:.2f} - المدفوع {v['paid_amount']:.2f}"
-            for v in visits
-        ]
-        DetailDialog("زيارات اليوم", lines, parent=self).exec_()
+        DashboardVisitsTableDialog("📋 تفاصيل زيارات اليوم", visits, parent=self).exec_()
 
     def show_todays_revenue(self):
-        payments = visit_service.get_todays_payments()
-        lines = [
-            f"فاتورة {p['invoice_number']} - {p['patient_name']} - دفعة {p['amount']:.2f} - {p['paid_at'][11:16]}"
-            for p in payments
-        ]
-        DetailDialog("إيرادات اليوم (الدفعات المُسجَّلة)", lines, parent=self).exec_()
+        visits = visit_service.get_todays_visits()
+        DashboardVisitsTableDialog("💰 تحصيلات وإيرادات فواتير اليوم", visits, parent=self).exec_()
 
     def show_outstanding(self):
         visits = visit_service.get_outstanding_visits()
-        lines = [
-            f"فاتورة {v['invoice_number']} - {v['patient_name']} - المتبقي {v['balance']:.2f}"
-            for v in visits
-        ]
-        DetailDialog("زيارات بمبالغ متبقية", lines, parent=self).exec_()
+        DashboardVisitsTableDialog("⚠️ تفاصيل الزيارات المستحق عليها مبالغ متبقية", visits, parent=self).exec_()
 
     def show_pending_results(self):
         entry = result_service.get_pending_orders(limit=500)
         review = result_service.get_orders_pending_review(limit=500)
-        lines = [f"{o['test_name']} - {o['patient_name']} - {STATUS_LABELS.get('InProgress')}" for o in entry]
-        lines += [f"{o['test_name']} - {o['patient_name']} - {STATUS_LABELS.get('Completed')}" for o in review]
-        DetailDialog("نتائج قيد الانتظار", lines, parent=self).exec_()
+        all_pending = entry + review
+        DashboardVisitsTableDialog("⏳ تفاصيل النتائج قيد الإدخال والمراجعة", all_pending, parent=self).exec_()
+
+    def show_referral_report(self):
+        ReferralReportDialog(parent=self).exec_()
+
+

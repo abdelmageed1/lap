@@ -1,32 +1,48 @@
-import subprocess
 import sys
+from PySide2.QtWidgets import (QFrame, QHBoxLayout, QInputDialog, QLabel, QLineEdit, QListWidget, QListWidgetItem,
+                                QMessageBox, QPushButton, QScrollArea, QTabWidget, QVBoxLayout, QWidget)
 
-from PySide2.QtWidgets import (QFrame, QHBoxLayout, QLabel, QLineEdit, QListWidget, QListWidgetItem,
-                                QPushButton, QScrollArea, QTabWidget, QVBoxLayout, QWidget)
 
 from app.reports.lab_report import generate_lab_report_pdf
-from app.services import catalog_service, result_service
+from app.services import auth_service, catalog_service, result_service
 from app.services.result_service import FLAG_LABELS
+from app.ui.animated_button import AnimatedButton
 from app.ui.widgets import HintBanner
 
 
 class ResultsView(QWidget):
     def __init__(self, current_user=None):
         self.current_user = current_user
+        self.last_pdf_path = None
         super().__init__()
+
         outer = QVBoxLayout(self)
         title = QLabel("نتائج التحاليل")
         title.setObjectName("PageTitle")
         outer.addWidget(title)
         outer.addWidget(HintBanner(
             "الفني يدخل النتائج من تبويب «إدخال النتائج»، ثم يراجعها ويعتمدها مسؤول آخر من تبويب "
-            "«المراجعة والاعتماد» - ولا تُطبع أي نتيجة PDF إلا بعد الاعتماد."
+            "«المراجعة والاعتماد» - ولا تُطبع أي نتيجة PDF إلا بعد الاعتماد. "
+            "يُمكن للأدمن إعادة فتح النتائج المعتمدة من التبويب المخصص."
         ))
 
-        tabs = QTabWidget()
-        outer.addWidget(tabs)
-        tabs.addTab(self._build_entry_tab(), "إدخال النتائج")
-        tabs.addTab(self._build_review_tab(), "المراجعة والاعتماد")
+        self.tabs = QTabWidget()
+        outer.addWidget(self.tabs)
+        self.tabs.addTab(self._build_entry_tab(), "إدخال النتائج")
+        self.tabs.addTab(self._build_review_tab(), "المراجعة والاعتماد")
+
+        if self._is_admin():
+            self.tabs.addTab(self._build_reopen_tab(), "النتائج المعتمدة (إعادة فتح 🔓)")
+
+    def _is_admin(self) -> bool:
+        if not self.current_user:
+            return True
+        if hasattr(self.current_user, "can_delete") and self.current_user.can_delete("Results"):
+            return True
+        if hasattr(self.current_user, "role_name") and self.current_user.role_name in ("مدير النظام", "Admin"):
+            return True
+        return False
+
 
     def _label_bold(self, text):
         label = QLabel(text)
@@ -55,6 +71,9 @@ class ResultsView(QWidget):
     def refresh(self):
         self.refresh_entry()
         self.refresh_review()
+        if hasattr(self, "refresh_reopen"):
+            self.refresh_reopen()
+
 
     # ==================== Entry tab: technician writes the result ====================
     def _build_entry_tab(self):
@@ -73,6 +92,13 @@ class ResultsView(QWidget):
         list_card.setObjectName("Card")
         list_layout = QVBoxLayout(list_card)
         list_layout.addWidget(self._label_bold("التحاليل قيد الإدخال"))
+
+        self.entry_search_edit = QLineEdit()
+        self.entry_search_edit.setPlaceholderText("🔍 ابحث باسم المريض، رقم الفاتورة، أو التحليل...")
+        self.entry_search_edit.setStyleSheet("padding: 6px 10px; border-radius: 6px; border: 1px solid #CBD5E1;")
+        self.entry_search_edit.textChanged.connect(lambda _: self.refresh_entry())
+        list_layout.addWidget(self.entry_search_edit)
+
         self.pending_list = QListWidget()
         self.pending_list.setToolTip("اختر تحليلًا لبدء إدخال نتيجته")
         self.pending_list.itemClicked.connect(self.on_select_order)
@@ -119,21 +145,26 @@ class ResultsView(QWidget):
 
     def refresh_entry(self):
         self._offset = 0
-        self.pending_orders = result_service.get_pending_orders(limit=self._limit, offset=self._offset)
+        query = self.entry_search_edit.text().strip() if hasattr(self, "entry_search_edit") else ""
+        self.pending_orders = result_service.get_pending_orders(query=query, limit=self._limit, offset=self._offset)
         self.pending_list.clear()
         for o in self.pending_orders:
-            item = QListWidgetItem(f"{o['test_name']}\n{o['patient_name']}")
+            inv_str = f"فاتورة #{o.get('invoice_number', '-')}: " if o.get('invoice_number') else ""
+            item = QListWidgetItem(f"{inv_str}{o['test_name']}\n👤 {o['patient_name']}")
             self.pending_list.addItem(item)
 
     def load_more(self):
         self._offset += self._limit
-        more = result_service.get_pending_orders(limit=self._limit, offset=self._offset)
+        query = self.entry_search_edit.text().strip() if hasattr(self, "entry_search_edit") else ""
+        more = result_service.get_pending_orders(query=query, limit=self._limit, offset=self._offset)
         if not more:
             return
         self.pending_orders.extend(more)
         for o in more:
-            item = QListWidgetItem(f"{o['test_name']}\n{o['patient_name']}")
+            inv_str = f"فاتورة #{o.get('invoice_number', '-')}: " if o.get('invoice_number') else ""
+            item = QListWidgetItem(f"{inv_str}{o['test_name']}\n👤 {o['patient_name']}")
             self.pending_list.addItem(item)
+
 
     def on_select_order(self, item):
         row = self.pending_list.row(item)
@@ -247,6 +278,13 @@ class ResultsView(QWidget):
         list_card.setObjectName("Card")
         list_layout = QVBoxLayout(list_card)
         list_layout.addWidget(self._label_bold("بانتظار المراجعة"))
+
+        self.review_search_edit = QLineEdit()
+        self.review_search_edit.setPlaceholderText("🔍 ابحث باسم المريض، رقم الفاتورة، أو التحليل...")
+        self.review_search_edit.setStyleSheet("padding: 6px 10px; border-radius: 6px; border: 1px solid #CBD5E1;")
+        self.review_search_edit.textChanged.connect(lambda _: self.refresh_review())
+        list_layout.addWidget(self.review_search_edit)
+
         self.review_list = QListWidget()
         self.review_list.itemClicked.connect(self.on_select_review_order)
         list_layout.addWidget(self.review_list)
@@ -276,9 +314,28 @@ class ResultsView(QWidget):
         self.reject_button = QPushButton("إرجاع للتعديل")
         self.reject_button.setToolTip("لو وُجد خطأ في القيم، يعيد التحليل لتبويب الإدخال لتصحيحه")
         self.reject_button.clicked.connect(self.reject_current_order)
+
+        self.open_location_button = AnimatedButton("فتح موقع الملف 📁")
+        self.open_location_button.setToolTip("فتح مستكشف الملفات (File Explorer) لتحديد مجلد حفظ تقرير الـ PDF")
+        self.open_location_button.setStyleSheet("""
+            QPushButton {
+                background-color: #0F766E;
+                color: white;
+                font-weight: bold;
+                border-radius: 6px;
+                padding: 6px 14px;
+            }
+            QPushButton:hover {
+                background-color: #0D9488;
+            }
+        """)
+        self.open_location_button.clicked.connect(lambda: self.open_file_location())
+
         review_buttons.addWidget(self.approve_button)
+        review_buttons.addWidget(self.open_location_button)
         review_buttons.addWidget(self.reject_button)
         self.review_detail_layout.addLayout(review_buttons)
+
 
         self.review_message = QLabel("")
         self.review_message.setWordWrap(True)
@@ -291,22 +348,27 @@ class ResultsView(QWidget):
 
     def refresh_review(self):
         self._review_offset = 0
-        self.review_orders = result_service.get_orders_pending_review(limit=self._review_limit, offset=self._review_offset)
+        query = self.review_search_edit.text().strip() if hasattr(self, "review_search_edit") else ""
+        self.review_orders = result_service.get_orders_pending_review(query=query, limit=self._review_limit, offset=self._review_offset)
         self.review_list.clear()
         for o in self.review_orders:
-            self.review_list.addItem(QListWidgetItem(f"{o['test_name']}\n{o['patient_name']}"))
+            inv_str = f"فاتورة #{o.get('invoice_number', '-')}: " if o.get('invoice_number') else ""
+            self.review_list.addItem(QListWidgetItem(f"{inv_str}{o['test_name']}\n👤 {o['patient_name']}"))
         self.current_review_order_id = None
         self.review_title.setText("اختر تحليلًا لمراجعته")
         self._clear_review_values()
 
     def load_more_review(self):
         self._review_offset += self._review_limit
-        more = result_service.get_orders_pending_review(limit=self._review_limit, offset=self._review_offset)
+        query = self.review_search_edit.text().strip() if hasattr(self, "review_search_edit") else ""
+        more = result_service.get_orders_pending_review(query=query, limit=self._review_limit, offset=self._review_offset)
         if not more:
             return
         self.review_orders.extend(more)
         for o in more:
-            self.review_list.addItem(QListWidgetItem(f"{o['test_name']}\n{o['patient_name']}"))
+            inv_str = f"فاتورة #{o.get('invoice_number', '-')}: " if o.get('invoice_number') else ""
+            self.review_list.addItem(QListWidgetItem(f"{inv_str}{o['test_name']}\n👤 {o['patient_name']}"))
+
 
     def _clear_review_values(self):
         while self.review_values_layout.count():
@@ -393,8 +455,13 @@ class ResultsView(QWidget):
 
         def _on_done(path):
             self.approve_button.setEnabled(True)
-            self.review_message.setText("تم اعتماد النتيجة، وتم فتح تقرير PDF جاهز للطباعة.")
-            self.review_message.setStyleSheet("color: #146C8E;")
+            self.last_pdf_path = path
+            self.review_message.setText(
+                f"✅ تم اعتماد النتيجة بنجاح!\n"
+                f"📁 تم حفظ الملف في المسار: {path}\n"
+                f"🖨️ تم فتح تقرير PDF تلقائيًا للطباعة."
+            )
+            self.review_message.setStyleSheet("color: #146C8E; font-weight: bold;")
             self._open_file(path)
             self.refresh_review()
 
@@ -406,6 +473,45 @@ class ResultsView(QWidget):
         from app.utils.worker import run_in_background
         run_in_background(_generate_pdf, on_success=_on_done, on_error=_on_err)
 
+    def _open_file(self, path):
+        try:
+            if sys.platform == "win32":
+                import os
+                os.startfile(path)  # noqa
+            elif sys.platform == "darwin":
+                import subprocess
+                subprocess.Popen(["open", path])
+            else:
+                import subprocess
+                subprocess.Popen(["xdg-open", path])
+        except Exception:
+            pass
+
+    def open_file_location(self, target_path=None):
+        import os
+        import subprocess
+        from app.config import REPORTS_DIR
+        path = target_path or self.last_pdf_path or REPORTS_DIR
+        try:
+            if os.path.exists(path):
+                if sys.platform == "win32":
+                    if os.path.isfile(path):
+                        subprocess.Popen(f'explorer /select,"{os.path.normpath(path)}"')
+                    else:
+                        os.startfile(path)
+                elif sys.platform == "darwin":
+                    subprocess.Popen(["open", "-R" if os.path.isfile(path) else "", path])
+                else:
+                    subprocess.Popen(["xdg-open", os.path.dirname(path) if os.path.isfile(path) else path])
+            else:
+                os.makedirs(REPORTS_DIR, exist_ok=True)
+                if sys.platform == "win32":
+                    os.startfile(REPORTS_DIR)
+        except Exception as exc:
+            QMessageBox.warning(self, "خطأ فتح المجلد", f"تعذر فتح مسار الملف: {exc}")
+
+
+
     def reject_current_order(self):
         if self.current_review_order_id is None:
             return
@@ -414,3 +520,141 @@ class ResultsView(QWidget):
         self.review_message.setStyleSheet("color: #6B7280;")
         self.refresh_review()
         self.refresh_entry()
+
+    # ==================== Re-open tab: Admin can re-open reviewed orders ====================
+    def _build_reopen_tab(self):
+        widget = QWidget()
+        self.reopen_orders = []
+        self.current_reopen_order_id = None
+        self._reopen_limit = 50
+        self._reopen_offset = 0
+
+        outer = QVBoxLayout(widget)
+        columns = QHBoxLayout()
+        outer.addLayout(columns)
+
+        list_card = QFrame()
+        list_card.setObjectName("Card")
+        list_layout = QVBoxLayout(list_card)
+        list_layout.addWidget(self._label_bold("النتائج المعتمدة مسبقًا"))
+
+        self.reopen_search_edit = QLineEdit()
+        self.reopen_search_edit.setPlaceholderText("🔍 ابحث باسم المريض، رقم الفاتورة، أو التحليل...")
+        self.reopen_search_edit.setStyleSheet("padding: 6px 10px; border-radius: 6px; border: 1px solid #CBD5E1;")
+        self.reopen_search_edit.textChanged.connect(lambda _: self.refresh_reopen())
+        list_layout.addWidget(self.reopen_search_edit)
+
+        self.reopen_list = QListWidget()
+        self.reopen_list.itemClicked.connect(self.on_select_reopen_order)
+        list_layout.addWidget(self.reopen_list)
+        columns.addWidget(list_card, 1)
+
+        detail_card = QFrame()
+        detail_card.setObjectName("Card")
+        self.reopen_detail_layout = QVBoxLayout(detail_card)
+        self.reopen_title = self._label_bold("اختر نتيجة معتمدة لعرضها أو إعادتها للتعديل")
+        self.reopen_detail_layout.addWidget(self.reopen_title)
+
+        self.reopen_scroll = QScrollArea()
+        self.reopen_scroll.setWidgetResizable(True)
+        self.reopen_values_container = QWidget()
+        self.reopen_values_layout = QVBoxLayout(self.reopen_values_container)
+        self.reopen_scroll.setWidget(self.reopen_values_container)
+        self.reopen_detail_layout.addWidget(self.reopen_scroll)
+
+        reopen_btn_row = QHBoxLayout()
+        self.reopen_button = AnimatedButton("إعادة الفتح للتعديل 🔓")
+        self.reopen_button.setToolTip("يعيد هذه النتيجة المعتمدة إلى قائمة الإدخال للتعديل بطلب موافقة الأدمن")
+        self.reopen_button.setStyleSheet("""
+            QPushButton {
+                background-color: #D97706;
+                color: white;
+                font-weight: bold;
+                border-radius: 6px;
+                padding: 8px 18px;
+            }
+            QPushButton:hover {
+                background-color: #B45309;
+            }
+        """)
+        self.reopen_button.clicked.connect(self.reopen_current_order)
+        reopen_btn_row.addWidget(self.reopen_button)
+        self.reopen_detail_layout.addLayout(reopen_btn_row)
+
+        self.reopen_message = QLabel("")
+        self.reopen_message.setWordWrap(True)
+        self.reopen_detail_layout.addWidget(self.reopen_message)
+
+        columns.addWidget(detail_card, 2)
+        self.refresh_reopen()
+        return widget
+
+    def refresh_reopen(self):
+        if not self._is_admin():
+            return
+        self._reopen_offset = 0
+        query = self.reopen_search_edit.text().strip() if hasattr(self, "reopen_search_edit") else ""
+        self.reopen_orders = result_service.get_reviewed_orders(query=query, limit=self._reopen_limit, offset=self._reopen_offset)
+        self.reopen_list.clear()
+        for o in self.reopen_orders:
+            inv_str = f"فاتورة #{o.get('invoice_number', '-')}: " if o.get('invoice_number') else ""
+            self.reopen_list.addItem(QListWidgetItem(f"{inv_str}{o['test_name']}\n👤 {o['patient_name']} (معتمدة)"))
+        self.current_reopen_order_id = None
+        self.reopen_title.setText("اختر نتيجة معتمدة لعرضها أو إعادتها للتعديل")
+        self._clear_reopen_values()
+
+
+    def _clear_reopen_values(self):
+        while self.reopen_values_layout.count():
+            child = self.reopen_values_layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+    def on_select_reopen_order(self, item):
+        row = self.reopen_list.row(item)
+        if row < 0 or row >= len(self.reopen_orders):
+            return
+        order_id = self.reopen_orders[row]["id"]
+        self.current_reopen_order_id = order_id
+        data = result_service.get_report_data(order_id)
+        self._clear_reopen_values()
+        if data is None:
+            return
+        self.reopen_title.setText(f"{data['test_name']} - {data['patient_name']} (معتمدة)")
+        for p in data["parameters"]:
+            value = p["numeric_value"] if p["numeric_value"] is not None else (p.get("text_value") or "-")
+            range_text = self._get_range_text(p)
+            unit_text = p.get("unit") or "-"
+            card = QFrame()
+            card.setStyleSheet("background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 6px; margin-bottom: 4px;")
+            l = QHBoxLayout(card)
+            l.addWidget(QLabel(f"<b>{p['name']}</b> ({unit_text}): {value}"))
+            l.addStretch()
+            l.addWidget(QLabel(f"المدى: {range_text}"))
+            self.reopen_values_layout.addWidget(card)
+        self.reopen_values_layout.addStretch()
+
+    def reopen_current_order(self):
+        if self.current_reopen_order_id is None:
+            QMessageBox.warning(self, "تنبيه", "اختر نتيجة معتمدة أولاً لإعادة فتحها")
+            return
+        reason, ok = QInputDialog.getText(self, "سبب إعادة الفتح", "يرجى كتابة سبب إعادة فتح النتيجة المعتمدة للتعديل:")
+        if not ok or not reason.strip():
+            QMessageBox.warning(self, "تنبيه", "يجب كتابة سبب لإعادة الفتح")
+            return
+
+        from app.ui.patient_history_view import AdminPasswordConfirmDialog
+        dlg = AdminPasswordConfirmDialog(self.reopen_title.text(), self)
+        if dlg.exec_() == dlg.Accepted:
+            password = dlg.get_password().strip()
+            if not auth_service.verify_admin_password(password, user_id=self._current_user_id()):
+                QMessageBox.warning(self, "خطأ", "كلمة سر الأدمن غير صحيحة! تعذر إعادة فتح النتيجة.")
+                return
+            
+            success, msg = result_service.reopen_reviewed_order(self.current_reopen_order_id, user_id=self._current_user_id(), reason=reason.strip())
+            if success:
+                QMessageBox.information(self, "تمت العملية", msg)
+                self.refresh()
+            else:
+                QMessageBox.critical(self, "خطأ", msg)
+
