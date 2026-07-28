@@ -71,6 +71,30 @@ def test_seed_grants_settings_access_to_admin_role(tmp_path, monkeypatch):
         conn.close()
 
 
+def test_catalog_dashboard_stats_count_active_and_inactive_tests(tmp_path, monkeypatch):
+    monkeypatch.setattr(db, "DATABASE_PATH", str(tmp_path / "catalog_stats.db"))
+    db.init_schema()
+    from app.seed import seed_if_empty
+    seed_if_empty()
+
+    conn = db.get_connection()
+    try:
+        test_id = conn.execute("SELECT id FROM tests ORDER BY id LIMIT 1").fetchone()["id"]
+        conn.execute("UPDATE tests SET is_active = 0 WHERE id = ?", (test_id,))
+        conn.commit()
+    finally:
+        conn.close()
+
+    stats = catalog_service.get_catalog_dashboard_stats()
+
+    assert stats["total_tests"] >= 1
+    assert stats["active_tests"] >= 0
+    assert stats["inactive_tests"] >= 1
+    assert stats["total_departments"] >= 1
+    assert stats["total_referral_sources"] >= 1
+    assert stats["total_doctors"] >= 1
+
+
 def test_catalog_export_import_round_trip(tmp_path, monkeypatch):
     """Export full catalog then re-import into fresh DB – all tests must round-trip cleanly."""
     monkeypatch.setattr(db, "DATABASE_PATH", str(tmp_path / "catalog_io.db"))

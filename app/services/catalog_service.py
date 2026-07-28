@@ -68,7 +68,12 @@ def delete_department(department_id: int) -> tuple[bool, str]:
         conn.close()
 
 
-def search_tests(name_contains: str = "", department_id: int = None, include_inactive: bool = False):
+def search_tests(name_contains: str = "", department_id: int = None, include_inactive: bool = False,
+                 limit: int = 300, offset: int = 0):
+    """Search tests with optional limit/offset for pagination.
+
+    Defaults to `limit=300` to preserve previous behaviour when callers don't pass limits.
+    """
     conn = get_connection()
     try:
         sql = ("SELECT t.*, d.name department_name FROM tests t "
@@ -83,8 +88,31 @@ def search_tests(name_contains: str = "", department_id: int = None, include_ina
         if department_id:
             sql += " AND t.department_id = ?"
             params.append(department_id)
-        sql += " ORDER BY t.name LIMIT 300"
+        sql += " ORDER BY t.name"
+        if limit is not None:
+            sql += " LIMIT ? OFFSET ?"
+            params += [limit, offset]
         return [dict(r) for r in conn.execute(sql, params).fetchall()]
+    finally:
+        conn.close()
+
+
+def count_tests(name_contains: str = "", department_id: int = None, include_inactive: bool = False) -> int:
+    """Return the total number of tests matching the filters (ignores pagination)."""
+    conn = get_connection()
+    try:
+        sql = "SELECT COUNT(*) c FROM tests WHERE 1=1"
+        params = []
+        if not include_inactive:
+            sql += " AND is_active = 1"
+        if name_contains:
+            sql += " AND (name LIKE ? OR abbreviation LIKE ?)"
+            like = f"%{name_contains}%"
+            params += [like, like]
+        if department_id:
+            sql += " AND department_id = ?"
+            params.append(department_id)
+        return conn.execute(sql, params).fetchone()["c"]
     finally:
         conn.close()
 
@@ -421,6 +449,27 @@ def save_lab_settings(settings: dict) -> None:
         conn.close()
 
 
+
+
+def get_catalog_dashboard_stats() -> dict:
+    conn = get_connection()
+    try:
+        total_tests = conn.execute("SELECT COUNT(*) c FROM tests").fetchone()["c"]
+        active_tests = conn.execute("SELECT COUNT(*) c FROM tests WHERE is_active = 1").fetchone()["c"]
+        inactive_tests = conn.execute("SELECT COUNT(*) c FROM tests WHERE is_active = 0").fetchone()["c"]
+        total_departments = conn.execute("SELECT COUNT(*) c FROM departments").fetchone()["c"]
+        total_referral_sources = conn.execute("SELECT COUNT(*) c FROM referral_sources WHERE is_active = 1").fetchone()["c"]
+        total_doctors = conn.execute("SELECT COUNT(*) c FROM doctors WHERE is_active = 1").fetchone()["c"]
+        return {
+            "total_tests": total_tests,
+            "active_tests": active_tests,
+            "inactive_tests": inactive_tests,
+            "total_departments": total_departments,
+            "total_referral_sources": total_referral_sources,
+            "total_doctors": total_doctors,
+        }
+    finally:
+        conn.close()
 
 
 def get_settings_dashboard_data() -> dict:

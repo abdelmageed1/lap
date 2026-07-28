@@ -12,7 +12,6 @@ from app.ui.widgets import HintBanner
 DATA_TYPES = ["Numeric", "Text"]
 SEX_OPTIONS = ["Both", "Male", "Female"]
 
-
 class CatalogView(QWidget):
     def __init__(self, current_user=None):
         super().__init__()
@@ -22,11 +21,14 @@ class CatalogView(QWidget):
         title = QLabel("📋 كتالوج التحاليل وإدارة النظام")
         title.setObjectName("PageTitle")
         outer.addWidget(title)
-        
-        outer.addWidget(HintBanner(
+
+        self.catalog_header_hint = HintBanner(
             "تتيح لك هذه الشاشة إدارة كتالوج التحاليل بالكامل: تعديل الأسماء والأقسام، إضافة وتحديد المعايير والمدى الطبيعي، "
             "ضبط أسعار جهات الإحالة المختلفة، وإدارة قوائم الأطباء والأقسام الطبية."
-        ))
+        )
+        self.catalog_header_hint.setObjectName("HintBanner")
+
+        outer.addWidget(self.catalog_header_hint)
 
         tabs = QTabWidget()
         outer.addWidget(tabs)
@@ -34,6 +36,25 @@ class CatalogView(QWidget):
         tabs.addTab(self._build_new_test_tab(), "➕ تحليل جديد")
         tabs.addTab(self._build_departments_tab(), "🏛️ الأقسام الطبية")
         tabs.addTab(self._build_sources_tab(), "👨‍⚕️ الأطباء وجهات الإحالة")
+
+    def _build_summary_card(self, title: str, value: str, subtitle: str = "") -> QWidget:
+        card = QFrame()
+        card.setObjectName("Card")
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(10, 10, 10, 10)
+        title_label = QLabel(title)
+        title_label.setStyleSheet("font-size: 10.5px; color: #64748b; font-weight: 700; letter-spacing: 0.2px;")
+        value_label = QLabel(value)
+        value_label.setObjectName("SummaryValueLabel")
+        value_label.setStyleSheet("font-size: 22px; font-weight: 700; color: #0B4F6C;")
+        layout.addWidget(title_label)
+        layout.addWidget(value_label)
+        card.value_label = value_label
+        if subtitle:
+            subtitle_label = QLabel(subtitle)
+            subtitle_label.setStyleSheet("font-size: 10px; color: #94a3b8;")
+            layout.addWidget(subtitle_label)
+        return card
 
     def _label_bold(self, text):
         label = QLabel(text)
@@ -57,6 +78,16 @@ class CatalogView(QWidget):
         left.setObjectName("Card")
         left_layout = QVBoxLayout(left)
         left_layout.addWidget(self._label_bold("🔍 قائمة التحاليل والاختبارات"))
+        left_layout.setSpacing(8)
+
+        stats_row = QHBoxLayout()
+        self.stats_cards = []
+        self.stats_cards.append(self._build_summary_card("إجمالي التحاليل", "0", "كل البيانات المسجلة"))
+        self.stats_cards.append(self._build_summary_card("نشط", "0", "متاح في الاستقبال"))
+        self.stats_cards.append(self._build_summary_card("معطّل", "0", "غير ظاهر حالياً"))
+        for card in self.stats_cards:
+            stats_row.addWidget(card, 1)
+        left_layout.addLayout(stats_row)
 
         # Filter row 1: Text search
         search_row = QHBoxLayout()
@@ -95,12 +126,54 @@ class CatalogView(QWidget):
         self.test_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.test_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.test_table.setAlternatingRowColors(True)
+        self.test_table.setSortingEnabled(True)
+        self.test_table.setShowGrid(False)
+        self.test_table.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.test_table.setCornerButtonEnabled(False)
+        self.test_table.verticalHeader().setVisible(False)
+        self.test_table.setStyleSheet(
+            "QTableWidget::item { padding: 7px 6px; } "
+            "QTableWidget::item:selected { background-color: #EAF4F8; color: #0B4F6C; }"
+        )
         self.test_table.itemClicked.connect(self.show_test_details)
         left_layout.addWidget(self.test_table)
 
         self.test_count_label = QLabel("العدد: 0")
         self.test_count_label.setStyleSheet("color: #666; font-size: 11px;")
         left_layout.addWidget(self.test_count_label)
+
+        quick_actions = QHBoxLayout()
+        clear_filter_button = QPushButton("مسح المرشحات")
+        clear_filter_button.clicked.connect(self._clear_filters)
+        quick_actions.addWidget(clear_filter_button)
+        left_layout.addLayout(quick_actions)
+
+        # Pagination controls: page-size selector + prev/next buttons
+        page_ctrl_row = QHBoxLayout()
+        page_ctrl_row.addWidget(QLabel("حجم الصفحة:"))
+        self.page_size_combo = QComboBox()
+        self.page_size_combo.addItems(["50", "100", "300", "عرض الكل"])
+        self.page_size_combo.setCurrentText("300")
+        self.page_size_combo.currentIndexChanged.connect(self._on_page_size_changed)
+        page_ctrl_row.addWidget(self.page_size_combo)
+
+        self.prev_button = QPushButton("السابق")
+        self.prev_button.clicked.connect(lambda: self._change_page(-1))
+        page_ctrl_row.addWidget(self.prev_button)
+
+        self.page_label = QLabel("")
+        page_ctrl_row.addWidget(self.page_label)
+
+        self.next_button = QPushButton("التالي")
+        self.next_button.clicked.connect(lambda: self._change_page(1))
+        page_ctrl_row.addWidget(self.next_button)
+
+        left_layout.addLayout(page_ctrl_row)
+
+        # Pagination state
+        self.page_size = 300
+        self.current_page = 1
+        self.total_matching = 0
 
         # Alias for backward compatibility
         self.test_list = self.test_table
@@ -154,6 +227,8 @@ class CatalogView(QWidget):
         self.parameters_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.parameters_table.setAlternatingRowColors(True)
         self.parameters_table.setMaximumHeight(160)
+        self.parameters_table.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.parameters_table.setStyleSheet("QTableWidget::item { padding: 5px; } QTableWidget::item:selected { background-color: #EAF4F8; color: #0B4F6C; }")
         self.parameters_table.itemClicked.connect(self.show_parameter_ranges)
         middle_layout.addWidget(self.parameters_table)
 
@@ -226,6 +301,8 @@ class CatalogView(QWidget):
         self.ranges_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.ranges_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.ranges_table.setAlternatingRowColors(True)
+        self.ranges_table.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.ranges_table.setStyleSheet("QTableWidget::item { padding: 5px; } QTableWidget::item:selected { background-color: #EAF4F8; color: #0B4F6C; }")
         right_layout.addWidget(self.ranges_table)
 
         # Alias for backward compatibility
@@ -292,35 +369,78 @@ class CatalogView(QWidget):
         self.search_tests()
         return widget
 
-    def search_tests(self):
+    def _clear_filters(self):
+        if hasattr(self, "test_search_edit"):
+            self.test_search_edit.clear()
+        if hasattr(self, "filter_dept_combo"):
+            self.filter_dept_combo.setCurrentIndex(0)
+        if hasattr(self, "include_inactive_check"):
+            self.include_inactive_check.setChecked(False)
+        self.current_page = 1
+        self.search_tests()
+
+    def _load_more_tests(self):
+        # Load the next page of results and append to the table
+        # Compatibility: if 'عرض الكل' selected, nothing to load
+        if self.page_size == 0:
+            return
+        # Move to next page and refresh
+        self.current_page += 1
+        self.search_tests()
+
+    def _change_page(self, delta: int):
+        if self.page_size == 0:
+            return
+        # compute total pages
+        total_pages = max(1, (self.total_matching + self.page_size - 1) // self.page_size)
+        new_page = max(1, min(total_pages, self.current_page + delta))
+        if new_page == self.current_page:
+            return
+        self.current_page = new_page
+        self.search_tests()
+
+    def _on_page_size_changed(self, idx: int):
+        text = self.page_size_combo.currentText()
+        if text == "عرض الكل":
+            self.page_size = 0
+        else:
+            try:
+                self.page_size = int(text)
+            except Exception:
+                self.page_size = 300
+        self.current_page = 1
+        self.search_tests()
+
+    def search_tests(self, append: bool = False):
         query = self.test_search_edit.text().strip()
         dept_id = self.filter_dept_combo.currentData() if hasattr(self, "filter_dept_combo") else None
         include_inactive = self.include_inactive_check.isChecked()
 
-        self.test_search_results = catalog_service.search_tests(
-            query, department_id=dept_id, include_inactive=include_inactive
+        # Determine limit/offset based on current page and page_size
+        limit = None if self.page_size == 0 else self.page_size
+        offset = 0 if self.current_page <= 1 else (self.current_page - 1) * (self.page_size or 0)
+
+        # Clear table when not appending
+        if not append:
+            self.test_table.setRowCount(0)
+
+        results = catalog_service.search_tests(
+            query, department_id=dept_id, include_inactive=include_inactive,
+            limit=limit, offset=offset
         )
 
-        self.test_table.setRowCount(0)
-        for row_idx, t in enumerate(self.test_search_results):
+        for t in results:
+            row_idx = self.test_table.rowCount()
             self.test_table.insertRow(row_idx)
-            
-            # Name
             item_name = QTableWidgetItem(t['name'])
             item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
             self.test_table.setItem(row_idx, 0, item_name)
-            
-            # Abbr
             item_abbr = QTableWidgetItem(t.get('abbreviation') or "-")
             item_abbr.setTextAlignment(Qt.AlignCenter)
             self.test_table.setItem(row_idx, 1, item_abbr)
-            
-            # Dept
             item_dept = QTableWidgetItem(t.get('department_name') or "-")
             item_dept.setTextAlignment(Qt.AlignCenter)
             self.test_table.setItem(row_idx, 2, item_dept)
-            
-            # Status
             status_text = "🟢 نشط" if t['is_active'] else "🔴 معطَّل"
             item_status = QTableWidgetItem(status_text)
             item_status.setTextAlignment(Qt.AlignCenter)
@@ -328,8 +448,29 @@ class CatalogView(QWidget):
                 item_status.setForeground(Qt.red)
             self.test_table.setItem(row_idx, 3, item_status)
 
+        # Update totals and page UI
+        self.total_matching = catalog_service.count_tests(query, department_id=dept_id, include_inactive=include_inactive)
+        loaded = self.test_table.rowCount()
         if hasattr(self, "test_count_label"):
-            self.test_count_label.setText(f"العدد الإجمالي: {len(self.test_search_results)} تحليل")
+            self.test_count_label.setText(f"عرض {loaded} من {self.total_matching} نتيجة")
+
+        stats = catalog_service.get_catalog_dashboard_stats()
+        if hasattr(self, "stats_cards"):
+            self.stats_cards[0].value_label.setText(str(stats["total_tests"]))
+            self.stats_cards[1].value_label.setText(str(stats["active_tests"]))
+            self.stats_cards[2].value_label.setText(str(stats["inactive_tests"]))
+
+        # Update pagination controls
+        if self.page_size == 0:
+            # 'عرض الكل' selected
+            self.page_label.setText("صفحة 1 من 1")
+            self.prev_button.setEnabled(False)
+            self.next_button.setEnabled(False)
+        else:
+            total_pages = max(1, (self.total_matching + self.page_size - 1) // self.page_size)
+            self.page_label.setText(f"صفحة {self.current_page} من {total_pages}")
+            self.prev_button.setEnabled(self.current_page > 1)
+            self.next_button.setEnabled(self.current_page < total_pages)
 
     def show_test_details(self, *args):
         row = self.test_table.currentRow()

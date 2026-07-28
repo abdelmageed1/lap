@@ -88,6 +88,11 @@ QFrame#Card {
     border-radius: 10px;
     border: 1px solid #E5E7EB;
 }
+QLabel#SummaryValueLabel {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0B4F6C;
+}
 QPushButton#Primary {
     background-color: #146C8E;
     color: white;
@@ -151,11 +156,16 @@ QTableWidget {
     border: 1px solid #E5E7EB;
     border-radius: 6px;
     gridline-color: #F0F1F3;
+    selection-background-color: #EAF4F8;
+    selection-color: #0B4F6C;
+}
+QTableWidget::item {
+    padding: 6px;
 }
 QHeaderView::section {
     background-color: #146C8E;
     color: white;
-    padding: 7px;
+    padding: 8px;
     border: none;
     font-weight: bold;
 }
