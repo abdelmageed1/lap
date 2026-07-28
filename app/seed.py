@@ -59,6 +59,7 @@ def seed_if_empty() -> None:
 
         _ensure_reference_defaults(conn)
         _backfill_missing_module_permissions(conn)
+        _backfill_new_profile_breakdowns(conn)
     finally:
         conn.close()
 
@@ -112,6 +113,101 @@ def _backfill_missing_module_permissions(conn) -> None:
                 "VALUES (?, ?, ?, ?, ?, ?)",
                 (role_id, module_key, grant, grant, grant, grant),
             )
+    conn.commit()
+
+
+def _backfill_new_profile_breakdowns(conn) -> None:
+    """Ensure existing databases get new profile parameters added in this round.
+
+    Rules (safe for production databases with existing patient results):
+    - If a test still has only the generic single "النتيجة" parameter AND no
+      result has been entered under it, replace it with the real breakdown from
+      profiles.json.
+    - If any result already exists for the test, leave it completely untouched.
+    - If a specific named parameter (e.g. "Color Index") is missing from an
+      otherwise-expanded test, add just that parameter without touching others.
+    """
+    profiles_data = _load("profiles.json")
+    profile_map = {
+        e["attachKey"]: e["parameters"]
+        for e in profiles_data.get("profiles", [])
+        if e.get("attachKey")  # skip entries that use "newTest" key instead
+    }
+
+    # Resolve attach keys to test_ids using the tests table
+    tests = conn.execute("SELECT id, name FROM tests").fetchall()
+
+    # Build a rough key→id map the same way _seed_catalog does (lowercase, no spaces)
+    def _to_key(name: str) -> str:
+        return name.lower().replace(" ", "").replace("-", "").replace("_", "")
+
+    test_key_to_id = {_to_key(t["name"]): t["id"] for t in tests}
+
+    for attach_key, new_params in profile_map.items():
+        test_id = test_key_to_id.get(attach_key)
+        if test_id is None:
+            continue
+
+        existing_params = conn.execute(
+            "SELECT id, name FROM test_parameters WHERE test_id = ?", (test_id,)
+        ).fetchall()
+
+        existing_names = {p["name"] for p in existing_params}
+
+        # Case 1: still has only the generic "النتيجة" parameter → full replacement
+        if len(existing_params) == 1 and list(existing_names)[0] == "النتيجة":
+            param_id = existing_params[0]["id"]
+            has_results = conn.execute(
+                "SELECT COUNT(*) c FROM test_results WHERE parameter_id = ?", (param_id,)
+            ).fetchone()["c"]
+            if has_results > 0:
+                continue  # data present – leave untouched
+
+            conn.execute("DELETE FROM test_parameters WHERE test_id = ?", (test_id,))
+            for p in new_params:
+                param_cur = conn.execute(
+                    "INSERT INTO test_parameters (test_id, name, unit, data_type, display_order) "
+                    "VALUES (?, ?, ?, ?, ?)",
+                    (test_id, p["name"], p.get("unit"), p.get("dataType", "Numeric"),
+                     p.get("displayOrder", 0)),
+                )
+                param_id = param_cur.lastrowid
+                for r in p.get("ranges", []):
+                    conn.execute(
+                        "INSERT INTO parameter_reference_ranges "
+                        "(parameter_id, sex, age_from_years, age_to_years, low_value, high_value, normal_text) "
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        (param_id, r.get("sex", "Both"), r.get("ageFromYears", 0),
+                         r.get("ageToYears", 120), r.get("lowValue"), r.get("highValue"),
+                         r.get("normalText")),
+                    )
+
+        # Case 2: already expanded – add any individual missing parameters
+        else:
+            for p in new_params:
+                if p["name"] in existing_names:
+                    continue
+                max_order = conn.execute(
+                    "SELECT COALESCE(MAX(display_order), 0) mo FROM test_parameters WHERE test_id = ?",
+                    (test_id,),
+                ).fetchone()["mo"]
+                param_cur = conn.execute(
+                    "INSERT INTO test_parameters (test_id, name, unit, data_type, display_order) "
+                    "VALUES (?, ?, ?, ?, ?)",
+                    (test_id, p["name"], p.get("unit"), p.get("dataType", "Numeric"),
+                     max_order + 1),
+                )
+                param_id = param_cur.lastrowid
+                for r in p.get("ranges", []):
+                    conn.execute(
+                        "INSERT INTO parameter_reference_ranges "
+                        "(parameter_id, sex, age_from_years, age_to_years, low_value, high_value, normal_text) "
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        (param_id, r.get("sex", "Both"), r.get("ageFromYears", 0),
+                         r.get("ageToYears", 120), r.get("lowValue"), r.get("highValue"),
+                         r.get("normalText")),
+                    )
+
     conn.commit()
 
 

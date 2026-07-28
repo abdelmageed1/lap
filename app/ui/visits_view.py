@@ -219,7 +219,7 @@ class VisitsView(QWidget):
                 item_bal.setForeground(QColor(get_color("success")))
 
             for item in (item_inv, item_pat, item_date, item_tot, item_paid, item_bal):
-                item.setTextAlignment(Qt.AlignCenter)
+                item.setTextAlignment(int(Qt.AlignCenter))
 
             self.visits_table.setItem(row, 0, item_inv)
             self.visits_table.setItem(row, 1, item_pat)
@@ -262,7 +262,7 @@ class VisitsView(QWidget):
             item_s = QTableWidgetItem(status_display)
 
             for item in (item_t, item_p, item_s):
-                item.setTextAlignment(Qt.AlignCenter)
+                item.setTextAlignment(int(Qt.AlignCenter))
 
             self.tests_table.setItem(r_i, 0, item_t)
             self.tests_table.setItem(r_i, 1, item_p)

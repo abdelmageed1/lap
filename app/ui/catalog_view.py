@@ -601,17 +601,17 @@ class CatalogView(QWidget):
             row_idx = self.test_table.rowCount()
             self.test_table.insertRow(row_idx)
             item_name = QTableWidgetItem(t['name'])
-            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item_name.setTextAlignment(int(Qt.AlignRight) | int(Qt.AlignVCenter))
             self.test_table.setItem(row_idx, 0, item_name)
             item_abbr = QTableWidgetItem(t.get('abbreviation') or "-")
-            item_abbr.setTextAlignment(Qt.AlignCenter)
+            item_abbr.setTextAlignment(int(Qt.AlignCenter))
             self.test_table.setItem(row_idx, 1, item_abbr)
             item_dept = QTableWidgetItem(t.get('department_name') or "-")
-            item_dept.setTextAlignment(Qt.AlignCenter)
+            item_dept.setTextAlignment(int(Qt.AlignCenter))
             self.test_table.setItem(row_idx, 2, item_dept)
             status_text = "🟢 نشط" if t['is_active'] else "🔴 معطَّل"
             item_status = QTableWidgetItem(status_text)
-            item_status.setTextAlignment(Qt.AlignCenter)
+            item_status.setTextAlignment(int(Qt.AlignCenter))
             if not t['is_active']:
                 item_status.setForeground(Qt.red)
             self.test_table.setItem(row_idx, 3, item_status)
@@ -675,16 +675,16 @@ class CatalogView(QWidget):
             self.parameters_table.insertRow(row_idx)
             
             item_pname = QTableWidgetItem(p['name'])
-            item_pname.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item_pname.setTextAlignment(int(Qt.AlignRight) | int(Qt.AlignVCenter))
             self.parameters_table.setItem(row_idx, 0, item_pname)
             
             item_punit = QTableWidgetItem(p.get('unit') or "-")
-            item_punit.setTextAlignment(Qt.AlignCenter)
+            item_punit.setTextAlignment(int(Qt.AlignCenter))
             self.parameters_table.setItem(row_idx, 1, item_punit)
             
             type_label = "رقمي 🔢" if p['data_type'] == 'Numeric' else "نصي 📝"
             item_ptype = QTableWidgetItem(type_label)
-            item_ptype.setTextAlignment(Qt.AlignCenter)
+            item_ptype.setTextAlignment(int(Qt.AlignCenter))
             self.parameters_table.setItem(row_idx, 2, item_ptype)
 
         self.ranges_table.setRowCount(0)
@@ -772,12 +772,12 @@ class CatalogView(QWidget):
             sex_map = {"Both": "الجميع 🚻", "Male": "ذكور ♂️", "Female": "إناث ♀️"}
             sex_str = sex_map.get(r['sex'], r['sex'])
             item_sex = QTableWidgetItem(sex_str)
-            item_sex.setTextAlignment(Qt.AlignCenter)
+            item_sex.setTextAlignment(int(Qt.AlignCenter))
             self.ranges_table.setItem(row_idx, 0, item_sex)
             
             age_str = f"{r['age_from_years']} - {r['age_to_years']} سنة"
             item_age = QTableWidgetItem(age_str)
-            item_age.setTextAlignment(Qt.AlignCenter)
+            item_age.setTextAlignment(int(Qt.AlignCenter))
             self.ranges_table.setItem(row_idx, 1, item_age)
             
             if r["low_value"] is not None:
@@ -785,7 +785,7 @@ class CatalogView(QWidget):
             else:
                 val_str = r.get("normal_text") or "-"
             item_val = QTableWidgetItem(val_str)
-            item_val.setTextAlignment(Qt.AlignCenter)
+            item_val.setTextAlignment(int(Qt.AlignCenter))
             self.ranges_table.setItem(row_idx, 2, item_val)
 
     def add_range(self):
@@ -979,11 +979,11 @@ class CatalogView(QWidget):
             self.departments_table.insertRow(row_idx)
             
             item_id = QTableWidgetItem(str(d["id"]))
-            item_id.setTextAlignment(Qt.AlignCenter)
+            item_id.setTextAlignment(int(Qt.AlignCenter))
             self.departments_table.setItem(row_idx, 0, item_id)
             
             item_name = QTableWidgetItem(d["name"])
-            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item_name.setTextAlignment(int(Qt.AlignRight) | int(Qt.AlignVCenter))
             self.departments_table.setItem(row_idx, 1, item_name)
 
     def add_department(self):
@@ -1093,11 +1093,11 @@ class CatalogView(QWidget):
             self.doctors_table.insertRow(row_idx)
             
             item_id = QTableWidgetItem(str(d["id"]))
-            item_id.setTextAlignment(Qt.AlignCenter)
+            item_id.setTextAlignment(int(Qt.AlignCenter))
             self.doctors_table.setItem(row_idx, 0, item_id)
             
             item_name = QTableWidgetItem(d["full_name"])
-            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item_name.setTextAlignment(int(Qt.AlignRight) | int(Qt.AlignVCenter))
             self.doctors_table.setItem(row_idx, 1, item_name)
 
         self._sources = catalog_service.get_referral_sources()
@@ -1106,11 +1106,11 @@ class CatalogView(QWidget):
             self.sources_table.insertRow(row_idx)
             
             item_id = QTableWidgetItem(str(s["id"]))
-            item_id.setTextAlignment(Qt.AlignCenter)
+            item_id.setTextAlignment(int(Qt.AlignCenter))
             self.sources_table.setItem(row_idx, 0, item_id)
             
             item_name = QTableWidgetItem(s["name"])
-            item_name.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item_name.setTextAlignment(int(Qt.AlignRight) | int(Qt.AlignVCenter))
             self.sources_table.setItem(row_idx, 1, item_name)
 
     def add_doctor(self):

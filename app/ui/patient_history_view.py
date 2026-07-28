@@ -519,7 +519,7 @@ class PatientHistoryView(QWidget):
                 item_last = QTableWidgetItem(last_visit)
 
                 for item in (item_name, item_phone, item_gender_age, item_visits, item_last):
-                    item.setTextAlignment(Qt.AlignCenter)
+                    item.setTextAlignment(int(Qt.AlignCenter))
 
                 self.patients_table.setItem(row, 0, item_name)
                 self.patients_table.setItem(row, 1, item_phone)

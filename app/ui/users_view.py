@@ -214,12 +214,17 @@ class UsersView(QWidget):
             QMessageBox.warning(self, "تنبيه الأمان", "لا يمكن حذف الحساب الذي تستخدمه حالياً للنظام.")
             return
 
-        confirm = QMessageBox.question(
-            self, "تأكيد حذف المستخدم",
-            f"هل أنت تأكد من رغبتك في حذف حساب المستخدم النهائي ({current['full_name']} - {current['username']})؟",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+        confirm_msg = QMessageBox(self)
+        confirm_msg.setWindowTitle("تأكيد حذف المستخدم")
+        confirm_msg.setIcon(QMessageBox.Warning)
+        confirm_msg.setText(
+            f"هل أنت تأكد من رغبتك في حذف حساب المستخدم النهائي ({current['full_name']} - {current['username']})؟"
         )
-        if confirm != QMessageBox.Yes:
+        yes_btn = confirm_msg.addButton("نعم، احذف الحساب", QMessageBox.YesRole)
+        no_btn = confirm_msg.addButton("لا، إلغاء", QMessageBox.NoRole)
+        confirm_msg.setDefaultButton(no_btn)
+        confirm_msg.exec_()
+        if confirm_msg.clickedButton() is not yes_btn:
             return
 
         from app.services import auth_service

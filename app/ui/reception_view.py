@@ -231,18 +231,34 @@ class ReceptionView(QWidget):
             return
         test = self.search_results[row]
 
-        # Gender validation check (e.g. BHCG / Pregnancy test for Male patients)
+        # Gender validation checks
         gender = self.gender_combo.currentText().strip()
         tname_upper = (test.get("name") or "").upper()
+
+        # Gender validation: BHCG/Pregnancy tests for male patients
         if gender in ("ذكر", "Male", "male") and any(w in tname_upper or w in (test.get("name") or "") for w in ["BHCG", "PREGNANCY", "حمل"]):
-            reply = QMessageBox.warning(
-                self,
-                "تنبيه نوع المريض",
-                f"تنبيه: التحليل «{test['name']}» مخصص للإناث عادةً، بينما نوع المريض المختار هو «ذكر».\nهل ترغب في الاستمرار وإضافة التحليل؟",
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
-            )
-            if reply == QMessageBox.No:
+            msg = QMessageBox(self)
+            msg.setWindowTitle("تنبيه نوع المريض")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText(f"تنبيه: التحليل «{test['name']}» مخصص للإناث عادةً، بينما نوع المريض المختار هو «ذكر».\nهل ترغب في الاستمرار وإضافة التحليل؟")
+            yes_btn = msg.addButton("نعم، أضف التحليل", QMessageBox.YesRole)
+            no_btn = msg.addButton("لا، إلغاء", QMessageBox.NoRole)
+            msg.setDefaultButton(no_btn)
+            msg.exec_()
+            if msg.clickedButton() is not yes_btn:
+                return
+
+        # Gender validation: PSA/Prostate tests for female patients
+        if gender in ("أنثى", "Female", "female") and any(w in tname_upper or w in (test.get("name") or "") for w in ["PSA", "PROSTATE", "بروستاتا"]):
+            msg = QMessageBox(self)
+            msg.setWindowTitle("تنبيه نوع المريض")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText(f"تنبيه: التحليل «{test['name']}» مخصص للذكور عادةً بينما نوع المريضة المختارة هو «أنثى».\nهل ترغب في الاستمرار وإضافة التحليل؟")
+            yes_btn = msg.addButton("نعم، أضف التحليل", QMessageBox.YesRole)
+            no_btn = msg.addButton("لا، إلغاء", QMessageBox.NoRole)
+            msg.setDefaultButton(no_btn)
+            msg.exec_()
+            if msg.clickedButton() is not yes_btn:
                 return
 
         source_id = self.source_combo.currentData()

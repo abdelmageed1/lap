@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# pytest
+.pytest_cache/
+*.egg-info/
+.eggs/
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec.bak
+
+# Database files (runtime data – not source)
+*.db
+*.db-shm
+*.db-wal
+
+# Environment / virtualenv
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Exports / generated PDFs
+data/exports/
+data/reports/
+data/invoices/
+data/backups/

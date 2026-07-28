@@ -10,6 +10,7 @@ from app.services import catalog_service
 from app.ui.animated_button import AnimatedButton
 from app.ui.styles import get_color
 from app.ui.widgets import HintBanner
+from app.utils.audit import log_action
 
 
 class SettingsView(QWidget):
@@ -491,6 +492,13 @@ class SettingsView(QWidget):
             "brand_secondary_color": self.brand_secondary_edit.text().strip() or "#146C8E",
         }
         catalog_service.save_lab_settings(settings)
+        # Audit: record who changed lab settings
+        user_id = getattr(self.user, "user_id", None) if self.user else None
+        log_action(
+            "lab_settings", None, "save_lab_settings",
+            user_id=user_id,
+            details=f"lab_name={settings.get('lab_name', '')}",
+        )
         if self.window():
             self.window().setWindowTitle(new_title)
         QMessageBox.information(self, "تم الحفظ", "تم حفظ إعدادات المعمل بنجاح")

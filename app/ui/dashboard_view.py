@@ -7,10 +7,7 @@ from PySide2.QtWidgets import (QComboBox, QDialog, QFileDialog, QFrame, QGridLay
                                 QLabel, QLineEdit, QListWidget, QMessageBox, QPushButton, QTableWidget,
                                 QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView)
 from app.ui.animated_button import AnimatedButton
-try:
-    from PySide2.QtCharts import QtCharts
-except ImportError:
-    from PySide6.QtCharts import QtCharts
+from PySide2.QtCharts import QtCharts
 
 from app.config import BACKUPS_DIR, get_exports_patients_dir
 from app.ui.animated_button import AnimatedButton

@@ -153,7 +153,7 @@ class ResultsView(QWidget):
         if not self.pending_orders:
             empty_item = QListWidgetItem("✨ لا توجد تحاليل بانتظار إدخال النتائج حالياً")
             empty_item.setFlags(Qt.NoItemFlags)
-            empty_item.setTextAlignment(Qt.AlignCenter)
+            empty_item.setTextAlignment(int(Qt.AlignCenter))
             self.pending_list.addItem(empty_item)
         else:
             for o in self.pending_orders:
@@ -414,7 +414,7 @@ class ResultsView(QWidget):
         if not self.review_orders:
             empty_item = QListWidgetItem("✨ لا توجد نتائج بانتظار المراجعة والاعتماد حالياً")
             empty_item.setFlags(Qt.NoItemFlags)
-            empty_item.setTextAlignment(Qt.AlignCenter)
+            empty_item.setTextAlignment(int(Qt.AlignCenter))
             self.review_list.addItem(empty_item)
         else:
             for o in self.review_orders:
@@ -693,7 +693,7 @@ class ResultsView(QWidget):
         if not self.reopen_orders:
             empty_item = QListWidgetItem("✨ لا توجد نتائج معتمدة متاحة لفك الاعتماد حالياً")
             empty_item.setFlags(Qt.NoItemFlags)
-            empty_item.setTextAlignment(Qt.AlignCenter)
+            empty_item.setTextAlignment(int(Qt.AlignCenter))
             self.reopen_list.addItem(empty_item)
         else:
             for o in self.reopen_orders:

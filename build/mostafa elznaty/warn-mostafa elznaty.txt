@@ -70,4 +70,3 @@ missing module named fontTools - imported by arabic_reshaper.reshaper_config (op
 missing module named shiboken2.Shiboken - imported by shiboken2 (top-level), PySide2.QtNetwork (top-level), PySide2.QtCore (top-level), PySide2.QtWidgets (top-level), PySide2.QtGui (top-level), PySide2.QtCharts (top-level), PySide2.QtSvg (top-level)
 missing module named shiboken2.VoidPtr - imported by shiboken2 (top-level), PySide2.support (top-level)
 missing module named 'PySide2.support.signature' - imported by PySide2.QtNetwork (top-level), PySide2.QtCore (top-level), PySide2.QtWidgets (top-level), PySide2.QtGui (top-level), PySide2.QtCharts (top-level), PySide2.QtSvg (top-level)
-missing module named PySide6 - imported by app.ui.dashboard_view (optional)

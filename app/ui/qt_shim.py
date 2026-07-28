@@ -1,30 +1,28 @@
-import importlib
-import sys
+"""Qt compatibility shim – enforces PySide2-only to guarantee Windows 7 support.
 
-def _load_compatible_qt():
-    """Load a Qt binding compatible with the application.
-    Preference order:
-    1. PySide2 (original)
-    2. PySide6 (newer but similar API)
-    3. PyQt5 (fallback)
-    If a binding other than PySide2 is loaded, it is aliased as ``PySide2``
-    so that existing ``from PySide2.xxx import ...`` statements keep working.
-    """
-    try:
-        import PySide2
-        return PySide2
-    except ImportError:
-        pass
+PySide6 (Qt 6) dropped Windows 7 support entirely.  Silently falling back to
+PySide6 would produce a build that works on the developer's machine but crashes
+on the lab's Windows 7 workstations.  We therefore refuse to start if PySide2
+is not installed, and emit a clear bilingual message so the problem is obvious
+at build time rather than at the client site.
+"""
 
-    for pkg in ("PySide6", "PyQt5"):
-        try:
-            module = importlib.import_module(pkg)
-            sys.modules["PySide2"] = module
-            return module
-        except ImportError:
-            continue
-    raise ImportError("No compatible Qt binding found. Install PySide2, PySide6, or PyQt5.")
-
-
-# Execute on import so the alias is set before any other Qt imports.
-_load_compatible_qt()
+try:
+    import PySide2  # noqa: F401 – just verifying it is available
+except ImportError:
+    raise ImportError(
+        "\n"
+        "========================================================\n"
+        "  PySide2 غير مثبَّت على هذا الجهاز.\n"
+        "  PySide2 is not installed on this machine.\n"
+        "\n"
+        "  الرجاء تثبيته بالأمر:\n"
+        "  Please install it with:\n"
+        "      pip install PySide2\n"
+        "\n"
+        "  تحذير: لا تستخدم PySide6 أو PyQt5 بديلاً –\n"
+        "  Warning:  Do NOT use PySide6 or PyQt5 as a replacement –\n"
+        "  PySide6 (Qt 6) does NOT support Windows 7, which is the\n"
+        "  target platform for this application.\n"
+        "========================================================\n"
+    )

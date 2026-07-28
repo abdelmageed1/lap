@@ -76,10 +76,6 @@ class LoginWindow(QWidget):
         self.error_label.setAlignment(Qt.AlignCenter)
         card_layout.addWidget(self.error_label)
 
-        hint = QLabel("بيانات الدخول الافتراضية:\nاسم المستخدم: admin │ كلمة المرور: Admin@123 (أو admin)")
-        hint.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 11px; font-weight: 500;")
-        hint.setAlignment(Qt.AlignCenter)
-        card_layout.addWidget(hint)
 
         outer.addWidget(card)
 

@@ -57,14 +57,14 @@ class DashboardVisitsTableDialog(QDialog):
                 for col_i, key in enumerate(columns):
                     val = rec.get(key)
                     item = QTableWidgetItem(str(val) if val is not None else "")
-                    item.setTextAlignment(Qt.AlignCenter)
+                    item.setTextAlignment(int(Qt.AlignCenter))
                     self.table.setItem(row_i, col_i, item)
         else:
             self.table.setColumnCount(1)
             self.table.setHorizontalHeaderLabels(["البيان"])
             self.table.setRowCount(1)
             empty = QTableWidgetItem("لا توجد بيانات للعرض")
-            empty.setTextAlignment(Qt.AlignCenter)
+            empty.setTextAlignment(int(Qt.AlignCenter))
             self.table.setItem(0, 0, empty)
 
         layout.addWidget(self.table)
