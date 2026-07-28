@@ -5,11 +5,17 @@ Write-Host "IMPORTANT: run this with Python 3.9 to keep the resulting .exe compa
 # Always use the laplis conda environment which has PySide2 installed.
 # Using any other Python/PyInstaller will produce an exe that crashes with
 # "No compatible Qt binding found" because PySide2 won't be bundled.
-$LAPLIS_PYINSTALLER = "C:\Users\abdelmageed.fathy\AppData\Local\miniconda3\envs\laplis\Scripts\pyinstaller.exe"
+# Dynamically resolve pyinstaller in laplis conda environment or system PATH
+$LAPLIS_PYINSTALLER = Join-Path $env:USERPROFILE "miniconda3\envs\laplis\Scripts\pyinstaller.exe"
 
 if (-not (Test-Path $LAPLIS_PYINSTALLER)) {
-    Write-Error "laplis conda environment not found at expected path. Please run: conda create -n laplis python=3.9 && pip install -r requirements.txt"
-    exit 1
+    $cmd = Get-Command pyinstaller -ErrorAction SilentlyContinue
+    if ($cmd) {
+        $LAPLIS_PYINSTALLER = $cmd.Path
+    } else {
+        Write-Error "laplis conda environment not found. Please activate your laplis environment and ensure pyinstaller is installed."
+        exit 1
+    }
 }
 
 # Kill any running instance so PyInstaller can overwrite the exe

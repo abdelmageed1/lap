@@ -109,7 +109,7 @@ def generate_stylesheet(theme_name: str) -> str:
     return f"""
 QWidget {{
     font-family: "Tahoma", "DejaVu Sans", sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     color: {c['text_main']};
 }}
 QMainWindow, QDialog {{
@@ -124,38 +124,39 @@ QScrollArea {{
 }}
 #SidebarTitle {{
     color: {c['sidebar_title']};
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
-    padding: 18px 14px 4px 14px;
+    padding: 12px 10px 3px 10px;
 }}
 #SidebarTagline {{
     color: {c['sidebar_muted']};
-    font-size: 11px;
-    padding: 0 14px 18px 14px;
+    font-size: 10.5px;
+    padding: 0 10px 12px 10px;
 }}
 #SidebarSection {{
     color: {c['sidebar_section']};
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: bold;
-    padding: 16px 16px 6px 16px;
+    padding: 10px 12px 4px 12px;
 }}
 #SidebarUser {{
     color: {c['sidebar_title']};
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-weight: bold;
+    font-size: 12.5px;
 }}
 #SidebarRole {{
     color: {c['sidebar_muted']};
-    padding: 0 16px 8px 16px;
+    padding: 0 12px 6px 12px;
     font-size: 10px;
 }}
 QPushButton#NavButton {{
     background-color: transparent;
     color: {c['sidebar_text']};
     text-align: right;
-    padding: 13px 16px;
+    padding: 9px 12px;
     border: none;
-    font-size: 14px;
+    font-size: 13px;
 }}
 QPushButton#NavButton:hover {{
     background-color: {c['sidebar_hover']};
@@ -165,16 +166,16 @@ QPushButton#NavButtonActive {{
     background-color: {c['sidebar_hover']};
     color: #FFFFFF;
     text-align: right;
-    padding: 13px 16px;
+    padding: 9px 12px;
     border-right: 4px solid {c['sidebar_section']};
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
 }}
 QLabel#PageTitle {{
-    font-size: 21px;
+    font-size: 18px;
     font-weight: bold;
     color: {c['primary_text']};
-    padding: 4px 0 4px 0;
+    padding: 2px 0 2px 0;
 }}
 
 QFrame#HintBanner {{
@@ -184,27 +185,27 @@ QFrame#HintBanner {{
 }}
 QLabel#HintIcon {{
     color: {c['primary']};
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
 }}
 QLabel#HintText {{
     color: {c['text_main']};
-    font-size: 12.5px;
+    font-size: 12px;
 }}
 QLabel#StepLabel {{
     color: {c['primary']};
     font-weight: bold;
-    font-size: 14.5px;
-    padding: 2px 0 6px 0;
+    font-size: 14px;
+    padding: 2px 0 4px 0;
 }}
 
 QFrame#Card {{
     background-color: {c['bg_card']};
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid {c['border']};
 }}
 QLabel#SummaryValueLabel {{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: {c['primary_text']};
 }}
@@ -212,9 +213,10 @@ QPushButton#Primary {{
     background-color: {c['primary'] if theme_name == 'light' else c['primary_hover']};
     color: white;
     border-radius: 5px;
-    padding: 9px 20px;
+    padding: 7px 16px;
     font-weight: bold;
     border: none;
+    font-size: 13px;
 }}
 QPushButton#Primary:hover {{
     background-color: {c['primary_hover'] if theme_name == 'light' else c['primary']};
@@ -223,8 +225,9 @@ QPushButton#Danger {{
     background-color: {c['danger']};
     color: white;
     border-radius: 5px;
-    padding: 7px 16px;
+    padding: 6px 14px;
     border: none;
+    font-size: 13px;
 }}
 QPushButton#Danger:hover {{
     background-color: {c['danger_hover']};
@@ -234,19 +237,21 @@ QPushButton {{
     color: {c['text_main']};
     border: 1px solid {c['border_light']};
     border-radius: 5px;
-    padding: 8px 16px;
+    padding: 6px 14px;
+    font-size: 13px;
 }}
 QPushButton:hover {{
     background-color: {c['bg_subtle'] if theme_name == 'light' else c['border_light']};
     border-color: {c['primary']};
 }}
 QLineEdit, QComboBox, QDoubleSpinBox, QSpinBox, QDateEdit {{
-    padding: 7px 9px;
+    padding: 5px 8px;
     border: 1px solid {c['border_light']};
     border-radius: 5px;
     background: {c['bg_card'] if theme_name == 'light' else c['bg_subtle']};
     color: {c['text_main']};
     selection-background-color: {c['primary']};
+    font-size: 13px;
 }}
 QLineEdit:focus, QComboBox:focus, QDoubleSpinBox:focus, QSpinBox:focus, QDateEdit:focus {{
     border: 1.5px solid {c['primary']};
@@ -259,7 +264,7 @@ QListWidget, QTreeWidget {{
     outline: none;
 }}
 QListWidget::item, QTreeWidget::item {{
-    padding: 5px 4px;
+    padding: 4px 4px;
 }}
 QListWidget::item:selected, QTreeWidget::item:selected {{
     background-color: {c['primary']};
@@ -273,16 +278,18 @@ QTableWidget {{
     gridline-color: {c['border']};
     selection-background-color: {c['accent_bg']};
     selection-color: {c['primary_text']};
+    font-size: 13px;
 }}
 QTableWidget::item {{
-    padding: 6px;
+    padding: 4px 5px;
 }}
 QHeaderView::section {{
     background-color: {c['primary'] if theme_name == 'light' else c['primary_hover']};
     color: white;
-    padding: 8px;
+    padding: 5px 7px;
     border: none;
     font-weight: bold;
+    font-size: 13px;
 }}
 QTabWidget::pane {{
     border: 1px solid {c['border']};
@@ -292,7 +299,7 @@ QTabWidget::pane {{
 QTabBar::tab {{
     background: {c['bg_subtle']};
     color: {c['text_muted']};
-    padding: 7px 12px;
+    padding: 5px 10px;
     font-size: 13px;
     border: 1px solid {c['border']};
     border-bottom: none;
@@ -303,6 +310,42 @@ QTabBar::tab:selected {{
     background: {c['bg_card']};
     color: {c['primary_text']};
     font-weight: bold;
+}}
+QScrollBar:vertical {{
+    border: none;
+    background: {c['bg_subtle']};
+    width: 8px;
+    margin: 0px;
+    border-radius: 4px;
+}}
+QScrollBar::handle:vertical {{
+    background: {c['border_light']};
+    min-height: 20px;
+    border-radius: 4px;
+}}
+QScrollBar::handle:vertical:hover {{
+    background: {c['primary']};
+}}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
+    height: 0px;
+}}
+QScrollBar:horizontal {{
+    border: none;
+    background: {c['bg_subtle']};
+    height: 8px;
+    margin: 0px;
+    border-radius: 4px;
+}}
+QScrollBar::handle:horizontal {{
+    background: {c['border_light']};
+    min-width: 20px;
+    border-radius: 4px;
+}}
+QScrollBar::handle:horizontal:hover {{
+    background: {c['primary']};
+}}
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {{
+    width: 0px;
 }}
 """
 

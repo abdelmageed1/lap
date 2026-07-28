@@ -29,15 +29,14 @@ conda activate laplis
 pip install -r requirements.txt
 
 # 4. تثبيت PySide2 بإصدار محدد (مهم!)
-pip install PySide2==5.15.15
+pip install PySide2==5.15.2.1
 
 # 5. تثبيت PyInstaller
 pip install pyinstaller
 ```
 
-> **لماذا PySide2==5.15.15 تحديدًا؟**  
-> إصدارات أحدث قد لا توجد لـ Python 3.9.  
-> إصدارات أقدم ممكن تفتقد بعض Qt DLLs المطلوبة.
+> **لماذا PySide2==5.15.2.1 تحديدًا؟**  
+> هو أحدث إصدار رسمي مستقر لمكتبة PySide2 على PyPI مع دعم كامل لـ Python 3.9 و Windows 7+.
 
 ---
 

@@ -15,10 +15,10 @@ IMPORTANT: Do NOT post this list to the issue-tracker. Use it as a basis for
             tracking down the missing module yourself. Thanks!
 
 missing module named pep517 - imported by importlib.metadata (delayed)
-missing module named org - imported by copy (optional)
+missing module named 'org.python' - imported by copy (optional), xml.sax (delayed, conditional)
 missing module named grp - imported by shutil (optional), tarfile (optional), pathlib (delayed, optional), subprocess (optional)
 missing module named pwd - imported by posixpath (delayed, conditional), shutil (optional), tarfile (optional), pathlib (delayed, conditional, optional), subprocess (optional), netrc (delayed, conditional), getpass (delayed), http.server (delayed, optional), webbrowser (delayed)
-missing module named 'org.python' - imported by pickle (optional), xml.sax (delayed, conditional)
+missing module named org - imported by pickle (optional)
 missing module named posix - imported by os (conditional, optional), shutil (conditional), importlib._bootstrap_external (conditional)
 missing module named resource - imported by posix (top-level)
 missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional), zipimport (top-level)
@@ -34,7 +34,7 @@ missing module named multiprocessing.get_context - imported by multiprocessing (
 missing module named multiprocessing.TimeoutError - imported by multiprocessing (top-level), multiprocessing.pool (top-level)
 missing module named multiprocessing.set_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
 missing module named multiprocessing.get_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
-missing module named pyimod02_importers - imported by C:\Users\abdelmageed.fathy\AppData\Local\miniconda3\envs\laplis\Lib\site-packages\PyInstaller\hooks\rthooks\pyi_rth_pkgutil.py (delayed)
+missing module named pyimod02_importers - imported by C:\Users\Abdelmageed\miniconda3\envs\laplis\Lib\site-packages\PyInstaller\hooks\rthooks\pyi_rth_pkgutil.py (delayed)
 missing module named tests - imported by reportlab.platypus.tables (conditional)
 missing module named pyphen - imported by reportlab.platypus.paragraph (optional)
 missing module named asyncio.DefaultEventLoopPolicy - imported by asyncio (delayed, conditional), asyncio.events (delayed, conditional)
@@ -67,6 +67,5 @@ missing module named pylibdmtx - imported by reportlab.graphics.barcode.dmtx (op
 missing module named reportlab_mods - imported by reportlab (optional)
 missing module named 'reportlab.local_rl_mods' - imported by reportlab (optional)
 missing module named fontTools - imported by arabic_reshaper.reshaper_config (optional)
-missing module named shiboken2.Shiboken - imported by shiboken2 (top-level), PySide2.QtNetwork (top-level), PySide2.QtCore (top-level), PySide2.QtWidgets (top-level), PySide2.QtGui (top-level), PySide2.QtCharts (top-level), PySide2.QtSvg (top-level)
 missing module named shiboken2.VoidPtr - imported by shiboken2 (top-level), PySide2.support (top-level)
 missing module named 'PySide2.support.signature' - imported by PySide2.QtNetwork (top-level), PySide2.QtCore (top-level), PySide2.QtWidgets (top-level), PySide2.QtGui (top-level), PySide2.QtCharts (top-level), PySide2.QtSvg (top-level)

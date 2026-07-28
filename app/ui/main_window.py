@@ -56,11 +56,9 @@ class MainWindow(QWidget):
         if logo_path:
             self.setWindowIcon(QIcon(logo_path))
 
-        # Fallback size for window managers that ignore showMaximized() (main.py maximizes on
-        # normal startup) - generous enough that dense screens like the Catalog don't need
-        # horizontal scrolling even at this "un-maximized" size.
-        self.resize(1366, 820)
-        self.setMinimumSize(1100, 700)
+        # Fallback size and minimum size optimized for small/medium laptop screens (down to 980x580)
+        self.resize(1280, 768)
+        self.setMinimumSize(980, 580)
 
         root = QHBoxLayout(self)
         root.setContentsMargins(0, 0, 0, 0)
@@ -69,7 +67,7 @@ class MainWindow(QWidget):
         # Sidebar
         sidebar = QWidget()
         sidebar.setObjectName("Sidebar")
-        sidebar.setFixedWidth(220)
+        sidebar.setFixedWidth(190)
         sidebar_layout = QVBoxLayout(sidebar)
         sidebar_layout.setContentsMargins(0, 0, 0, 0)
         sidebar_layout.setSpacing(0)

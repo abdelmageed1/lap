@@ -158,7 +158,7 @@ def _backfill_new_profile_breakdowns(conn) -> None:
         if len(existing_params) == 1 and list(existing_names)[0] == "النتيجة":
             param_id = existing_params[0]["id"]
             has_results = conn.execute(
-                "SELECT COUNT(*) c FROM test_results WHERE parameter_id = ?", (param_id,)
+                "SELECT COUNT(*) c FROM result_values WHERE parameter_id = ?", (param_id,)
             ).fetchone()["c"]
             if has_results > 0:
                 continue  # data present – leave untouched
