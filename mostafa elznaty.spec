@@ -8,6 +8,16 @@ _conda_bin = r'C:\Users\abdelmageed.fathy\AppData\Local\miniconda3\envs\laplis\l
 _pyside2_dir = r'C:\Users\abdelmageed.fathy\AppData\Local\miniconda3\envs\laplis\lib\site-packages\PySide2'
 _shiboken2_dir = r'C:\Users\abdelmageed.fathy\AppData\Local\miniconda3\envs\laplis\lib\site-packages\shiboken2'
 
+arch = os.environ.get('LAPLIS_ARCH', '').lower()
+if arch == 'amd64' or arch == 'x64' or arch == '64':
+    pyside_dll = 'pyside2.cp39-win_amd64.dll'
+    shiboken_dll = 'shiboken2.cp39-win_amd64.dll'
+    target_arch = None
+else:
+    pyside_dll = 'pyside2.cp39-win32.dll'
+    shiboken_dll = 'shiboken2.cp39-win32.dll'
+    target_arch = 'x86'
+
 _conda_dlls = [
     'Qt5Core_conda.dll',
     'Qt5Gui_conda.dll',
@@ -15,8 +25,8 @@ _conda_dlls = [
     'Qt5Charts_conda.dll',
     'Qt5Svg_conda.dll',
     'Qt5Network_conda.dll',
-    'pyside2.cp39-win_amd64.dll',
-    'shiboken2.cp39-win_amd64.dll',
+    pyside_dll,
+    shiboken_dll,
 ]
 
 _extra_binaries = [
@@ -141,7 +151,7 @@ exe = EXE(
     console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
-    target_arch=None,
+    target_arch=target_arch,
     codesign_identity=None,
     entitlements_file=None,
     icon=['logo\\app_icon.ico'],

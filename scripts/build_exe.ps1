@@ -1,6 +1,9 @@
-param()
+param(
+    [string]$Arch = "x86"
+)
 Write-Host "Building LapLIS executable with PyInstaller..."
 Write-Host "IMPORTANT: run this with Python 3.9 to keep the resulting .exe compatible with Windows 7."
+Write-Host "Target architecture: $Arch"
 
 # Always use the laplis conda environment which has PySide2 installed.
 # Using any other Python/PyInstaller will produce an exe that crashes with
@@ -17,6 +20,17 @@ if (-not (Test-Path $LAPLIS_PYINSTALLER)) {
         exit 1
     }
 }
+
+$pythonArch = & python -c "import struct; print(struct.calcsize('P') * 8)"
+if ($Arch -eq 'x86' -and $pythonArch -ne 32) {
+    Write-Warning "Requested x86 build but Python interpreter is $pythonArch-bit. Use a 32-bit Python 3.9 environment for Windows 7 x86 builds."
+}
+if ($Arch -eq 'amd64' -and $pythonArch -ne 64) {
+    Write-Warning "Requested amd64 build but Python interpreter is $pythonArch-bit. Use a 64-bit Python environment for amd64 builds."
+}
+
+# Expose architecture to the spec file
+$env:LAPLIS_ARCH = $Arch
 
 # Kill any running instance so PyInstaller can overwrite the exe
 taskkill /F /IM "mostafa elznaty.exe" /T 2>$null
