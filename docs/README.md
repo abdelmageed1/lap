@@ -1,9 +1,26 @@
 # LapLIS (نسخة Python) — نظام معمل نخبة للدكتور مصطفى الزناتي المتوافقة مع Windows 7
 
+
+
+
+
+اخر تعديل 
+```
+pyinstaller --noconfirm --onefile --windowed --name "LapLIS" --icon "logo/app_icon.ico" --add-data "app/seed_data;app/seed_data" --add-data "app/reports/fonts;app/reports/fonts" --add-data "logo;logo" main.py
+```
+
+ المتطلبات الوحيدة اللازمة على جهاز العميل (Windows 7):
+لكي يعمل البرنامج على جهاز العميل المزود بـ Windows 7 بدون أي مشاكل، يفضل دائماً التأكد من:
+
+وجود حزمة Service Pack 1 (SP1) على ويندوز 7.
+تثبيت حزمة Visual C++ Redistributable (2015-2022) (وهي مجانية وتثبّت في دقيقة واحدة).
+
 ```
 conda activate laplis
 python main.py
 
+
+```
 
 # 1️⃣ إنشاء بيئة جديدة باسم “laplis”
 conda create -y -n laplis python=3.13

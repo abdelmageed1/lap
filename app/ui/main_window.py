@@ -223,3 +223,5 @@ class MainWindow(QWidget):
         except Exception:
             pass
         event.accept()
+        from PySide2.QtWidgets import QApplication
+        QApplication.quit()

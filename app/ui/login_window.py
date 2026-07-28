@@ -71,12 +71,13 @@ class LoginWindow(QWidget):
         card_layout.addWidget(login_button)
 
         self.error_label = QLabel("")
-        self.error_label.setStyleSheet(f"color: {get_color('danger')};")
+        self.error_label.setWordWrap(True)
+        self.error_label.setStyleSheet("color: #DC2626; font-weight: bold; font-size: 12.5px; margin-top: 4px;")
         self.error_label.setAlignment(Qt.AlignCenter)
         card_layout.addWidget(self.error_label)
 
-        hint = QLabel("بيانات الدخول الافتراضية: admin / Admin@123")
-        hint.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 10px;")
+        hint = QLabel("بيانات الدخول الافتراضية:\nاسم المستخدم: admin │ كلمة المرور: Admin@123 (أو admin)")
+        hint.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 11px; font-weight: 500;")
         hint.setAlignment(Qt.AlignCenter)
         card_layout.addWidget(hint)
 
@@ -86,8 +87,13 @@ class LoginWindow(QWidget):
         self.password_edit.setFocus()
 
     def try_login(self):
-        user = auth_service.login(self.username_edit.text().strip(), self.password_edit.text())
-        if user is None:
-            self.error_label.setText("اسم المستخدم أو كلمة المرور غير صحيحة")
-            return
-        self.logged_in.emit(user)
+        try:
+            username = self.username_edit.text().strip()
+            password = self.password_edit.text()
+            user = auth_service.login(username, password)
+            if user is None:
+                self.error_label.setText("اسم المستخدم أو كلمة المرور غير صحيحة")
+                return
+            self.logged_in.emit(user)
+        except Exception as exc:
+            self.error_label.setText(f"خطأ غير متوقع: {exc}")

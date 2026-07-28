@@ -18,6 +18,7 @@ def main():
     from PySide2.QtGui import QIcon
 
     app = QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
     app.setLayoutDirection(Qt.RightToLeft)
     apply_theme(app, get_saved_theme())
 
@@ -35,14 +36,24 @@ def main():
         login.show()
 
     def on_logged_in(user):
-        from app.ui.main_window import MainWindow
-        state["login_window"].close()
-        window = MainWindow(user, on_logout=show_login_after_logout)
-        state["main_window"] = window
-        window.showMaximized()
+        try:
+            from app.ui.main_window import MainWindow
+            window = MainWindow(user, on_logout=show_login_after_logout)
+            state["main_window"] = window
+            window.showMaximized()
+            if state["login_window"]:
+                state["login_window"].close()
+                state["login_window"] = None
+        except Exception as e:
+            from PySide2.QtWidgets import QMessageBox
+            import traceback
+            traceback.print_exc()
+            QMessageBox.critical(None, "خطأ في تشغيل النظام", f"حدث خطأ أثناء تحميل الشاشة الرئيسية:\n{e}")
 
     def show_login_after_logout():
-        state["main_window"].close()
+        if state["main_window"]:
+            state["main_window"].close()
+            state["main_window"] = None
         show_login()
 
     show_login()
