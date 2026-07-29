@@ -3,6 +3,7 @@ fresh SQLite database: departments, the unified test catalog, prices, reference 
 sources, and the real multi-parameter panels (CBC, liver/kidney/lipid/thyroid profiles, etc.)."""
 import json
 import os
+import re
 
 import bcrypt
 
@@ -51,9 +52,9 @@ def seed_if_empty() -> None:
         has_settings = conn.execute("SELECT COUNT(*) c FROM lab_settings").fetchone()["c"] > 0
         if not has_settings:
             conn.execute(
-                "INSERT INTO lab_settings (id, lab_name, tagline, address, phone_numbers) "
-                "VALUES (1, ?, ?, ?, ?)",
-                ("معمل نخبة للدكتور مصطفى الزناتي", "معملك الطبي الموثوق", "", ""),
+                "INSERT INTO lab_settings (id, lab_name, supervising_doctor_name, tagline, address, phone_numbers) "
+                "VALUES (1, ?, ?, ?, ?, ?)",
+                ("معمل نخبة", "د. مصطفى الزناتي", "معملك الطبي الموثوق", "", ""),
             )
             conn.commit()
 
@@ -137,9 +138,15 @@ def _backfill_new_profile_breakdowns(conn) -> None:
     # Resolve attach keys to test_ids using the tests table
     tests = conn.execute("SELECT id, name FROM tests").fetchall()
 
-    # Build a rough key→id map the same way _seed_catalog does (lowercase, no spaces)
+    # Build a rough key→id map matching how attachKey values in profiles.json are derived from a
+    # test's display name: lowercased, alphanumerics only. Stripping only spaces/hyphens/
+    # underscores (as an earlier version of this function did) missed trailing punctuation - e.g.
+    # the real catalog name "Thyroid Function." (note the period) normalized to
+    # "thyroidfunction." which never matched the "thyroidfunction" attachKey, so an
+    # already-installed database's Thyroid Function test silently never got its breakdown
+    # parameters from this backfill. Caught by tests/test_seed_migration.py.
     def _to_key(name: str) -> str:
-        return name.lower().replace(" ", "").replace("-", "").replace("_", "")
+        return re.sub(r"[^a-z0-9]", "", name.lower())
 
     test_key_to_id = {_to_key(t["name"]): t["id"] for t in tests}
 

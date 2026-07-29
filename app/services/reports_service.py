@@ -4,6 +4,35 @@ from __future__ import annotations
 from app.db import get_connection
 
 
+def get_visits_in_range(start_date: str = None, end_date: str = None, only_outstanding: bool = False,
+                        limit: int = 2000) -> list:
+    """Returns the individual visits behind the Reports & Statistics KPI summary cards, for
+    drill-down when a card is clicked."""
+    conn = get_connection()
+    try:
+        sql = ("SELECT v.id, v.invoice_number, v.visit_date, v.total_amount, v.discount_amount, "
+               "v.paid_amount, p.full_name patient_name FROM visits v "
+               "JOIN patients p ON p.id = v.patient_id WHERE 1=1")
+        params = []
+        if start_date:
+            sql += " AND v.visit_date >= ?"
+            params.append(f"{start_date} 00:00:00")
+        if end_date:
+            sql += " AND v.visit_date <= ?"
+            params.append(f"{end_date} 23:59:59")
+        sql += " ORDER BY v.id DESC LIMIT ?"
+        params.append(limit)
+
+        rows = [dict(r) for r in conn.execute(sql, tuple(params)).fetchall()]
+        for r in rows:
+            r["balance"] = r["total_amount"] - r["discount_amount"] - r["paid_amount"]
+        if only_outstanding:
+            rows = [r for r in rows if r["balance"] > 0.001]
+        return rows
+    finally:
+        conn.close()
+
+
 def get_top_referring_doctors(start_date: str = None, end_date: str = None, limit: int = 100) -> list:
     """Returns all doctors with visit counts, total revenue, discount, paid amount, and outstanding balance."""
     conn = get_connection()

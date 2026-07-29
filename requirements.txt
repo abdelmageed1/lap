@@ -1,6 +1,9 @@
 # PySide2 (Qt5) is required, not PySide6 (Qt6) - Qt6 dropped Windows 7 support entirely.
 # Do not upgrade to PySide6 unless you are intentionally dropping Windows 7 support.
-PySide2
+# Pinned (rather than left open) to the exact version confirmed to publish official win32 (32-bit)
+# + win_amd64 (64-bit) wheels for Python 3.9 - see the "Windows 7 32-bit" section of
+# "exe create .md" before ever changing this pin.
+PySide2==5.15.2.1
 reportlab
 arabic-reshaper
 python-bidi

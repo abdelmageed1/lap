@@ -2,7 +2,8 @@ import os
 from datetime import datetime
 
 from PySide2.QtWidgets import (QComboBox, QFileDialog, QFrame, QHBoxLayout, QLabel, QLineEdit,
-                                QMessageBox, QPushButton, QScrollArea, QTextEdit, QVBoxLayout, QWidget)
+                                QMessageBox, QPushButton, QScrollArea, QSpinBox, QTextEdit,
+                                QVBoxLayout, QWidget)
 from PySide2.QtCore import Qt
 
 from app.config import get_storage_root, set_storage_root, get_pdf_reports_dir, get_pdf_invoices_dir, get_exports_patients_dir, get_exports_catalog_dir, get_backups_dir
@@ -10,7 +11,6 @@ from app.services import catalog_service
 from app.ui.animated_button import AnimatedButton
 from app.ui.styles import get_color
 from app.ui.widgets import HintBanner
-from app.utils.audit import log_action
 
 
 class SettingsView(QWidget):
@@ -61,8 +61,26 @@ class SettingsView(QWidget):
 
         self.lab_name_edit = QLineEdit()
         self.lab_name_edit.setPlaceholderText("اسم المعمل")
-        card_layout.addWidget(QLabel("اسم المعمل"))
-        card_layout.addWidget(self.lab_name_edit)
+        card_layout.addWidget(QLabel("اسم المعمل (يظهر في مُنتصف ترويسة الفاتورة والتقرير)"))
+        lab_name_row = QHBoxLayout()
+        lab_name_row.addWidget(self.lab_name_edit, 1)
+        lab_name_row.addWidget(QLabel("حجم الخط:"))
+        self.lab_name_font_size_spin = QSpinBox()
+        self.lab_name_font_size_spin.setRange(10, 40)
+        self.lab_name_font_size_spin.setValue(20)
+        self.lab_name_font_size_spin.setToolTip(
+            "لتكبير أو تصغير اسم المعمل في الفاتورة وتقرير النتيجة - غيّر هذا الرقم فقط"
+        )
+        lab_name_row.addWidget(self.lab_name_font_size_spin)
+        card_layout.addLayout(lab_name_row)
+
+        self.supervising_doctor_edit = QLineEdit()
+        self.supervising_doctor_edit.setPlaceholderText("مثال: د. مصطفى الزناتي")
+        self.supervising_doctor_edit.setToolTip(
+            "يظهر منفصلًا عن اسم المعمل في ترويسة الفاتورة وتقرير النتيجة - غيّر أي منهما بدون التأثير على الآخر"
+        )
+        card_layout.addWidget(QLabel("اسم الطبيب المسؤول عن المعمل"))
+        card_layout.addWidget(self.supervising_doctor_edit)
 
         self.tagline_edit = QLineEdit()
         self.tagline_edit.setPlaceholderText("شعار أو slogan")
@@ -359,6 +377,8 @@ class SettingsView(QWidget):
         data = catalog_service.get_settings_dashboard_data()
         settings = data.get("lab_settings") or {}
         self.lab_name_edit.setText(settings.get("lab_name") or "")
+        self.lab_name_font_size_spin.setValue(settings.get("lab_name_font_size") or 20)
+        self.supervising_doctor_edit.setText(settings.get("supervising_doctor_name") or "")
         self.tagline_edit.setText(settings.get("tagline") or "")
         self.address_edit.setPlainText(settings.get("address") or "")
         self.phone_edit.setText(settings.get("phone_numbers") or "")
@@ -481,6 +501,8 @@ class SettingsView(QWidget):
         new_title = self.app_title_edit.text().strip() or "LapLIS - نظام إدارة معمل التحاليل الطبية"
         settings = {
             "lab_name": self.lab_name_edit.text().strip(),
+            "lab_name_font_size": self.lab_name_font_size_spin.value(),
+            "supervising_doctor_name": self.supervising_doctor_edit.text().strip(),
             "tagline": self.tagline_edit.text().strip(),
             "address": self.address_edit.toPlainText().strip(),
             "phone_numbers": self.phone_edit.text().strip(),
@@ -491,14 +513,8 @@ class SettingsView(QWidget):
             "brand_primary_color": self.brand_primary_edit.text().strip() or "#0B4F6C",
             "brand_secondary_color": self.brand_secondary_edit.text().strip() or "#146C8E",
         }
-        catalog_service.save_lab_settings(settings)
-        # Audit: record who changed lab settings
         user_id = getattr(self.user, "user_id", None) if self.user else None
-        log_action(
-            "lab_settings", None, "save_lab_settings",
-            user_id=user_id,
-            details=f"lab_name={settings.get('lab_name', '')}",
-        )
+        catalog_service.save_lab_settings(settings, user_id=user_id)
         if self.window():
             self.window().setWindowTitle(new_title)
         QMessageBox.information(self, "تم الحفظ", "تم حفظ إعدادات المعمل بنجاح")

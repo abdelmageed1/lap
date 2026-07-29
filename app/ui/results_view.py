@@ -306,7 +306,8 @@ class ResultsView(QWidget):
                 "low": p["range_low"], "high": p["range_high"], "normal_text": p.get("range_text"),
                 "data_type": data_type,
             })
-        result_service.save_results(self.current_order["id"], values, mark_completed)
+        result_service.save_results(self.current_order["id"], values, mark_completed,
+                                     user_id=self._current_user_id())
         if mark_completed:
             self.entry_message.setText("تم الحفظ وإرساله لقائمة المراجعة والاعتماد.")
             self.entry_message.setStyleSheet(f"color: {get_color('primary')};")

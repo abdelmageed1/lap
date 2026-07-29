@@ -139,11 +139,16 @@ def get_logo_png_path() -> str:
         try:
             from PySide2.QtWidgets import QApplication
             from PySide2.QtGui import QPixmap
-            _app = QApplication.instance()
-            pix = QPixmap(svg_path)
-            if not pix.isNull():
-                pix.scaledToWidth(300).save(png_path, "PNG")
-                return png_path
+            # QPixmap aborts the whole process (a Qt qFatal, not a catchable Python exception) if
+            # constructed before any QGuiApplication exists - checking for one first, rather than
+            # relying on the try/except below, is the only way to actually avoid that crash. This
+            # matters beyond just tests: any future script/CLI path that generates a report without
+            # first starting the GUI would hit the exact same hard crash.
+            if QApplication.instance() is not None:
+                pix = QPixmap(svg_path)
+                if not pix.isNull():
+                    pix.scaledToWidth(300).save(png_path, "PNG")
+                    return png_path
         except Exception:
             pass
     return png_path if os.path.exists(png_path) else svg_path

@@ -429,21 +429,21 @@ def get_lab_settings():
         conn.close()
 
 
-def save_lab_settings(settings: dict) -> None:
+def save_lab_settings(settings: dict, user_id: int = None) -> None:
     conn = get_connection()
     try:
         conn.execute(
-            "UPDATE lab_settings SET lab_name=?, tagline=?, address=?, phone_numbers=?, "
-            "footer_signature1=?, footer_signature2=?, digital_seal_text=?, app_title=?, "
-            "brand_primary_color=?, brand_secondary_color=? WHERE id=1",
-            (settings.get("lab_name"), settings.get("tagline"), settings.get("address"),
-             settings.get("phone_numbers"), settings.get("footer_signature1"),
+            "UPDATE lab_settings SET lab_name=?, supervising_doctor_name=?, tagline=?, address=?, "
+            "phone_numbers=?, footer_signature1=?, footer_signature2=?, digital_seal_text=?, "
+            "app_title=?, brand_primary_color=?, brand_secondary_color=?, lab_name_font_size=? WHERE id=1",
+            (settings.get("lab_name"), settings.get("supervising_doctor_name"), settings.get("tagline"),
+             settings.get("address"), settings.get("phone_numbers"), settings.get("footer_signature1"),
              settings.get("footer_signature2"), settings.get("digital_seal_text"),
              settings.get("app_title"), settings.get("brand_primary_color", "#0B4F6C"),
-             settings.get("brand_secondary_color", "#146C8E")),
+             settings.get("brand_secondary_color", "#146C8E"), settings.get("lab_name_font_size", 20)),
         )
         try:
-            log_action('lab_settings', 1, 'update', conn=conn)
+            log_action('lab_settings', 1, 'update', user_id=user_id, conn=conn)
         except Exception:
             pass
         conn.commit()

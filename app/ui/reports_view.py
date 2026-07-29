@@ -8,6 +8,7 @@ from PySide2.QtWidgets import (QCheckBox, QComboBox, QDateEdit, QFileDialog, QFr
 
 from app.services import reports_service
 from app.ui.animated_button import AnimatedButton
+from app.ui.dashboard_table_dialog import DashboardVisitsTableDialog
 from app.ui.reports_chart_widgets import KPICardWidget, BarChartWidget
 from app.ui.styles import get_color
 from app.ui.widgets import HintBanner
@@ -39,6 +40,11 @@ class ReportsView(QWidget):
         self.kpi_visits = KPICardWidget("إجمالي عدد الزيارات", "0 زيارة", "📋", bg_color="#0284C7")
         self.kpi_paid = KPICardWidget("صافي التحصيلات", "0.00 ج.م", "💵", bg_color="#166534")
         self.kpi_balance = KPICardWidget("إجمالي المتبقي", "0.00 ج.م", "⚖️", bg_color="#B91C1C")
+
+        self.kpi_revenue.clicked.connect(lambda: self._show_kpi_drilldown("💰 تفاصيل إجمالي الإيرادات"))
+        self.kpi_visits.clicked.connect(lambda: self._show_kpi_drilldown("📋 تفاصيل الزيارات"))
+        self.kpi_paid.clicked.connect(lambda: self._show_kpi_drilldown("💵 تفاصيل صافي التحصيلات"))
+        self.kpi_balance.clicked.connect(lambda: self._show_kpi_drilldown("⚖️ تفاصيل المبالغ المتبقية", only_outstanding=True))
 
         kpi_row.addWidget(self.kpi_revenue)
         kpi_row.addWidget(self.kpi_visits)
@@ -116,6 +122,12 @@ class ReportsView(QWidget):
 
         outer.addWidget(self.tabs)
         self.refresh_all_reports()
+
+    def _show_kpi_drilldown(self, title: str, only_outstanding: bool = False):
+        start_date, end_date = self._get_dates()
+        visits = reports_service.get_visits_in_range(start_date=start_date, end_date=end_date,
+                                                       only_outstanding=only_outstanding)
+        DashboardVisitsTableDialog(title, visits, parent=self).exec_()
 
     def on_preset_changed(self, index):
         preset = self.preset_combo.currentText()

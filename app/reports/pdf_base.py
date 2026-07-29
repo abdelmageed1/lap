@@ -8,23 +8,36 @@ from reportlab.pdfbase.ttfonts import TTFont
 from app.reports.arabic_text import shape
 
 FONT_DIR = os.path.join(os.path.dirname(__file__), "fonts")
-FONT_REGULAR = "DejaVuSans"
-FONT_BOLD = "DejaVuSans-Bold"
+FONT_REGULAR = "Amiri"
+FONT_BOLD = "Amiri-Bold"
+FONT_REGULAR_FILE = "Amiri-Regular.ttf"
+FONT_BOLD_FILE = "Amiri-Bold.ttf"
 
 _registered = False
 
 
 def ensure_fonts_registered() -> None:
-    """DejaVu Sans is used (rather than an Arabic-only Noto family font) because it is one of the
-    few open, redistributable TTF files that ships glyphs for *both* Arabic presentation forms and
-    the full Latin alphabet - this app's test names/dates/abbreviations are plain English mixed with
-    Arabic labels, and Arabic-only fonts silently render Latin letters as blank glyphs.
+    """Amiri (a Naskh-style Arabic typeface modeled on classic Bulaq Press typesetting, SIL OFL
+    licensed) is used for every printed document - invoices and lab result reports are official
+    paperwork handed to patients, and Amiri gives them the formal, typeset look that a generic
+    sans-serif font like the previously-used DejaVu Sans does not.
+
+    Font choice constraint - do not swap this for another Arabic webfont (Cairo/Tajawal/Almarai/
+    etc.) without checking coverage first: this codebase has no HarfBuzz/OpenType-shaping engine,
+    so `arabic_text.shape()` (arabic_reshaper + python-bidi) maps text to literal Arabic
+    Presentation Forms-B codepoints (U+FE70-FEFF) that must exist directly in the font's cmap.
+    Many modern Arabic webfonts (verified: Tajawal, Almarai) only support shaping via OpenType
+    GSUB features and are missing several presentation-form codepoints outright - text drawn with
+    them silently shows blank ".notdef" boxes for certain letter/position combinations (e.g. isolated
+    alef/reh). Amiri and IBM Plex Sans Arabic were verified to have complete presentation-forms
+    coverage plus full Latin coverage (needed since test names/units mix English abbreviations with
+    Arabic labels) - see tests/test_report_fonts.py, which guards against a future regression.
     """
     global _registered
     if _registered:
         return
-    pdfmetrics.registerFont(TTFont(FONT_REGULAR, os.path.join(FONT_DIR, "DejaVuSans.ttf")))
-    pdfmetrics.registerFont(TTFont(FONT_BOLD, os.path.join(FONT_DIR, "DejaVuSans-Bold.ttf")))
+    pdfmetrics.registerFont(TTFont(FONT_REGULAR, os.path.join(FONT_DIR, FONT_REGULAR_FILE)))
+    pdfmetrics.registerFont(TTFont(FONT_BOLD, os.path.join(FONT_DIR, FONT_BOLD_FILE)))
     _registered = True
 
 

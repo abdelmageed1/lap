@@ -160,7 +160,7 @@ def _compute_flag(data_type: str, numeric_value, text_value, low, high, normal_t
     return "Normal"
 
 
-def save_results(order_id: int, values: list, mark_completed: bool) -> None:
+def save_results(order_id: int, values: list, mark_completed: bool, user_id: int = None) -> None:
     """values: list of {parameter_id, numeric_value, text_value, low, high, normal_text, data_type}."""
     conn = get_connection()
     try:
@@ -177,7 +177,7 @@ def save_results(order_id: int, values: list, mark_completed: bool) -> None:
                     (v.get("numeric_value"), v.get("text_value"), flag, existing["id"]),
                 )
                 try:
-                    log_action('result_values', existing['id'], 'update', conn=conn)
+                    log_action('result_values', existing['id'], 'update', user_id=user_id, conn=conn)
                 except Exception:
                     pass
             else:
@@ -187,7 +187,7 @@ def save_results(order_id: int, values: list, mark_completed: bool) -> None:
                     (order_id, v["parameter_id"], v.get("numeric_value"), v.get("text_value"), flag),
                 )
                 try:
-                    log_action('result_values', cur.lastrowid, 'create', conn=conn)
+                    log_action('result_values', cur.lastrowid, 'create', user_id=user_id, conn=conn)
                 except Exception:
                     pass
         conn.execute(
@@ -195,7 +195,14 @@ def save_results(order_id: int, values: list, mark_completed: bool) -> None:
             ("Completed" if mark_completed else "InProgress", order_id),
         )
         try:
-            log_action('visit_test_orders', order_id, 'update', details=f'mark_completed={mark_completed}', conn=conn)
+            log_action('visit_test_orders', order_id, 'update', user_id=user_id,
+                       details=f'mark_completed={mark_completed}', conn=conn)
+            # Logged under table_name='results' (distinct from the 'result_values'/'visit_test_orders'
+            # rows above) because reports_service.get_staff_productivity_analytics()'s "results
+            # processed" metric specifically queries table_name='results' - without this row that
+            # metric always read 0 for every staff member regardless of how much work they entered.
+            if mark_completed:
+                log_action('results', order_id, 'save', user_id=user_id, conn=conn)
         except Exception:
             pass
         conn.commit()
@@ -252,6 +259,7 @@ def approve_order(order_id: int, user_id=None) -> None:
         conn.execute("UPDATE visit_test_orders SET status = 'Reviewed' WHERE id = ?", (order_id,))
         try:
             log_action('visit_test_orders', order_id, 'review_approve', user_id=user_id, conn=conn)
+            log_action('results', order_id, 'approve', user_id=user_id, conn=conn)
         except Exception:
             pass
         conn.commit()

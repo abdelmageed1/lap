@@ -12,6 +12,7 @@ from app.services import catalog_service, visit_service
 from app.services.result_service import STATUS_LABELS
 from app.ui.animated_button import AnimatedButton
 from app.ui.widgets import HintBanner
+from app.ui import styles
 from app.ui.styles import get_color
 
 
@@ -47,7 +48,6 @@ class VisitsView(QWidget):
         self.search_edit.returnPressed.connect(self.search)
 
         self.unpaid_check = QCheckBox("مبالغ متبقية فقط")
-        self.unpaid_check.setStyleSheet(f"font-weight: bold; color: {get_color('text_emphasis')};")
         self.unpaid_check.setToolTip("إظهار الزيارات التي لم تُسدَّد بالكامل فقط")
         self.unpaid_check.stateChanged.connect(self.search)
 
@@ -70,20 +70,6 @@ class VisitsView(QWidget):
         self.visits_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.visits_table.setAlternatingRowColors(True)
         self.visits_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.visits_table.setStyleSheet(f"""
-            QTableWidget {{
-                border: 1px solid {get_color('border_light')};
-                border-radius: 6px;
-                gridline-color: {get_color('border')};
-                font-size: 12px;
-            }}
-            QHeaderView::section {{
-                background-color: {get_color('primary')};
-                color: white;
-                font-weight: bold;
-                padding: 5px;
-            }}
-        """)
         self.visits_table.itemSelectionChanged.connect(self.on_select_visit_row)
         left_layout.addWidget(self.visits_table)
 
@@ -99,18 +85,10 @@ class VisitsView(QWidget):
         self.details_layout = QVBoxLayout(right)
 
         self.details_title = QLabel("اختر فاتورة من الجدول لعرض تفاصيلها")
-        self.details_title.setStyleSheet(f"font-weight: bold; font-size: 14px; color: {get_color('primary_text')};")
         self.details_layout.addWidget(self.details_title)
 
         # Financial Summary Profile Grid
         self.summary_card = QFrame()
-        self.summary_card.setStyleSheet(f"""
-            QFrame {{
-                background-color: {get_color('bg_subtle')};
-                border: 1px solid {get_color('border')};
-                border-radius: 8px;
-            }}
-        """)
         s_layout = QGridLayout(self.summary_card)
         s_layout.setContentsMargins(10, 8, 10, 8)
         s_layout.setSpacing(6)
@@ -140,25 +118,11 @@ class VisitsView(QWidget):
         self.tests_table.setHorizontalHeaderLabels(["التحليل", "السعر", "الحالة"])
         self.tests_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.tests_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tests_table.setStyleSheet(f"""
-            QTableWidget {{
-                border: 1px solid {get_color('border_light')};
-                border-radius: 6px;
-                font-size: 12px;
-            }}
-            QHeaderView::section {{
-                background-color: {get_color('primary')};
-                color: white;
-                font-weight: bold;
-                padding: 4px;
-            }}
-        """)
         self.details_layout.addWidget(self.tests_table)
 
         # Payment Registration Card
-        payment_box = QFrame()
-        payment_box.setStyleSheet(f"background-color: {get_color('bg_subtle')}; border-radius: 6px; padding: 6px;")
-        payment_layout = QHBoxLayout(payment_box)
+        self.payment_box = QFrame()
+        payment_layout = QHBoxLayout(self.payment_box)
         payment_layout.setContentsMargins(4, 4, 4, 4)
 
         payment_layout.addWidget(QLabel("<b>تسجيل دفعة جديدة:</b>"))
@@ -173,7 +137,7 @@ class VisitsView(QWidget):
         self.btn_pay.clicked.connect(self.add_payment)
         payment_layout.addWidget(self.btn_pay)
 
-        self.details_layout.addWidget(payment_box)
+        self.details_layout.addWidget(self.payment_box)
 
         # Reprint Invoice PDF Button
         self.reprint_button = AnimatedButton("إعادة طباعة الفاتورة 🧾")
@@ -183,7 +147,57 @@ class VisitsView(QWidget):
 
         columns.addWidget(right, 2)
 
+        self._apply_theme_styles()
+        styles.register_theme_listener(self._on_theme_changed)
         self.search()
+
+    def _on_theme_changed(self, new_theme: str):
+        try:
+            self._apply_theme_styles()
+        except Exception:
+            pass
+
+    def _apply_theme_styles(self):
+        """Re-applies every inline (non-QSS-selector) style in this screen so switching between
+        light/dark mode while this screen is already open doesn't leave it half-themed - these
+        widgets are built once and cached by MainWindow, not recreated on each visit."""
+        self.unpaid_check.setStyleSheet(f"font-weight: bold; color: {get_color('text_emphasis')};")
+        self.visits_table.setStyleSheet(f"""
+            QTableWidget {{
+                border: 1px solid {get_color('border_light')};
+                border-radius: 6px;
+                gridline-color: {get_color('border')};
+                font-size: 12px;
+            }}
+            QHeaderView::section {{
+                background-color: {get_color('primary')};
+                color: white;
+                font-weight: bold;
+                padding: 5px;
+            }}
+        """)
+        self.details_title.setStyleSheet(f"font-weight: bold; font-size: 14px; color: {get_color('primary_text')};")
+        self.summary_card.setStyleSheet(f"""
+            QFrame {{
+                background-color: {get_color('bg_subtle')};
+                border: 1px solid {get_color('border')};
+                border-radius: 8px;
+            }}
+        """)
+        self.tests_table.setStyleSheet(f"""
+            QTableWidget {{
+                border: 1px solid {get_color('border_light')};
+                border-radius: 6px;
+                font-size: 12px;
+            }}
+            QHeaderView::section {{
+                background-color: {get_color('primary')};
+                color: white;
+                font-weight: bold;
+                padding: 4px;
+            }}
+        """)
+        self.payment_box.setStyleSheet(f"background-color: {get_color('bg_subtle')}; border-radius: 6px; padding: 6px;")
 
     def search(self):
         self._offset = 0
@@ -288,7 +302,8 @@ class VisitsView(QWidget):
             QMessageBox.warning(self, "تنبيه", "أدخل مبلغ دفعة أكبر من صفر.")
             return
 
-        visit_service.add_payment(self.selected_visit_id, val)
+        uid = getattr(self.current_user, "user_id", None) if self.current_user else None
+        visit_service.add_payment(self.selected_visit_id, val, user_id=uid)
         self.payment_spin.setValue(0)
         self.search()
         self.on_select_visit_row()

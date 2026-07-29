@@ -79,7 +79,7 @@ def create_visit(patient: dict, doctor_id, referral_source_id, test_ids: list, d
         )
         visit_id = visit_cur.lastrowid
         try:
-            log_action('visits', visit_id, 'create', conn=conn)
+            log_action('visits', visit_id, 'create', user_id=user_id, conn=conn)
         except Exception:
             pass
 
@@ -89,7 +89,7 @@ def create_visit(patient: dict, doctor_id, referral_source_id, test_ids: list, d
                 (visit_id, test_id, price),
             )
             try:
-                log_action('visit_test_orders', cur_o.lastrowid, 'create', conn=conn)
+                log_action('visit_test_orders', cur_o.lastrowid, 'create', user_id=user_id, conn=conn)
             except Exception:
                 pass
 
@@ -99,7 +99,7 @@ def create_visit(patient: dict, doctor_id, referral_source_id, test_ids: list, d
                 (visit_id, initial_payment, datetime.now().isoformat(timespec="seconds")),
             )
             try:
-                log_action('payments', pay_cur.lastrowid, 'create', conn=conn)
+                log_action('payments', pay_cur.lastrowid, 'create', user_id=user_id, conn=conn)
             except Exception:
                 pass
 
@@ -113,7 +113,7 @@ def create_visit(patient: dict, doctor_id, referral_source_id, test_ids: list, d
         conn.close()
 
 
-def add_payment(visit_id: int, amount: float) -> None:
+def add_payment(visit_id: int, amount: float, user_id: int = None) -> None:
     conn = get_connection()
     try:
         cur = conn.execute(
@@ -122,8 +122,8 @@ def add_payment(visit_id: int, amount: float) -> None:
         )
         conn.execute("UPDATE visits SET paid_amount = paid_amount + ? WHERE id = ?", (amount, visit_id))
         try:
-            log_action('payments', cur.lastrowid, 'create', conn=conn)
-            log_action('visits', visit_id, 'update', details=f'paid+={amount}', conn=conn)
+            log_action('payments', cur.lastrowid, 'create', user_id=user_id, conn=conn)
+            log_action('visits', visit_id, 'update', user_id=user_id, details=f'paid+={amount}', conn=conn)
         except Exception:
             pass
         conn.commit()

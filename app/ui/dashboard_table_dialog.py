@@ -1,7 +1,7 @@
 """DashboardVisitsTableDialog – generic table dialog used by dashboard cards."""
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import (
-    QDialog, QHBoxLayout, QHeaderView, QLabel, QPushButton,
+    QDialog, QHBoxLayout, QHeaderView, QLabel, QLineEdit, QPushButton,
     QTableWidget, QTableWidgetItem, QVBoxLayout,
 )
 
@@ -21,9 +21,15 @@ class DashboardVisitsTableDialog(QDialog):
         heading.setStyleSheet("font-size:15px; font-weight:bold; color:#1E3A5F; margin-bottom:6px;")
         layout.addWidget(heading)
 
-        count_label = QLabel(f"إجمالي السجلات: {len(records)}")
-        count_label.setStyleSheet("color:#475569; margin-bottom:4px;")
-        layout.addWidget(count_label)
+        self._total_count = len(records)
+        self.count_label = QLabel(f"إجمالي السجلات: {self._total_count}")
+        self.count_label.setStyleSheet("color:#475569; margin-bottom:4px;")
+        layout.addWidget(self.count_label)
+
+        self.search_edit = QLineEdit()
+        self.search_edit.setPlaceholderText("🔍 ابحث في كل الأعمدة...")
+        self.search_edit.textChanged.connect(self._filter_rows)
+        layout.addWidget(self.search_edit)
 
         self.table = QTableWidget()
         self.table.setAlternatingRowColors(True)
@@ -78,6 +84,22 @@ class DashboardVisitsTableDialog(QDialog):
         btn_row.addWidget(close_btn)
         layout.addLayout(btn_row)
 
+    def _filter_rows(self, text: str):
+        text = text.strip().lower()
+        visible_count = 0
+        for row_i in range(self.table.rowCount()):
+            match = not text or any(
+                text in (self.table.item(row_i, col_i).text().lower() if self.table.item(row_i, col_i) else "")
+                for col_i in range(self.table.columnCount())
+            )
+            self.table.setRowHidden(row_i, not match)
+            if match:
+                visible_count += 1
+        if text:
+            self.count_label.setText(f"إجمالي السجلات: {self._total_count} (المطابق للبحث: {visible_count})")
+        else:
+            self.count_label.setText(f"إجمالي السجلات: {self._total_count}")
+
     # ------------------------------------------------------------------
     @staticmethod
     def _arabicize_headers(columns: list) -> list:
@@ -97,5 +119,6 @@ class DashboardVisitsTableDialog(QDialog):
             "ordered_at": "وقت الطلب",
             "amount": "المبلغ",
             "paid_at": "وقت الدفع",
+            "balance": "المتبقي",
         }
         return [mapping.get(col, col.replace("_", " ").title()) for col in columns]

@@ -288,6 +288,7 @@ class CatalogView(QWidget):
         r2.addWidget(save_test_button, 1)
 
         self.deactivate_test_button = QPushButton("تعطيل التحليل ⛔")
+        self.deactivate_test_button.setObjectName("Danger")
         self.deactivate_test_button.clicked.connect(self.deactivate_selected_test)
         r2.addWidget(self.deactivate_test_button, 1)
         info_layout.addLayout(r2)
@@ -405,6 +406,7 @@ class CatalogView(QWidget):
         pb_layout.addLayout(param_add_row)
 
         del_param_btn = QPushButton("حذف المعيار المحدَّد 🗑️")
+        del_param_btn.setObjectName("Danger")
         del_param_btn.clicked.connect(self.delete_selected_parameter)
         pb_layout.addWidget(del_param_btn)
 
@@ -520,6 +522,7 @@ class CatalogView(QWidget):
         r_btns.addWidget(add_range_btn)
 
         del_range_btn = QPushButton("حذف المدى 🗑️")
+        del_range_btn.setObjectName("Danger")
         del_range_btn.clicked.connect(self.delete_selected_range)
         r_btns.addWidget(del_range_btn)
         rc_layout.addLayout(r_btns)
@@ -781,7 +784,13 @@ class CatalogView(QWidget):
             self.ranges_table.setItem(row_idx, 1, item_age)
             
             if r["low_value"] is not None:
-                val_str = f"{r['low_value']} إلى {r['high_value']}"
+                # A plain "-" separator (not the Arabic word "إلى") is used deliberately: mixing an
+                # RTL word directly between two LTR numeric runs makes Qt's bidi algorithm reorder
+                # the numbers unpredictably in an RTL-direction table cell (e.g. "4.0 11.0 إلى"
+                # instead of "4.0 إلى 11.0") - this is the exact "range text overlapping/jumbled"
+                # bug reported for this table. Every other range display in the app (results
+                # entry, PDF reports) already uses "-" for this same reason.
+                val_str = f"{r['low_value']} - {r['high_value']}"
             else:
                 val_str = r.get("normal_text") or "-"
             item_val = QTableWidgetItem(val_str)
@@ -959,6 +968,7 @@ class CatalogView(QWidget):
         self.departments_list = self.departments_table
 
         delete_dept_button = QPushButton("حذف القسم المحدَّد 🗑️")
+        delete_dept_button.setObjectName("Danger")
         delete_dept_button.setToolTip("لا يمكن حذف قسم مرتبط بتحاليل موجودة - عدِّل قسم كل تحليل أولًا")
         delete_dept_button.clicked.connect(self.delete_selected_department)
         card_layout.addWidget(delete_dept_button)
@@ -1042,6 +1052,7 @@ class CatalogView(QWidget):
         self.doctors_list = self.doctors_table
 
         deactivate_doctor_button = QPushButton("تعطيل الطبيب المحدَّد ⛔")
+        deactivate_doctor_button.setObjectName("Danger")
         deactivate_doctor_button.setToolTip("يخفي الطبيب من قائمة الاستقبال دون حذف زياراته السابقة")
         deactivate_doctor_button.clicked.connect(self.deactivate_selected_doctor)
         doctors_layout.addWidget(deactivate_doctor_button)
@@ -1077,6 +1088,7 @@ class CatalogView(QWidget):
         self.sources_list = self.sources_table
 
         deactivate_source_button = QPushButton("تعطيل جهة الإحالة المحدَّدة ⛔")
+        deactivate_source_button.setObjectName("Danger")
         deactivate_source_button.clicked.connect(self.deactivate_selected_source)
         sources_layout.addWidget(deactivate_source_button)
         layout.addWidget(sources_box)

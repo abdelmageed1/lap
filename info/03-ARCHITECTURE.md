@@ -94,7 +94,8 @@ theme = get_saved_theme()      # "dark" أو "light"
 ## توليد PDF — طبقة `reports/`
 
 **المكتبة:** ReportLab (تعمل على Python 3.9 + Windows 7)  
-**الخط:** DejaVu Sans مُضمَّن في `app/reports/fonts/` — يدعم Unicode كامل (بما فيه العربية)
+**الخط:** Amiri (خط Naskh عربي كلاسيكي رسمي) مُضمَّن في `app/reports/fonts/` — تغطية كاملة للعربي
+والإنجليزي معًا، ومُتحقَّق منها برمجيًا (`tests/test_report_fonts.py`) لضمان عدم ظهور رموز مفقودة
 
 ```
 pdf_base.py

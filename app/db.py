@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS lab_settings (
     id INTEGER PRIMARY KEY CHECK (id = 1),
     lab_name TEXT NOT NULL,
+    supervising_doctor_name TEXT,
     tagline TEXT,
     address TEXT,
     phone_numbers TEXT,
@@ -140,7 +141,8 @@ CREATE TABLE IF NOT EXISTS lab_settings (
     digital_seal_text TEXT DEFAULT '🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً.',
     app_title TEXT DEFAULT 'LapLIS - نظام إدارة معمل التحاليل الطبية',
     brand_primary_color TEXT DEFAULT '#0B4F6C',
-    brand_secondary_color TEXT DEFAULT '#146C8E'
+    brand_secondary_color TEXT DEFAULT '#146C8E',
+    lab_name_font_size INTEGER DEFAULT 20
 );
 
 
@@ -188,7 +190,25 @@ def init_schema() -> None:
             conn.execute("ALTER TABLE lab_settings ADD COLUMN brand_primary_color TEXT DEFAULT '#0B4F6C'")
         if "brand_secondary_color" not in lab_cols:
             conn.execute("ALTER TABLE lab_settings ADD COLUMN brand_secondary_color TEXT DEFAULT '#146C8E'")
-            
+        if "supervising_doctor_name" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN supervising_doctor_name TEXT")
+            # One-time helpful correction for an existing install: the lab name and doctor name
+            # used to be combined into one field (e.g. "معمل نخبة للدكتور مصطفى الزناتي"). Split
+            # them automatically so the lab owner doesn't have to retype anything after upgrading -
+            # if the pattern isn't recognized, the field is just left blank for them to fill in.
+            row = conn.execute("SELECT lab_name FROM lab_settings WHERE id = 1").fetchone()
+            if row and row["lab_name"] and "للدكتور" in row["lab_name"]:
+                lab_part, _, doctor_part = row["lab_name"].partition("للدكتور")
+                lab_part = lab_part.strip()
+                doctor_part = doctor_part.strip()
+                if lab_part and doctor_part:
+                    conn.execute(
+                        "UPDATE lab_settings SET lab_name = ?, supervising_doctor_name = ? WHERE id = 1",
+                        (lab_part, f"د. {doctor_part}"),
+                    )
+        if "lab_name_font_size" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN lab_name_font_size INTEGER DEFAULT 20")
+
         conn.commit()
     finally:
         conn.close()

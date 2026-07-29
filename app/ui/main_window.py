@@ -46,6 +46,7 @@ class MainWindow(QWidget):
         super().__init__()
         self.user = user
         self.on_logout = on_logout
+        self._closing_for_logout = False
         settings = catalog_service.get_lab_settings()
         app_title = settings.get("app_title") or settings.get("lab_name") or "LapLIS"
         self.setWindowTitle(app_title)
@@ -201,6 +202,9 @@ class MainWindow(QWidget):
         self.theme_button.setText("🌙 الوضع المظلم" if new_theme == "light" else "☀️ الوضع الفاتح")
 
     def logout(self):
+        # Logout closes this window to swap back to the login screen - it must not quit the whole
+        # application the way closing the window via the OS titlebar (a real exit) should.
+        self._closing_for_logout = True
         self.on_logout()
 
     def closeEvent(self, event):
@@ -218,5 +222,10 @@ class MainWindow(QWidget):
         except Exception:
             pass
         event.accept()
-        from PySide2.QtWidgets import QApplication
+        if not self._closing_for_logout:
+            self._quit_app()
+
+    def _quit_app(self):
+        # Kept as a thin, patchable indirection: PySide2/Shiboken's QApplication.quit is a C++
+        # bound method that isn't reliably interceptable via monkeypatch.setattr from tests.
         QApplication.quit()

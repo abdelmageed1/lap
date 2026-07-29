@@ -8,8 +8,8 @@ from reportlab.pdfgen import canvas
 from app.config import REPORTS_DIR
 from app.reports.pdf_base import (BRAND_BLACK, BRAND_BORDER, BRAND_DARK, BRAND_GRAY, BRAND_GREEN,
                                    BRAND_LIGHT_BG, BRAND_RED, BRAND_TEAL, FONT_BOLD, FONT_REGULAR,
-                                   draw_card_box, draw_logo, draw_rtl_label_value, draw_rtl_text,
-                                   ensure_fonts_registered)
+                                   draw_card_box, draw_centered_text, draw_logo, draw_rtl_label_value,
+                                   draw_rtl_text, ensure_fonts_registered)
 from app.services.result_service import FLAG_LABELS
 
 PAGE_W, PAGE_H = A4
@@ -17,6 +17,10 @@ MARGIN = 36
 RIGHT = PAGE_W - MARGIN
 LEFT = MARGIN
 CONTENT_W = PAGE_W - (MARGIN * 2)
+LOGO_WIDTH = 85
+# The lab name is centered in the space to the right of the logo (not the full page width) so a
+# long name never overlaps the logo, while still reading as "centered" in the available header area.
+HEADER_TEXT_CENTER_X = (LEFT + LOGO_WIDTH + 15 + RIGHT) / 2
 
 
 def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name: str,
@@ -44,11 +48,17 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
     c.rect(0, PAGE_H - 8, PAGE_W, 8, fill=1, stroke=0)
 
     y = PAGE_H - 45
-    draw_logo(c, LEFT, y - 40, width=85, height=60, logo_override_path=lab_settings.get("logo_path"))
+    draw_logo(c, LEFT, y - 40, width=LOGO_WIDTH, height=60, logo_override_path=lab_settings.get("logo_path"))
 
     lab_name = lab_settings.get("lab_name") or "المعمل الطبي"
-    draw_rtl_text(c, RIGHT, y, lab_name, font=FONT_BOLD, size=20, color=brand_primary)
-    y -= 24
+    lab_name_size = lab_settings.get("lab_name_font_size") or 20
+    draw_centered_text(c, HEADER_TEXT_CENTER_X, y, lab_name, font=FONT_BOLD, size=lab_name_size, color=brand_primary)
+    y -= round(lab_name_size * 1.2)
+
+    if lab_settings.get("supervising_doctor_name"):
+        draw_rtl_text(c, RIGHT, y, f"تحت إشراف {lab_settings['supervising_doctor_name']}",
+                      font=FONT_BOLD, size=12, color=brand_secondary)
+        y -= 18
 
     if lab_settings.get("tagline"):
         draw_rtl_text(c, RIGHT, y, lab_settings["tagline"], font=FONT_REGULAR, size=10.5, color=BRAND_GRAY)
@@ -89,14 +99,23 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
     col_range_right = RIGHT - 350
     col_flag_right = LEFT + 84
 
+    # header_h is the header bar's own height; HEADER_GAP is extra clearance below it before the
+    # first row's text baseline. This must exceed the font's ascent at the row font size, or glyph
+    # tops visibly poke up into the header bar (a real, confirmed-by-rendering bug at the previous
+    # header_h + 4 gap - see info/06-CHANGES-THIS-ROUND.md).
     header_h = 26
-    c.setFillColor(brand_primary)
-    c.roundRect(LEFT, y - header_h + 4, CONTENT_W, header_h, 6, fill=1, stroke=0)
-    draw_rtl_text(c, col_name_right, y - 12, "اسم المعيار", font=FONT_BOLD, size=10.5, color=WHITE)
-    draw_rtl_text(c, col_value_right, y - 12, "القيمة", font=FONT_BOLD, size=10.5, color=WHITE)
-    draw_rtl_text(c, col_range_right, y - 12, "المدى المرجعي", font=FONT_BOLD, size=10.5, color=WHITE)
-    draw_rtl_text(c, col_flag_right, y - 12, "الحالة", font=FONT_BOLD, size=10.5, color=WHITE)
-    y -= header_h + 4
+    HEADER_GAP = 12
+
+    def draw_table_header(y_top):
+        c.setFillColor(brand_primary)
+        c.roundRect(LEFT, y_top - header_h + 4, CONTENT_W, header_h, 6, fill=1, stroke=0)
+        draw_rtl_text(c, col_name_right, y_top - 12, "اسم المعيار", font=FONT_BOLD, size=10.5, color=WHITE)
+        draw_rtl_text(c, col_value_right, y_top - 12, "القيمة", font=FONT_BOLD, size=10.5, color=WHITE)
+        draw_rtl_text(c, col_range_right, y_top - 12, "المدى المرجعي", font=FONT_BOLD, size=10.5, color=WHITE)
+        draw_rtl_text(c, col_flag_right, y_top - 12, "الحالة", font=FONT_BOLD, size=10.5, color=WHITE)
+        return y_top - header_h - HEADER_GAP
+
+    y = draw_table_header(y)
 
     row_h = 24
     for idx, p in enumerate(parameters_with_values):
@@ -133,8 +152,10 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
 
         y -= row_h
         if y < 120:
+            c.setFillColor(brand_primary)
+            c.rect(0, PAGE_H - 8, PAGE_W, 8, fill=1, stroke=0)
             c.showPage()
-            y = PAGE_H - 60
+            y = draw_table_header(PAGE_H - 60)
 
     y -= 28
     c.setStrokeColor(BRAND_BORDER)

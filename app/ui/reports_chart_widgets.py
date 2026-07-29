@@ -1,14 +1,19 @@
 """Visual charting widgets and graphic indicators for ReportsView in PySide2."""
-from PySide2.QtCore import Qt, QRectF
+from PySide2.QtCore import Qt, QRectF, Signal
 from PySide2.QtGui import QColor, QPainter, QBrush, QPen, QFont
 from PySide2.QtWidgets import QFrame, QHBoxLayout, QLabel, QProgressBar, QVBoxLayout, QWidget
 
 
 class KPICardWidget(QFrame):
-    """Summary card displaying a KPI metric with icon, value, and stylized gradient background."""
+    """Summary card displaying a KPI metric with icon, value, and stylized gradient background.
+    Clickable: emits `clicked` so callers can show a detail drill-down for the metric."""
+    clicked = Signal()
+
     def __init__(self, title: str, value: str, icon: str, bg_color: str = "#0B4F6C", text_color: str = "#FFFFFF"):
         super().__init__()
         self.setObjectName("Card")
+        self.setCursor(Qt.PointingHandCursor)
+        self.setToolTip("اضغط لعرض تفاصيل السجلات المكوّنة لهذا الرقم")
         self.setStyleSheet(f"""
             QFrame#Card {{
                 background-color: {bg_color};
@@ -41,6 +46,10 @@ class KPICardWidget(QFrame):
 
     def set_value(self, value: str):
         self.lbl_val.setText(value)
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
+        super().mousePressEvent(event)
 
 
 class VisualProgressBar(QProgressBar):
