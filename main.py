@@ -44,6 +44,12 @@ def main():
             if state["login_window"]:
                 state["login_window"].close()
                 state["login_window"] = None
+
+            # Runs at most once per app launch, well after the main window is visible, so a slow
+            # SMTP send (or none at all, if no report is due) never delays showing the app.
+            from PySide2.QtCore import QTimer
+            from app.services import periodic_report_service
+            QTimer.singleShot(3000, periodic_report_service.check_and_run)
         except Exception as e:
             from PySide2.QtWidgets import QMessageBox
             import traceback

@@ -131,6 +131,26 @@ def add_payment(visit_id: int, amount: float, user_id: int = None) -> None:
         conn.close()
 
 
+def get_recent_test_dates(patient_id: int, test_id: int, within_days: int = 3) -> list:
+    """Returns visit_date strings for any past order of this exact test by this patient within the
+    last `within_days` days - used to warn reception staff before an unnecessary repeat test."""
+    if not patient_id:
+        return []
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            "SELECT v.visit_date FROM visit_test_orders o "
+            "JOIN visits v ON v.id = o.visit_id "
+            "WHERE v.patient_id = ? AND o.test_id = ? "
+            "AND v.visit_date >= datetime('now', ?) "
+            "ORDER BY v.visit_date DESC",
+            (patient_id, test_id, f"-{within_days} days"),
+        ).fetchall()
+        return [r["visit_date"] for r in rows]
+    finally:
+        conn.close()
+
+
 def search_visits(name_contains: str = "", unpaid_only: bool = False, limit: int = 100, offset: int = 0):
     conn = get_connection()
     try:
@@ -326,12 +346,12 @@ def search_patients(query: str = "", start_date: str = None, end_date: str = Non
 
 
         if start_date:
-            where_clauses.append("v.visit_date >= ?")
-            params.append(f"{start_date} 00:00:00")
+            where_clauses.append("date(v.visit_date) >= ?")
+            params.append(start_date)
 
         if end_date:
-            where_clauses.append("v.visit_date <= ?")
-            params.append(f"{end_date} 23:59:59")
+            where_clauses.append("date(v.visit_date) <= ?")
+            params.append(end_date)
 
         if where_clauses:
             sql.append("WHERE " + " AND ".join(where_clauses))
@@ -505,11 +525,11 @@ def get_referral_financial_report(start_date: str = None, end_date: str = None) 
         """
         params = []
         if start_date:
-            sql += " AND v.visit_date >= ?"
-            params.append(f"{start_date} 00:00:00")
+            sql += " AND date(v.visit_date) >= ?"
+            params.append(start_date)
         if end_date:
-            sql += " AND v.visit_date <= ?"
-            params.append(f"{end_date} 23:59:59")
+            sql += " AND date(v.visit_date) <= ?"
+            params.append(end_date)
         sql += " GROUP BY v.referral_source_id, v.doctor_id ORDER BY total_amount DESC"
 
         rows = conn.execute(sql, params).fetchall()

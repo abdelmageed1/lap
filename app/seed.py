@@ -12,7 +12,7 @@ from app.db import get_connection
 
 MODULE_KEYS = [
     "Dashboard", "Reception", "Visits", "Results", "Catalog", "Pricing", "Settings", "Users",
-    "Audit", "PatientHistory", "Backup", "Reports",
+    "Audit", "PatientHistory", "Backup", "Reports", "Attendance", "SpecimenTracking", "QualityControl",
 ]
 
 

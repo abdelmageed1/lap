@@ -435,12 +435,20 @@ def save_lab_settings(settings: dict, user_id: int = None) -> None:
         conn.execute(
             "UPDATE lab_settings SET lab_name=?, supervising_doctor_name=?, tagline=?, address=?, "
             "phone_numbers=?, footer_signature1=?, footer_signature2=?, digital_seal_text=?, "
-            "app_title=?, brand_primary_color=?, brand_secondary_color=?, lab_name_font_size=? WHERE id=1",
+            "app_title=?, brand_primary_color=?, brand_secondary_color=?, lab_name_font_size=?, "
+            "periodic_report_enabled=?, periodic_report_frequency=?, periodic_report_last_sent=?, "
+            "smtp_host=?, smtp_port=?, smtp_username=?, smtp_password=?, smtp_from_email=?, "
+            "smtp_to_email=? WHERE id=1",
             (settings.get("lab_name"), settings.get("supervising_doctor_name"), settings.get("tagline"),
              settings.get("address"), settings.get("phone_numbers"), settings.get("footer_signature1"),
              settings.get("footer_signature2"), settings.get("digital_seal_text"),
              settings.get("app_title"), settings.get("brand_primary_color", "#0B4F6C"),
-             settings.get("brand_secondary_color", "#146C8E"), settings.get("lab_name_font_size", 20)),
+             settings.get("brand_secondary_color", "#146C8E"), settings.get("lab_name_font_size", 20),
+             int(bool(settings.get("periodic_report_enabled"))), settings.get("periodic_report_frequency", "monthly"),
+             settings.get("periodic_report_last_sent"),
+             settings.get("smtp_host"), settings.get("smtp_port") or None,
+             settings.get("smtp_username"), settings.get("smtp_password"),
+             settings.get("smtp_from_email"), settings.get("smtp_to_email")),
         )
         try:
             log_action('lab_settings', 1, 'update', user_id=user_id, conn=conn)

@@ -52,6 +52,21 @@ class ReportsView(QWidget):
         kpi_row.addWidget(self.kpi_balance)
         outer.addLayout(kpi_row)
 
+        # Growth panel: month-to-date vs same days last month, year-to-date vs same days last year
+        growth_row = QHBoxLayout()
+        growth_row.setSpacing(12)
+        self.growth_month_label = QLabel("")
+        self.growth_month_label.setObjectName("Card")
+        self.growth_month_label.setWordWrap(True)
+        self.growth_month_label.setStyleSheet("QLabel#Card { padding: 10px 14px; }")
+        self.growth_year_label = QLabel("")
+        self.growth_year_label.setObjectName("Card")
+        self.growth_year_label.setWordWrap(True)
+        self.growth_year_label.setStyleSheet("QLabel#Card { padding: 10px 14px; }")
+        growth_row.addWidget(self.growth_month_label)
+        growth_row.addWidget(self.growth_year_label)
+        outer.addLayout(growth_row)
+
         # Filter bar
         filter_card = QFrame()
         filter_card.setObjectName("Card")
@@ -101,6 +116,23 @@ class ReportsView(QWidget):
         self.btn_export.clicked.connect(self.export_current_tab_csv)
         filter_layout.addWidget(self.btn_export)
 
+        self.btn_export_excel = AnimatedButton("تصدير إلى Excel 📈")
+        self.btn_export_excel.setToolTip("تصدير مع رسم بياني جاهز للعرض على الإدارة")
+        self.btn_export_excel.setStyleSheet("""
+            QPushButton {
+                background-color: #16A34A;
+                color: white;
+                font-weight: bold;
+                border-radius: 6px;
+                padding: 6px 14px;
+            }
+            QPushButton:hover {
+                background-color: #15803D;
+            }
+        """)
+        self.btn_export_excel.clicked.connect(self.export_current_tab_excel)
+        filter_layout.addWidget(self.btn_export_excel)
+
         filter_layout.addStretch()
         outer.addWidget(filter_card)
 
@@ -110,12 +142,14 @@ class ReportsView(QWidget):
         self.tab_sources = self._build_sources_tab()
         self.tab_departments = self._build_departments_tab()
         self.tab_staff = self._build_staff_tab()
+        self.tab_tat = self._build_tat_tab()
         self.tab_charts = self._build_charts_dash_tab()
 
         self.tabs.addTab(self.tab_doctors, "🩺 الأطباء والمرضى المحولون")
         self.tabs.addTab(self.tab_sources, "🏢 جهات الإحالة والتعاقدات")
         self.tabs.addTab(self.tab_departments, "🧪 إحصائيات الأقسام الطبية")
         self.tabs.addTab(self.tab_staff, "👥 إنتاجية موظفي المعمل")
+        self.tabs.addTab(self.tab_tat, "⏱ وقت الاستجابة (TAT)")
         self.tabs.addTab(self.tab_charts, "📊 الرسوم والتحليلات البيانية")
 
 
@@ -156,6 +190,20 @@ class ReportsView(QWidget):
         self.date_from.setEnabled(checked)
         self.date_to.setEnabled(checked)
         self.refresh_all_reports()
+
+    def _format_growth_text(self, title: str, period: dict) -> str:
+        pct = period["revenue_change_pct"]
+        if pct is None:
+            arrow, color, pct_text = "", get_color("text_muted"), "لا يوجد بيانات كافية للمقارنة"
+        else:
+            arrow = "▲" if pct >= 0 else "▼"
+            color = get_color("primary") if pct >= 0 else get_color("danger")
+            pct_text = f"{arrow} {abs(pct):.1f}%"
+        current = period["current"]
+        return (f"<b>{title}</b><br>"
+                f"الإيرادات: {current['revenue']:,.2f} ج.م "
+                f"<span style='color:{color}; font-weight:bold;'>({pct_text})</span><br>"
+                f"عدد الزيارات: {current['visit_count']}")
 
     def _get_dates(self):
         if not self.use_date_filter.isChecked():
@@ -293,6 +341,28 @@ class ReportsView(QWidget):
         layout.addWidget(splitter)
         return widget
 
+    # ==================== Turnaround Time (TAT) Tab ====================
+    def _build_tat_tab(self):
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        card = QFrame()
+        card.setObjectName("Card")
+        card_layout = QVBoxLayout(card)
+        card_layout.addWidget(QLabel(
+            "<b>متوسط وقت الاستجابة لكل تحليل (من إنشاء الطلب حتى اعتماد النتيجة):</b> "
+            "يشمل فقط التحاليل المعتمَدة بالكامل خلال الفترة المحدَّدة."
+        ))
+
+        self.tat_table = QTableWidget()
+        self.tat_table.setColumnCount(5)
+        self.tat_table.setHorizontalHeaderLabels([
+            "اسم التحليل", "القسم الطبي", "عدد الحالات المعتمَدة", "متوسط الوقت (ساعة)", "أطول وقت (ساعة)"
+        ])
+        self.tat_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        card_layout.addWidget(self.tat_table)
+        layout.addWidget(card)
+        return widget
+
     # ==================== Graphical Analytics Dashboard Tab ====================
     def _build_charts_dash_tab(self):
         widget = QWidget()
@@ -389,7 +459,17 @@ class ReportsView(QWidget):
             self.staff_patients_table.setRowCount(0)
             self.lbl_staff_drilldown_title.setText("<b>📋 سجل عمليات الموظف:</b> (اختر موظفًا من الجدول أعلى)")
 
-        # 5. Update KPI Cards Summary Totals
+        # 5. Refresh Turnaround Time (TAT) Table
+        self.tat_data = reports_service.get_turnaround_time_analytics(start_date=start_date, end_date=end_date)
+        self.tat_table.setRowCount(len(self.tat_data))
+        for row_idx, row in enumerate(self.tat_data):
+            self.tat_table.setItem(row_idx, 0, QTableWidgetItem(row["test_name"]))
+            self.tat_table.setItem(row_idx, 1, QTableWidgetItem(row["department_name"] or "غير محدد"))
+            self.tat_table.setItem(row_idx, 2, QTableWidgetItem(str(row["completed_count"])))
+            self.tat_table.setItem(row_idx, 3, QTableWidgetItem(f"{row['avg_hours']:.1f}"))
+            self.tat_table.setItem(row_idx, 4, QTableWidgetItem(f"{row['max_hours']:.1f}"))
+
+        # 6. Update KPI Cards Summary Totals
         tot_rev = sum([s["total_amount"] for s in self.sources_data]) if self.sources_data else sum([d["total_amount"] for d in self.doctors_data])
         tot_vis = sum([s["visit_count"] for s in self.sources_data]) if self.sources_data else sum([d["visit_count"] for d in self.doctors_data])
         tot_paid = sum([s["total_paid"] for s in self.sources_data]) if self.sources_data else sum([d["total_paid"] for d in self.doctors_data])
@@ -400,7 +480,12 @@ class ReportsView(QWidget):
         self.kpi_paid.set_value(f"{tot_paid:,.2f} ج.م")
         self.kpi_balance.set_value(f"{tot_bal:,.2f} ج.م")
 
-        # 6. Update Visual Charts Data
+        # 7. Update Growth Comparison Panel (month-to-date / year-to-date vs previous period)
+        comparison = reports_service.get_period_comparison()
+        self.growth_month_label.setText(self._format_growth_text("📅 هذا الشهر مقابل نفس الفترة الشهر السابق", comparison["month"]))
+        self.growth_year_label.setText(self._format_growth_text("📆 هذا العام مقابل نفس الفترة العام السابق", comparison["year"]))
+
+        # 8. Update Visual Charts Data
         doc_chart_items = [
             {"label": d["doctor_name"] or "غير محدد", "value": d["total_amount"], "display_val": f"{d['total_amount']:,.0f} ج.م", "color": "#0F766E"}
             for d in self.doctors_data[:6]
@@ -486,34 +571,73 @@ class ReportsView(QWidget):
             self.staff_patients_table.setItem(row_idx, 7, QTableWidgetItem(f"{p['balance']:.2f}" if p.get('balance') is not None else "-"))
 
     # ==================== Export functionality ====================
-    def export_current_tab_csv(self):
+    def _current_export_target(self):
+        """Returns (title, target_table, default_filename_stem, chart_label_col, chart_value_col)
+        for whichever tab is currently active - shared by the CSV and Excel export actions.
+        chart_label_col/chart_value_col are None where a bar chart wouldn't be meaningful."""
         current_tab_index = self.tabs.currentIndex()
         if current_tab_index == 0:
             if self.selected_doctor_id is not None:
-                title = f"مرضى الطبيب {self.selected_doctor_name}"
-                target_table = self.patients_table
-                default_filename = f"patients_doctor_{self.selected_doctor_id}.csv"
-            else:
-                title = "تقرير الأطباء المحولين"
-                target_table = self.doctors_table
-                default_filename = "referring_doctors_report.csv"
+                return (f"مرضى الطبيب {self.selected_doctor_name}", self.patients_table,
+                        f"patients_doctor_{self.selected_doctor_id}", None, None)
+            return ("تقرير الأطباء المحولين", self.doctors_table, "referring_doctors_report", 1, 3)
         elif current_tab_index == 1:
-            title = "تقرير جهات الإحالة"
-            target_table = self.sources_table
-            default_filename = "referral_sources_report.csv"
+            return ("تقرير جهات الإحالة", self.sources_table, "referral_sources_report", 0, 2)
         elif current_tab_index == 2:
-            title = "تقرير إحصائيات الأقسام الطبية"
-            target_table = self.departments_table
-            default_filename = "departments_revenue_report.csv"
+            return ("تقرير إحصائيات الأقسام الطبية", self.departments_table, "departments_revenue_report", 0, 2)
+        elif current_tab_index == 4:
+            return ("تقرير وقت الاستجابة (TAT)", self.tat_table, "turnaround_time_report", 0, 3)
         else:
             if self.selected_staff_id is not None:
-                title = f"عمليات الموظف {self.selected_staff_name}"
-                target_table = self.staff_patients_table
-                default_filename = f"staff_activity_user_{self.selected_staff_id}.csv"
-            else:
-                title = "تقرير إنتاجية موظفي المعمل"
-                target_table = self.staff_table
-                default_filename = "staff_productivity_report.csv"
+                return (f"عمليات الموظف {self.selected_staff_name}", self.staff_patients_table,
+                        f"staff_activity_user_{self.selected_staff_id}", None, None)
+            return ("تقرير إنتاجية موظفي المعمل", self.staff_table, "staff_productivity_report", 1, 5)
+
+    def _read_table_data(self, target_table):
+        headers = [target_table.horizontalHeaderItem(col).text() for col in range(target_table.columnCount())]
+        rows = []
+        for row in range(target_table.rowCount()):
+            rows.append([
+                (target_table.item(row, col).text() if target_table.item(row, col) else "")
+                for col in range(target_table.columnCount())
+            ])
+        return headers, rows
+
+    def export_current_tab_excel(self):
+        title, target_table, default_stem, chart_label_col, chart_value_col = self._current_export_target()
+        headers, rows = self._read_table_data(target_table)
+
+        from app.config import get_exports_patients_dir
+        import os as _os
+        path, _ = QFileDialog.getSaveFileName(
+            self, f"تصدير {title}",
+            _os.path.join(get_exports_patients_dir(), f"{default_stem}.xlsx"),
+            "Excel Files (*.xlsx)"
+        )
+        if not path:
+            return
+
+        try:
+            from app.reports.excel_export import generate_excel_report
+            numeric_rows = []
+            for row in rows:
+                converted = list(row)
+                if chart_value_col is not None:
+                    try:
+                        converted[chart_value_col] = float(row[chart_value_col])
+                    except (ValueError, TypeError):
+                        pass
+                numeric_rows.append(converted)
+            generate_excel_report(path, title, headers, numeric_rows,
+                                  chart_label_col=chart_label_col, chart_value_col=chart_value_col,
+                                  chart_title=title)
+            QMessageBox.information(self, "✅ تم التصدير بنجاح", f"تم تصدير التقرير بنجاح!\n\n📁 مسار الحفظ:\n{path}")
+        except Exception as exc:
+            QMessageBox.critical(self, "خطأ في التصدير", f"تعذر حفظ الملف: {exc}")
+
+    def export_current_tab_csv(self):
+        title, target_table, default_stem, _label_col, _value_col = self._current_export_target()
+        default_filename = f"{default_stem}.csv"
 
         from app.config import get_exports_patients_dir
         import os as _os

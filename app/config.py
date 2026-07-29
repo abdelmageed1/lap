@@ -99,6 +99,10 @@ def get_backups_dir(root: str = None) -> str:
     return os.path.join(root or get_storage_root(), "Backups")
 
 
+def get_periodic_reports_dir(root: str = None) -> str:
+    return os.path.join(root or get_storage_root(), "Exports", "PeriodicReports")
+
+
 # Legacy aliases (kept for backward compatibility in backup_service.py)
 BACKUPS_DIR = get_backups_dir()
 INVOICES_DIR = get_pdf_invoices_dir()

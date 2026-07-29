@@ -261,6 +261,24 @@ class ReceptionView(QWidget):
             if msg.clickedButton() is not yes_btn:
                 return
 
+        # Warn if this exact test was already ordered for this same (recognized) patient recently -
+        # only meaningful once we know who the patient actually is, i.e. an existing patient match.
+        if self.selected_existing_patient_id:
+            recent_dates = visit_service.get_recent_test_dates(self.selected_existing_patient_id, test["id"])
+            if recent_dates:
+                last_date = recent_dates[0][:10]
+                msg = QMessageBox(self)
+                msg.setWindowTitle("تحليل تم عمله مؤخرًا")
+                msg.setIcon(QMessageBox.Warning)
+                msg.setText(f"تنبيه: هذا المريض عمل تحليل «{test['name']}» بالفعل بتاريخ {last_date} "
+                            f"(خلال آخر 3 أيام).\nهل ترغب في إضافته مرة أخرى؟")
+                yes_btn = msg.addButton("نعم، أضف التحليل", QMessageBox.YesRole)
+                no_btn = msg.addButton("لا، إلغاء", QMessageBox.NoRole)
+                msg.setDefaultButton(no_btn)
+                msg.exec_()
+                if msg.clickedButton() is not yes_btn:
+                    return
+
         source_id = self.source_combo.currentData()
         source_name = next((s["name"] for s in self.sources if s["id"] == source_id), "Individual")
         price = catalog_service.get_price(test["id"], source_name)

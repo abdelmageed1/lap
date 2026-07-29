@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from PySide2.QtWidgets import (QComboBox, QFileDialog, QFrame, QHBoxLayout, QLabel, QLineEdit,
+from PySide2.QtWidgets import (QCheckBox, QComboBox, QFileDialog, QFrame, QHBoxLayout, QLabel, QLineEdit,
                                 QMessageBox, QPushButton, QScrollArea, QSpinBox, QTextEdit,
                                 QVBoxLayout, QWidget)
 from PySide2.QtCore import Qt
@@ -44,6 +44,7 @@ class SettingsView(QWidget):
 
         self._build_general_section(layout)
         self._build_branding_section(layout)
+        self._build_periodic_report_section(layout)
         self._build_catalog_section(layout)
         self._build_storage_section(layout)
         self._build_catalog_io_section(layout)
@@ -177,6 +178,92 @@ class SettingsView(QWidget):
     def _set_brand_colors(self, primary: str, secondary: str):
         self.brand_primary_edit.setText(primary)
         self.brand_secondary_edit.setText(secondary)
+
+    def _build_periodic_report_section(self, layout):
+        card = QFrame()
+        card.setObjectName("Card")
+        card_layout = QVBoxLayout(card)
+
+        lbl_title = QLabel("📈 التقرير الدوري التلقائي")
+        lbl_title.setStyleSheet(f"font-weight: bold; color: {get_color('primary_text')}; font-size: 13px;")
+        card_layout.addWidget(lbl_title)
+
+        hint = QLabel(
+            "عند التفعيل، يتحقق البرنامج عند كل تشغيل هل حان وقت تقرير جديد (أسبوعي أو شهري)، ويولّده "
+            "تلقائيًا في مجلد 'Exports/PeriodicReports'. لو أدخلت بيانات بريد إلكتروني (SMTP) بالأسفل "
+            "سيتم إرساله تلقائيًا أيضًا - بدونها يُحفَظ التقرير محليًا فقط."
+        )
+        hint.setWordWrap(True)
+        hint.setStyleSheet(f"color: {get_color('text_muted')}; font-size: 11px;")
+        card_layout.addWidget(hint)
+
+        self.periodic_enabled_check = QCheckBox("تفعيل التقرير الدوري التلقائي")
+        card_layout.addWidget(self.periodic_enabled_check)
+
+        freq_row = QHBoxLayout()
+        freq_row.addWidget(QLabel("التكرار:"))
+        self.periodic_frequency_combo = QComboBox()
+        self.periodic_frequency_combo.addItem("أسبوعي", "weekly")
+        self.periodic_frequency_combo.addItem("شهري", "monthly")
+        freq_row.addWidget(self.periodic_frequency_combo)
+        card_layout.addLayout(freq_row)
+
+        smtp_grid = QHBoxLayout()
+        col_a = QVBoxLayout()
+        col_a.addWidget(QLabel("خادم SMTP (اختياري - للإرسال بالبريد)"))
+        self.smtp_host_edit = QLineEdit()
+        self.smtp_host_edit.setPlaceholderText("مثال: smtp.gmail.com")
+        col_a.addWidget(self.smtp_host_edit)
+        self.smtp_port_spin = QSpinBox()
+        self.smtp_port_spin.setRange(0, 65535)
+        self.smtp_port_spin.setValue(587)
+        col_a.addWidget(self.smtp_port_spin)
+        smtp_grid.addLayout(col_a)
+
+        col_b = QVBoxLayout()
+        col_b.addWidget(QLabel("اسم المستخدم وكلمة المرور"))
+        self.smtp_username_edit = QLineEdit()
+        self.smtp_username_edit.setPlaceholderText("اسم مستخدم البريد")
+        col_b.addWidget(self.smtp_username_edit)
+        self.smtp_password_edit = QLineEdit()
+        self.smtp_password_edit.setPlaceholderText("كلمة المرور")
+        self.smtp_password_edit.setEchoMode(QLineEdit.Password)
+        col_b.addWidget(self.smtp_password_edit)
+        smtp_grid.addLayout(col_b)
+
+        col_c = QVBoxLayout()
+        col_c.addWidget(QLabel("من / إلى"))
+        self.smtp_from_edit = QLineEdit()
+        self.smtp_from_edit.setPlaceholderText("البريد المرسِل")
+        col_c.addWidget(self.smtp_from_edit)
+        self.smtp_to_edit = QLineEdit()
+        self.smtp_to_edit.setPlaceholderText("بريد صاحب المعمل (المستقبِل)")
+        col_c.addWidget(self.smtp_to_edit)
+        smtp_grid.addLayout(col_c)
+
+        card_layout.addLayout(smtp_grid)
+
+        test_button = QPushButton("إنشاء تقرير الآن للتجربة")
+        test_button.setToolTip("يولّد التقرير فورًا (وبيرسله لو بيانات البريد متعبّية) بدون انتظار الموعد الدوري")
+        test_button.clicked.connect(self.run_periodic_report_now)
+        card_layout.addWidget(test_button)
+
+        layout.addWidget(card)
+
+    def run_periodic_report_now(self):
+        try:
+            from app.services import periodic_report_service
+            settings = catalog_service.get_lab_settings()
+            file_path = periodic_report_service.generate_report_file(settings)
+            emailed = periodic_report_service.send_report_email(settings, file_path)
+            msg = f"تم إنشاء التقرير بنجاح:\n{file_path}"
+            if emailed:
+                msg += "\n\nتم إرساله بالبريد الإلكتروني بنجاح أيضًا."
+            elif settings.get("smtp_host"):
+                msg += "\n\nتعذر إرساله بالبريد - تأكد من صحة بيانات SMTP."
+            QMessageBox.information(self, "تم", msg)
+        except Exception as exc:
+            QMessageBox.critical(self, "خطأ", f"تعذر إنشاء التقرير: {exc}")
 
 
 
@@ -393,6 +480,16 @@ class SettingsView(QWidget):
         self.brand_primary_edit.setText(settings.get("brand_primary_color") or "#0B4F6C")
         self.brand_secondary_edit.setText(settings.get("brand_secondary_color") or "#146C8E")
 
+        self.periodic_enabled_check.setChecked(bool(settings.get("periodic_report_enabled")))
+        freq_index = self.periodic_frequency_combo.findData(settings.get("periodic_report_frequency") or "monthly")
+        self.periodic_frequency_combo.setCurrentIndex(freq_index if freq_index >= 0 else 1)
+        self.smtp_host_edit.setText(settings.get("smtp_host") or "")
+        self.smtp_port_spin.setValue(settings.get("smtp_port") or 587)
+        self.smtp_username_edit.setText(settings.get("smtp_username") or "")
+        self.smtp_password_edit.setText(settings.get("smtp_password") or "")
+        self.smtp_from_edit.setText(settings.get("smtp_from_email") or "")
+        self.smtp_to_edit.setText(settings.get("smtp_to_email") or "")
+
         self.department_combo.clear()
         self.department_combo.addItem("- اختر قسم -", None)
         for dept in data.get("departments") or []:
@@ -499,6 +596,9 @@ class SettingsView(QWidget):
 
     def save_settings(self):
         new_title = self.app_title_edit.text().strip() or "LapLIS - نظام إدارة معمل التحاليل الطبية"
+        # periodic_report_last_sent has no field on this form - carry over the existing value so
+        # saving settings never resets the "when was the last periodic report sent" tracker.
+        current = catalog_service.get_lab_settings()
         settings = {
             "lab_name": self.lab_name_edit.text().strip(),
             "lab_name_font_size": self.lab_name_font_size_spin.value(),
@@ -512,6 +612,15 @@ class SettingsView(QWidget):
             "app_title": new_title,
             "brand_primary_color": self.brand_primary_edit.text().strip() or "#0B4F6C",
             "brand_secondary_color": self.brand_secondary_edit.text().strip() or "#146C8E",
+            "periodic_report_enabled": self.periodic_enabled_check.isChecked(),
+            "periodic_report_frequency": self.periodic_frequency_combo.currentData() or "monthly",
+            "periodic_report_last_sent": current.get("periodic_report_last_sent"),
+            "smtp_host": self.smtp_host_edit.text().strip(),
+            "smtp_port": self.smtp_port_spin.value(),
+            "smtp_username": self.smtp_username_edit.text().strip(),
+            "smtp_password": self.smtp_password_edit.text(),
+            "smtp_from_email": self.smtp_from_edit.text().strip(),
+            "smtp_to_email": self.smtp_to_edit.text().strip(),
         }
         user_id = getattr(self.user, "user_id", None) if self.user else None
         catalog_service.save_lab_settings(settings, user_id=user_id)

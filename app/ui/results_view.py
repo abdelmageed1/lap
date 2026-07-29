@@ -83,6 +83,7 @@ class ResultsView(QWidget):
         self.pending_orders = []
         self.current_order = None
         self.parameter_inputs = []  # list of (parameter_id, data_type, line_edit, range)
+        self._delta_labels = {}  # parameter_id -> (QLabel, param_info) for the delta-check warning
         self._limit = 50
         self._offset = 0
 
@@ -192,6 +193,7 @@ class ResultsView(QWidget):
             if child.widget():
                 child.widget().deleteLater()
         self.parameter_inputs = []
+        self._delta_labels = {}
 
         self.entry_title.setText(f"{view['test_name']} - {view['patient_name']}")
 
@@ -225,26 +227,57 @@ class ResultsView(QWidget):
             value_edit.setPlaceholderText(f"أدخل النتيجة (المدى الطبيعي: {range_text})")
             value_edit.setStyleSheet("font-size: 14px; padding: 8px 12px; border: 1px solid #CBD5E1; border-radius: 6px; background: white;")
 
-            if p.get("numeric_value") is not None:
-                value_edit.setText(str(p["numeric_value"]))
-            elif p.get("text_value"):
-                value_edit.setText(p["text_value"])
+            if p.get("existing_numeric") is not None:
+                value_edit.setText(str(p["existing_numeric"]))
+            elif p.get("existing_text"):
+                value_edit.setText(p["existing_text"])
 
             tooltip_text = self._get_range_text(p)
             if tooltip_text:
                 value_edit.setToolTip(f"المدى الطبيعي: {tooltip_text}")
 
+            delta_label = QLabel("")
+            delta_label.setWordWrap(True)
+            delta_label.setStyleSheet(f"color: {get_color('danger')}; font-size: 11px; font-weight: bold;")
+            delta_label.setVisible(False)
+            self._delta_labels[p["parameter_id"]] = (delta_label, p)
+
             value_edit.textChanged.connect(lambda txt, edit=value_edit, param=p: self._on_param_value_changed(txt, edit, param))
 
             card_layout.addLayout(top_row)
             card_layout.addWidget(value_edit)
+            card_layout.addWidget(delta_label)
 
             self.params_layout.addWidget(param_card)
             self.parameter_inputs.append((p["parameter_id"], p["data_type"], value_edit, p))
+            self._check_delta(value_edit.text(), p)
 
         self.params_layout.addStretch()
 
+    def _check_delta(self, text: str, param: dict):
+        entry = self._delta_labels.get(param["parameter_id"])
+        if entry is None:
+            return
+        label, _ = entry
+        previous = param.get("previous_numeric")
+        if previous is None:
+            label.setVisible(False)
+            return
+        try:
+            current = float(text.strip())
+        except (ValueError, TypeError):
+            label.setVisible(False)
+            return
+        pct = result_service.compute_delta_percent(current, previous)
+        if pct is not None and pct > result_service.DELTA_CHECK_THRESHOLD_PERCENT:
+            prev_date = (param.get("previous_date") or "")[:10]
+            label.setText(f"⚠ فرق {pct:.0f}% عن آخر نتيجة لنفس المريض ({previous}) بتاريخ {prev_date}")
+            label.setVisible(True)
+        else:
+            label.setVisible(False)
+
     def _on_param_value_changed(self, text: str, edit: QLineEdit, param: dict):
+        self._check_delta(text, param)
         stripped = text.strip()
         if stripped.lower() == "n":
             edit.blockSignals(True)

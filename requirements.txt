@@ -8,6 +8,7 @@ reportlab
 arabic-reshaper
 python-bidi
 bcrypt
+openpyxl
 
 # Dev/build only (not needed to just run the app):
 pytest

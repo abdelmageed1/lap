@@ -9,6 +9,7 @@ from app.ui.animated_button import AnimatedButton
 
 from app.config import get_logo_path
 from app.services import catalog_service
+from app.ui.attendance_view import AttendanceView
 from app.ui.audit_log_view import AuditLogView
 from app.ui.backup_view import BackupView
 from app.ui.catalog_view import CatalogView
@@ -16,8 +17,10 @@ from app.ui.dashboard_view import DashboardView
 from app.ui.patient_history_view import PatientHistoryView
 from app.ui.patient_tracker_widget import PatientTrackerWidget
 from app.ui.reception_view import ReceptionView
+from app.ui.qc_view import QCView
 from app.ui.reports_view import ReportsView
 from app.ui.results_view import ResultsView
+from app.ui.specimen_tracking_view import SpecimenTrackingView
 
 from app.ui.settings_view import SettingsView
 from app.ui.users_view import UsersView
@@ -108,9 +111,12 @@ class MainWindow(QWidget):
                 ("Results", "نتائج التحاليل", ResultsView),
                 ("PatientHistory", "سجل المريض", PatientHistoryView),
                 ("PatientTracker", "تتبّع المريض", PatientTrackerWidget),
+                ("SpecimenTracking", "متابعة العينات", SpecimenTrackingView),
+                ("Attendance", "الحضور والانصراف", AttendanceView),
             ]),
             ("الإدارة", [
                 ("Catalog", "كتالوج التحاليل", CatalogView),
+                ("QualityControl", "مراقبة الجودة (QC)", QCView),
                 ("Reports", "التقارير والإحصائيات", ReportsView),
                 ("Settings", "الإعدادات", SettingsView),
                 ("Users", "المستخدمون والأدوار", UsersView),

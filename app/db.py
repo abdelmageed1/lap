@@ -86,7 +86,8 @@ CREATE TABLE IF NOT EXISTS visit_test_orders (
     visit_id INTEGER NOT NULL REFERENCES visits(id) ON DELETE CASCADE,
     test_id INTEGER NOT NULL REFERENCES tests(id),
     price REAL NOT NULL DEFAULT 0,
-    status TEXT NOT NULL DEFAULT 'Ordered'
+    status TEXT NOT NULL DEFAULT 'Ordered',
+    specimen_status TEXT NOT NULL DEFAULT 'NotCollected'
 );
 
 CREATE TABLE IF NOT EXISTS result_values (
@@ -142,7 +143,16 @@ CREATE TABLE IF NOT EXISTS lab_settings (
     app_title TEXT DEFAULT 'LapLIS - نظام إدارة معمل التحاليل الطبية',
     brand_primary_color TEXT DEFAULT '#0B4F6C',
     brand_secondary_color TEXT DEFAULT '#146C8E',
-    lab_name_font_size INTEGER DEFAULT 20
+    lab_name_font_size INTEGER DEFAULT 20,
+    periodic_report_enabled INTEGER DEFAULT 0,
+    periodic_report_frequency TEXT DEFAULT 'monthly',
+    periodic_report_last_sent TEXT,
+    smtp_host TEXT,
+    smtp_port INTEGER,
+    smtp_username TEXT,
+    smtp_password TEXT,
+    smtp_from_email TEXT,
+    smtp_to_email TEXT
 );
 
 
@@ -154,6 +164,31 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     user_id INTEGER,
     timestamp TEXT NOT NULL,
     details TEXT
+);
+
+CREATE TABLE IF NOT EXISTS attendance (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    check_in TEXT NOT NULL,
+    check_out TEXT
+);
+
+CREATE TABLE IF NOT EXISTS qc_targets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    parameter_id INTEGER NOT NULL REFERENCES test_parameters(id),
+    control_level TEXT NOT NULL,
+    target_mean REAL NOT NULL,
+    target_sd REAL NOT NULL,
+    UNIQUE(parameter_id, control_level)
+);
+
+CREATE TABLE IF NOT EXISTS qc_records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    parameter_id INTEGER NOT NULL REFERENCES test_parameters(id),
+    control_level TEXT NOT NULL,
+    measured_value REAL NOT NULL,
+    recorded_at TEXT NOT NULL,
+    user_id INTEGER REFERENCES users(id)
 );
 
 -- Useful indexes
@@ -180,7 +215,11 @@ def init_schema() -> None:
         columns = [r["name"] for r in conn.execute("PRAGMA table_info(patients)").fetchall()]
         if "created_by_user_id" not in columns:
             conn.execute("ALTER TABLE patients ADD COLUMN created_by_user_id INTEGER REFERENCES users(id)")
-        
+
+        order_cols = [r["name"] for r in conn.execute("PRAGMA table_info(visit_test_orders)").fetchall()]
+        if "specimen_status" not in order_cols:
+            conn.execute("ALTER TABLE visit_test_orders ADD COLUMN specimen_status TEXT NOT NULL DEFAULT 'NotCollected'")
+
         lab_cols = [r["name"] for r in conn.execute("PRAGMA table_info(lab_settings)").fetchall()]
         if "digital_seal_text" not in lab_cols:
             conn.execute("ALTER TABLE lab_settings ADD COLUMN digital_seal_text TEXT DEFAULT '🔒 هذا التقرير مُعتمَد إلكترونيًا وبخاتم الإدارة الرسمي ولا يحتاج توقيعًا يدوياً.'")
@@ -208,6 +247,16 @@ def init_schema() -> None:
                     )
         if "lab_name_font_size" not in lab_cols:
             conn.execute("ALTER TABLE lab_settings ADD COLUMN lab_name_font_size INTEGER DEFAULT 20")
+        if "periodic_report_enabled" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN periodic_report_enabled INTEGER DEFAULT 0")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN periodic_report_frequency TEXT DEFAULT 'monthly'")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN periodic_report_last_sent TEXT")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_host TEXT")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_port INTEGER")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_username TEXT")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_password TEXT")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_from_email TEXT")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_to_email TEXT")
 
         conn.commit()
     finally:

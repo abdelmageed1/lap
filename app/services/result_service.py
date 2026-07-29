@@ -122,6 +122,10 @@ def get_order_entry_view(order_id: int):
             "SELECT * FROM result_values WHERE visit_test_order_id = ?", (order_id,)
         ).fetchall()}
 
+        patient_id = conn.execute(
+            "SELECT patient_id FROM visits WHERE id = ?", (order["visit_id"],)
+        ).fetchone()["patient_id"]
+
         parameters = []
         for p in params:
             p = dict(p)
@@ -130,6 +134,17 @@ def get_order_entry_view(order_id: int):
             ).fetchall()]
             matched = _select_range(ranges, sex, age)
             existing_value = existing.get(p["id"])
+
+            prev = conn.execute(
+                "SELECT rv.numeric_value, v.visit_date FROM result_values rv "
+                "JOIN visit_test_orders o2 ON o2.id = rv.visit_test_order_id "
+                "JOIN visits v ON v.id = o2.visit_id "
+                "WHERE v.patient_id = ? AND rv.parameter_id = ? AND o2.id != ? "
+                "AND rv.numeric_value IS NOT NULL "
+                "ORDER BY v.visit_date DESC LIMIT 1",
+                (patient_id, p["id"], order_id),
+            ).fetchone()
+
             parameters.append({
                 "parameter_id": p["id"],
                 "name": p["name"],
@@ -140,12 +155,26 @@ def get_order_entry_view(order_id: int):
                 "range_text": matched["normal_text"] if matched else None,
                 "existing_numeric": existing_value["numeric_value"] if existing_value else None,
                 "existing_text": existing_value["text_value"] if existing_value else None,
+                "previous_numeric": prev["numeric_value"] if prev else None,
+                "previous_date": prev["visit_date"] if prev else None,
             })
 
         order["parameters"] = parameters
         return order
     finally:
         conn.close()
+
+
+DELTA_CHECK_THRESHOLD_PERCENT = 50.0
+
+
+def compute_delta_percent(current: float, previous: float):
+    """Percentage change of `current` vs a patient's `previous` result for the same parameter.
+    Returns None when there's nothing meaningful to compare against (no previous value, or a
+    previous value of exactly 0 where percentage change is undefined)."""
+    if previous is None or previous == 0:
+        return None
+    return abs(current - previous) / abs(previous) * 100
 
 
 def _compute_flag(data_type: str, numeric_value, text_value, low, high, normal_text) -> str:
@@ -339,11 +368,11 @@ def get_patient_history(patient_id: int, start_date: str = None, end_date: str =
         query = "SELECT * FROM visits WHERE patient_id = ?"
         params = [patient_id]
         if start_date:
-            query += " AND visit_date >= ?"
-            params.append(f"{start_date} 00:00:00")
+            query += " AND date(visit_date) >= ?"
+            params.append(start_date)
         if end_date:
-            query += " AND visit_date <= ?"
-            params.append(f"{end_date} 23:59:59")
+            query += " AND date(visit_date) <= ?"
+            params.append(end_date)
         query += " ORDER BY id DESC"
 
         visits = conn.execute(query, tuple(params)).fetchall()
