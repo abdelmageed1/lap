@@ -16,9 +16,11 @@
 pip install -r requirements.txt
 ```
 
+
+
 ### التشغيل
 ```bash
-python main.py
+python   main.py
 ```
 
 **عند أول تشغيل تلقائيًا:**
