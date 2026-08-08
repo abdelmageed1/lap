@@ -47,6 +47,8 @@ a = Analysis(
         'PySide2.QtCharts',
         'PySide2.QtSvg',
         'bcrypt',
+        'cffi',
+        '_cffi_backend',
         'sqlite3',
         'arabic_reshaper',
         'bidi',

@@ -7,7 +7,7 @@ PySide2==5.15.2.1
 reportlab
 arabic-reshaper
 python-bidi
-bcrypt
+bcrypt==3.2.2
 openpyxl
 
 # Dev/build only (not needed to just run the app):
