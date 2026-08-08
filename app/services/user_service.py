@@ -1,6 +1,7 @@
 """Users, roles and their per-module permissions."""
 from __future__ import annotations
 
+import sqlite3
 import bcrypt
 
 from app.db import get_connection
@@ -225,13 +226,23 @@ def delete_user(user_id: int, current_user_id: int = None) -> tuple[bool, str]:
         if current_user_id and user_id == current_user_id:
             return False, "لا يمكن حذف الحساب المسجّل به حالياً"
 
-        conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
-        conn.commit()
         try:
-            log_action('users', user_id, 'delete', details=f"deleted_username={user['username']}")
-        except Exception:
-            pass
-        return True, "تم حذف حساب المستخدم بنجاح"
+            conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
+            conn.commit()
+            try:
+                log_action('users', user_id, 'delete', details=f"deleted_username={user['username']}")
+            except Exception:
+                pass
+            return True, "تم حذف حساب المستخدم بنجاح"
+        except sqlite3.IntegrityError:
+            conn.rollback()
+            conn.execute("UPDATE users SET is_active = 0 WHERE id = ?", (user_id,))
+            conn.commit()
+            try:
+                log_action('users', user_id, 'deactivate', details=f"deactivated_due_to_linked_records={user['username']}")
+            except Exception:
+                pass
+            return True, "المستخدم مرتبط بسجلات سابقة (حضور/مرضى/جودة/تدقيق). تم تعطيل الحساب بنجاح بدلاً من الحذف النهائي للحفاظ على تاريخ وتكامل البيانات."
     finally:
         conn.close()
 

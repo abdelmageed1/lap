@@ -81,3 +81,16 @@ def get_attendance_report(start_date: str = None, end_date: str = None, user_id:
         return rows
     finally:
         conn.close()
+
+
+def delete_attendance_record(record_id: int) -> tuple[bool, str]:
+    conn = get_connection()
+    try:
+        cur = conn.execute("DELETE FROM attendance WHERE id = ?", (record_id,))
+        conn.commit()
+        if cur.rowcount > 0:
+            return True, "تم حذف سجل الحضور والانصراف بنجاح"
+        return False, "سجل الحضور غير موجود"
+    finally:
+        conn.close()
+

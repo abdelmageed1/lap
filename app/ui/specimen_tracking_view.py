@@ -1,3 +1,4 @@
+from PySide2.QtCore import Qt
 from PySide2.QtWidgets import (QFrame, QHBoxLayout, QHeaderView, QLabel, QLineEdit, QPushButton,
                                 QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
@@ -34,8 +35,17 @@ class SpecimenTrackingView(QWidget):
 
         self.table = QTableWidget()
         self.table.setColumnCount(5)
-        self.table.setHorizontalHeaderLabels(["رقم الفاتورة", "اسم المريض", "التحليل", "المرحلة الحالية", ""])
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.table.setHorizontalHeaderLabels(["رقم الفاتورة", "اسم المريض", "التحليل", "المرحلة الحالية", "الإجراء"])
+        self.table.verticalHeader().setDefaultSectionSize(46)
+        self.table.verticalHeader().setVisible(False)
+
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.Stretch)
+        header.setSectionResizeMode(2, QHeaderView.Stretch)
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
+
         self.table.setSelectionBehavior(QTableWidget.SelectRows)
         card_layout.addWidget(self.table)
 
@@ -56,11 +66,22 @@ class SpecimenTrackingView(QWidget):
             self.table.setItem(row_idx, 2, QTableWidgetItem(r["test_name"]))
             self.table.setItem(row_idx, 3, QTableWidgetItem(specimen_service.STAGE_LABELS[r["specimen_status"]]))
 
-            advance_button = QPushButton("نقل للمرحلة التالية ▶")
+            advance_button = AnimatedButton("نقل للمرحلة التالية ▶")
             advance_button.setObjectName("Primary")
+            advance_button.setMinimumWidth(180)
+            advance_button.setMinimumHeight(32)
+            advance_button.setStyleSheet("padding: 4px 14px; font-size: 13px; font-weight: bold;")
             advance_button.clicked.connect(lambda checked=False, order_id=r["order_id"]: self.advance(order_id))
-            self.table.setCellWidget(row_idx, 4, advance_button)
+
+            btn_container = QWidget()
+            btn_layout = QHBoxLayout(btn_container)
+            btn_layout.setContentsMargins(6, 4, 6, 4)
+            btn_layout.setAlignment(Qt.AlignCenter)
+            btn_layout.addWidget(advance_button)
+
+            self.table.setCellWidget(row_idx, 4, btn_container)
 
     def advance(self, order_id: int):
         specimen_service.advance_specimen_status(order_id, user_id=self._current_user_id())
         self.refresh()
+

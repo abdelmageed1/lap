@@ -1,4 +1,4 @@
-from PySide2.QtCore import QDate
+from PySide2.QtCore import QDate, Qt
 from PySide2.QtWidgets import (QComboBox, QDateEdit, QFrame, QHBoxLayout, QHeaderView, QLabel,
                                 QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
@@ -73,9 +73,16 @@ class AttendanceView(QWidget):
         report_layout.addLayout(filters_row)
 
         self.report_table = QTableWidget()
-        self.report_table.setColumnCount(4)
-        self.report_table.setHorizontalHeaderLabels(["الموظف", "وقت الحضور", "وقت الانصراف", "عدد الساعات"])
-        self.report_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.report_table.setColumnCount(5)
+        self.report_table.setHorizontalHeaderLabels(["الموظف", "وقت الحضور", "وقت الانصراف", "عدد الساعات", "الإجراء"])
+        self.report_table.verticalHeader().setDefaultSectionSize(44)
+        self.report_table.verticalHeader().setVisible(False)
+        header = self.report_table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
         report_layout.addWidget(self.report_table)
 
         outer.addWidget(report_card)
@@ -127,6 +134,22 @@ class AttendanceView(QWidget):
             QMessageBox.warning(self, "تنبيه", message)
         self.refresh()
 
+    def delete_record(self, record_id: int, staff_name: str, check_in_time: str):
+        reply = QMessageBox.question(
+            self,
+            "تأكيد حذف سجل الحضور",
+            f"هل أنت تأكد من رغبتك في حذف سجل حضور الموظف ({staff_name}) في {check_in_time[:10]}؟",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+        if reply == QMessageBox.Yes:
+            ok, msg = attendance_service.delete_attendance_record(record_id)
+            if ok:
+                QMessageBox.information(self, "تم الحذف", msg)
+                self.refresh()
+            else:
+                QMessageBox.warning(self, "خطأ", msg)
+
     def refresh_report(self):
         start_date = self.date_from.date().toString("yyyy-MM-dd")
         end_date = self.date_to.date().toString("yyyy-MM-dd")
@@ -139,3 +162,17 @@ class AttendanceView(QWidget):
             self.report_table.setItem(row_idx, 1, QTableWidgetItem(r["check_in"].replace("T", " ")))
             self.report_table.setItem(row_idx, 2, QTableWidgetItem(r["check_out"].replace("T", " ") if r["check_out"] else "لا يزال حاضرًا"))
             self.report_table.setItem(row_idx, 3, QTableWidgetItem(f"{r['hours_worked']:.2f}" if r["hours_worked"] is not None else "-"))
+
+            del_btn = AnimatedButton("🗑️ حذف السجل")
+            del_btn.setObjectName("Danger")
+            del_btn.setStyleSheet("padding: 4px 10px; font-size: 12px; font-weight: bold;")
+            del_btn.clicked.connect(lambda checked=False, rec_id=r["id"], name=r["full_name"], cin=r["check_in"]: self.delete_record(rec_id, name, cin))
+
+            btn_container = QWidget()
+            btn_layout = QHBoxLayout(btn_container)
+            btn_layout.setContentsMargins(6, 4, 6, 4)
+            btn_layout.setAlignment(Qt.AlignCenter)
+            btn_layout.addWidget(del_btn)
+
+            self.report_table.setCellWidget(row_idx, 4, btn_container)
+

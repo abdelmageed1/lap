@@ -332,22 +332,38 @@ class CatalogView(QWidget):
         # --- Sub-Tab 2: Parameters & Reference Ranges ---
         params_tab = QWidget()
         params_layout = QHBoxLayout(params_tab)
-        params_layout.setSpacing(10)
+        params_layout.setContentsMargins(4, 8, 4, 8)
+        params_layout.setSpacing(12)
 
-        # Parameters section (left side of params tab - 40%)
+        # Parameters section (left side of params tab - 44%)
         params_box = QFrame()
-        params_box.setStyleSheet(f"background-color: {get_color('bg_subtle')}; border: 1px solid {get_color('border')}; border-radius: 8px; padding: 8px;")
+        params_box.setObjectName("ParamsBox")
+        params_box.setStyleSheet(f"""
+            QFrame#ParamsBox {{
+                background-color: {get_color('bg_card')};
+                border: 1px solid {get_color('border')};
+                border-radius: 10px;
+                padding: 10px;
+            }}
+        """)
         pb_layout = QVBoxLayout(params_box)
-        pb_layout.setSpacing(6)
-        pb_layout.addWidget(self._label_bold("📏 المعايير (Parameters)"))
+        pb_layout.setSpacing(10)
+        
+        param_header_row = QHBoxLayout()
+        param_title = QLabel("📐 المعايير الخاصة بالتحليل (Parameters)")
+        param_title.setStyleSheet(f"font-weight: 800; font-size: 14px; color: {get_color('primary_text')};")
+        param_header_row.addWidget(param_title)
+        pb_layout.addLayout(param_header_row)
 
         self.parameters_table = QTableWidget()
         self.parameters_table.setColumnCount(3)
-        self.parameters_table.setHorizontalHeaderLabels(["المعيار", "الوحدة", "النوع"])
-        self.parameters_table.horizontalHeader().setFixedHeight(36)
+        self.parameters_table.setHorizontalHeaderLabels(["اسم المعيار", "الوحدة", "النوع"])
+        self.parameters_table.horizontalHeader().setFixedHeight(40)
         self.parameters_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         self.parameters_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.parameters_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.parameters_table.verticalHeader().setDefaultSectionSize(40)
+        self.parameters_table.verticalHeader().setVisible(False)
         self.parameters_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.parameters_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.parameters_table.setAlternatingRowColors(True)
@@ -355,9 +371,9 @@ class CatalogView(QWidget):
         self.parameters_table.setStyleSheet(f"""
             QTableWidget {{
                 border: 1px solid {get_color('border')};
-                border-radius: 6px;
+                border-radius: 8px;
                 gridline-color: {get_color('border')};
-                font-size: 12px;
+                font-size: 13px;
                 background-color: {get_color('bg_card')};
                 color: {get_color('text_main')};
             }}
@@ -365,16 +381,16 @@ class CatalogView(QWidget):
                 background-color: {get_color('primary')};
                 color: #FFFFFF;
                 font-weight: bold;
-                padding: 6px 4px;
-                font-size: 12px;
+                padding: 8px 10px;
+                font-size: 13px;
                 border: none;
             }}
             QTableWidget::item {{
-                padding: 6px 4px;
+                padding: 6px 8px;
             }}
             QTableWidget::item:selected {{
                 background-color: {get_color('accent_bg')};
-                color: {get_color('accent')};
+                color: {get_color('primary_text')};
                 font-weight: bold;
             }}
         """)
@@ -383,51 +399,111 @@ class CatalogView(QWidget):
 
         self.parameters_list = self.parameters_table  # Alias
 
+        # Add Parameter Card
+        add_param_card = QFrame()
+        add_param_card.setObjectName("AddParamCard")
+        add_param_card.setStyleSheet(f"""
+            QFrame#AddParamCard {{
+                background-color: {get_color('bg_subtle')};
+                border: 1px solid {get_color('border_light')};
+                border-radius: 8px;
+                padding: 8px;
+            }}
+        """)
+        ap_layout = QVBoxLayout(add_param_card)
+        ap_layout.setSpacing(6)
+
         param_add_row = QHBoxLayout()
+        param_add_row.setSpacing(6)
+        
         self.new_param_name_edit = QLineEdit()
         self.new_param_name_edit.setPlaceholderText("اسم المعيار...")
-        self.new_param_name_edit.setStyleSheet(f"padding: 5px; border-radius: 4px; border: 1px solid {get_color('border')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')};")
+        self.new_param_name_edit.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')}; font-size: 13px;")
         param_add_row.addWidget(self.new_param_name_edit, 2)
 
         self.new_param_unit_edit = QLineEdit()
         self.new_param_unit_edit.setPlaceholderText("الوحدة...")
-        self.new_param_unit_edit.setStyleSheet(f"padding: 5px; border-radius: 4px; border: 1px solid {get_color('border')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')};")
+        self.new_param_unit_edit.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')}; font-size: 13px;")
         param_add_row.addWidget(self.new_param_unit_edit, 1)
 
         self.new_param_type_combo = QComboBox()
         self.new_param_type_combo.addItems(DATA_TYPES)
-        self.new_param_type_combo.setStyleSheet(f"padding: 5px; border-radius: 4px; border: 1px solid {get_color('border')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')};")
+        self.new_param_type_combo.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')}; font-size: 13px;")
         param_add_row.addWidget(self.new_param_type_combo, 1)
 
-        add_param_btn = QPushButton("إضافة ➕")
+        add_param_btn = AnimatedButton("إضافة معيار ➕")
         add_param_btn.setObjectName("Primary")
+        add_param_btn.setStyleSheet(f"""
+            QPushButton#Primary {{
+                background-color: {get_color('primary')};
+                color: #FFFFFF;
+                border-radius: 6px;
+                padding: 7px 16px;
+                font-weight: bold;
+                font-size: 13px;
+                min-width: 100px;
+                min-height: 36px;
+                border: none;
+            }}
+            QPushButton#Primary:hover {{
+                background-color: {get_color('primary_hover')};
+            }}
+        """)
         add_param_btn.clicked.connect(self.add_parameter)
         param_add_row.addWidget(add_param_btn)
-        pb_layout.addLayout(param_add_row)
+        ap_layout.addLayout(param_add_row)
 
-        del_param_btn = QPushButton("حذف المعيار المحدَّد 🗑️")
+        pb_layout.addWidget(add_param_card)
+
+        del_param_btn = AnimatedButton("🗑️ حذف المعيار المحدَّد")
         del_param_btn.setObjectName("Danger")
+        del_param_btn.setStyleSheet(f"""
+            QPushButton#Danger {{
+                background-color: {get_color('danger')};
+                color: #FFFFFF;
+                border-radius: 6px;
+                padding: 7px 16px;
+                font-weight: bold;
+                font-size: 13px;
+                min-height: 36px;
+                border: none;
+            }}
+            QPushButton#Danger:hover {{
+                background-color: {get_color('danger_hover')};
+            }}
+        """)
         del_param_btn.clicked.connect(self.delete_selected_parameter)
         pb_layout.addWidget(del_param_btn)
 
-        params_layout.addWidget(params_box, 40)
+        params_layout.addWidget(params_box, 44)
 
-        # Ranges section (right side of params tab - 60%)
+        # Ranges section (right side of params tab - 56%)
         ranges_box = QFrame()
-        ranges_box.setStyleSheet(f"background-color: {get_color('bg_subtle')}; border: 1px solid {get_color('border')}; border-radius: 8px; padding: 8px;")
+        ranges_box.setObjectName("RangesBox")
+        ranges_box.setStyleSheet(f"""
+            QFrame#RangesBox {{
+                background-color: {get_color('bg_card')};
+                border: 1px solid {get_color('border')};
+                border-radius: 10px;
+                padding: 10px;
+            }}
+        """)
         rb_layout = QVBoxLayout(ranges_box)
-        rb_layout.setSpacing(6)
+        rb_layout.setSpacing(10)
 
-        self.ranges_title = self._label_bold("📐 المدى الطبيعي للمعيار المختار")
+        self.ranges_title = QLabel("🎯 المدى الطبيعي للمعيار المختار")
+        self.ranges_title.setStyleSheet(f"font-weight: 800; font-size: 14px; color: {get_color('primary_text')};")
         rb_layout.addWidget(self.ranges_title)
 
         self.ranges_table = QTableWidget()
         self.ranges_table.setColumnCount(3)
-        self.ranges_table.setHorizontalHeaderLabels(["النوع", "السن", "المدى الطبيعي"])
-        self.ranges_table.horizontalHeader().setFixedHeight(36)
+        self.ranges_table.setHorizontalHeaderLabels(["الجنس / الفئة", "العمر السني", "المدى الطبيعي / النطاق"])
+        self.ranges_table.horizontalHeader().setFixedHeight(40)
         self.ranges_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
         self.ranges_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
         self.ranges_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+        self.ranges_table.verticalHeader().setDefaultSectionSize(40)
+        self.ranges_table.verticalHeader().setVisible(False)
         self.ranges_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.ranges_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.ranges_table.setAlternatingRowColors(True)
@@ -435,9 +511,9 @@ class CatalogView(QWidget):
         self.ranges_table.setStyleSheet(f"""
             QTableWidget {{
                 border: 1px solid {get_color('border')};
-                border-radius: 6px;
+                border-radius: 8px;
                 gridline-color: {get_color('border')};
-                font-size: 12px;
+                font-size: 13px;
                 background-color: {get_color('bg_card')};
                 color: {get_color('text_main')};
             }}
@@ -445,16 +521,16 @@ class CatalogView(QWidget):
                 background-color: {get_color('primary')};
                 color: #FFFFFF;
                 font-weight: bold;
-                padding: 6px 4px;
-                font-size: 12px;
+                padding: 8px 10px;
+                font-size: 13px;
                 border: none;
             }}
             QTableWidget::item {{
-                padding: 6px 4px;
+                padding: 6px 8px;
             }}
             QTableWidget::item:selected {{
                 background-color: {get_color('accent_bg')};
-                color: {get_color('accent')};
+                color: {get_color('primary_text')};
                 font-weight: bold;
             }}
         """)
@@ -463,72 +539,126 @@ class CatalogView(QWidget):
         self.ranges_list = self.ranges_table  # Alias
 
         range_ctrl_box = QFrame()
-        range_ctrl_box.setStyleSheet(f"background-color: {get_color('bg_card')}; border: 1px solid {get_color('border')}; border-radius: 8px; padding: 8px;")
+        range_ctrl_box.setObjectName("RangeCtrlBox")
+        range_ctrl_box.setStyleSheet(f"""
+            QFrame#RangeCtrlBox {{
+                background-color: {get_color('bg_subtle')};
+                border: 1px solid {get_color('border_light')};
+                border-radius: 8px;
+                padding: 10px;
+            }}
+        """)
         rc_layout = QVBoxLayout(range_ctrl_box)
-        rc_layout.setSpacing(6)
+        rc_layout.setSpacing(8)
 
         rc_grid = QGridLayout()
-        rc_grid.setSpacing(6)
+        rc_grid.setSpacing(10)
 
-        input_qss = f"padding: 4px; border-radius: 4px; border: 1px solid {get_color('border')}; color: {get_color('primary_text')}; background-color: {get_color('bg_subtle')}; font-size: 12px;"
+        input_qss = f"padding: 6px 8px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('primary_text')}; background-color: {get_color('bg_card')}; font-size: 13px;"
 
-        rc_grid.addWidget(QLabel("النوع:"), 0, 0)
+        lbl_sex = QLabel("الجنس / الفئة:")
+        lbl_sex.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
+        rc_grid.addWidget(lbl_sex, 0, 0)
         self.range_sex_combo = QComboBox()
         self.range_sex_combo.addItems(SEX_OPTIONS)
         self.range_sex_combo.setStyleSheet(input_qss)
-        self.range_sex_combo.setMinimumWidth(75)
+        self.range_sex_combo.setMinimumWidth(100)
         rc_grid.addWidget(self.range_sex_combo, 0, 1)
 
-        rc_grid.addWidget(QLabel("من سن:"), 0, 2)
+        lbl_age_from = QLabel("من سن:")
+        lbl_age_from.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
+        rc_grid.addWidget(lbl_age_from, 0, 2)
         self.range_age_from = QDoubleSpinBox()
         self.range_age_from.setRange(0, 120)
+        self.range_age_from.setSuffix(" سنة")
         self.range_age_from.setStyleSheet(input_qss)
-        self.range_age_from.setMinimumWidth(55)
+        self.range_age_from.setMinimumWidth(90)
         rc_grid.addWidget(self.range_age_from, 0, 3)
 
-        rc_grid.addWidget(QLabel("إلى سن:"), 0, 4)
+        lbl_age_to = QLabel("إلى سن:")
+        lbl_age_to.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
+        rc_grid.addWidget(lbl_age_to, 0, 4)
         self.range_age_to = QDoubleSpinBox()
         self.range_age_to.setRange(0, 120)
         self.range_age_to.setValue(120)
+        self.range_age_to.setSuffix(" سنة")
         self.range_age_to.setStyleSheet(input_qss)
-        self.range_age_to.setMinimumWidth(55)
+        self.range_age_to.setMinimumWidth(90)
         rc_grid.addWidget(self.range_age_to, 0, 5)
 
-        rc_grid.addWidget(QLabel("من قيمة:"), 1, 0)
+        lbl_low = QLabel("من قيمة:")
+        lbl_low.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
+        rc_grid.addWidget(lbl_low, 1, 0)
         self.range_low = QDoubleSpinBox()
         self.range_low.setRange(-100000, 100000)
         self.range_low.setStyleSheet(input_qss)
-        self.range_low.setMinimumWidth(60)
+        self.range_low.setMinimumWidth(100)
         rc_grid.addWidget(self.range_low, 1, 1)
 
-        rc_grid.addWidget(QLabel("إلى قيمة:"), 1, 2)
+        lbl_high = QLabel("إلى قيمة:")
+        lbl_high.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
+        rc_grid.addWidget(lbl_high, 1, 2)
         self.range_high = QDoubleSpinBox()
         self.range_high.setRange(-100000, 100000)
         self.range_high.setStyleSheet(input_qss)
-        self.range_high.setMinimumWidth(60)
+        self.range_high.setMinimumWidth(100)
         rc_grid.addWidget(self.range_high, 1, 3)
 
         rc_layout.addLayout(rc_grid)
 
         self.range_normal_text_edit = QLineEdit()
         self.range_normal_text_edit.setPlaceholderText("نص طبيعي للنتائج الكيفية (مثال: سلبي / Negative)...")
-        self.range_normal_text_edit.setStyleSheet(f"padding: 6px; border-radius: 6px; border: 1px solid {get_color('border')}; color: {get_color('primary_text')}; background-color: {get_color('bg_subtle')};")
+        self.range_normal_text_edit.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('primary_text')}; background-color: {get_color('bg_card')}; font-size: 13px;")
         rc_layout.addWidget(self.range_normal_text_edit)
 
         r_btns = QHBoxLayout()
-        add_range_btn = QPushButton("إضافة مدى ➕")
+        r_btns.setSpacing(10)
+
+        add_range_btn = AnimatedButton("حفظ وإضافة المدى ➕")
         add_range_btn.setObjectName("Primary")
+        add_range_btn.setStyleSheet(f"""
+            QPushButton#Primary {{
+                background-color: {get_color('primary')};
+                color: #FFFFFF;
+                border-radius: 6px;
+                padding: 8px 18px;
+                font-weight: bold;
+                font-size: 13px;
+                min-height: 38px;
+                min-width: 140px;
+                border: none;
+            }}
+            QPushButton#Primary:hover {{
+                background-color: {get_color('primary_hover')};
+            }}
+        """)
         add_range_btn.clicked.connect(self.add_range)
         r_btns.addWidget(add_range_btn)
 
-        del_range_btn = QPushButton("حذف المدى 🗑️")
+        del_range_btn = AnimatedButton("🗑️ حذف المدى المحدد")
         del_range_btn.setObjectName("Danger")
+        del_range_btn.setStyleSheet(f"""
+            QPushButton#Danger {{
+                background-color: {get_color('danger')};
+                color: #FFFFFF;
+                border-radius: 6px;
+                padding: 8px 18px;
+                font-weight: bold;
+                font-size: 13px;
+                min-height: 38px;
+                min-width: 140px;
+                border: none;
+            }}
+            QPushButton#Danger:hover {{
+                background-color: {get_color('danger_hover')};
+            }}
+        """)
         del_range_btn.clicked.connect(self.delete_selected_range)
         r_btns.addWidget(del_range_btn)
         rc_layout.addLayout(r_btns)
 
         rb_layout.addWidget(range_ctrl_box)
-        params_layout.addWidget(ranges_box, 60)
+        params_layout.addWidget(ranges_box, 56)
 
         self.detail_tabs.addTab(params_tab, "📏 المعايير والمدى الطبيعي")
 
