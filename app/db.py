@@ -258,6 +258,22 @@ def init_schema() -> None:
             conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_from_email TEXT")
             conn.execute("ALTER TABLE lab_settings ADD COLUMN smtp_to_email TEXT")
 
+        if "pdf_paper_mode" not in lab_cols:
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_paper_mode TEXT DEFAULT 'white_paper'")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_page_size TEXT DEFAULT 'A4'")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_top_margin_mm REAL DEFAULT 15.0")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_bottom_margin_mm REAL DEFAULT 15.0")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_left_margin_mm REAL DEFAULT 12.0")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_right_margin_mm REAL DEFAULT 12.0")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_logo_align TEXT DEFAULT 'right'")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_header_show_logo INTEGER DEFAULT 1")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_show_doctor_signature INTEGER DEFAULT 1")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_doctor_signature_title TEXT DEFAULT 'طبيب التحاليل المسؤول'")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_doctor_signature_path TEXT DEFAULT ''")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_show_stamp INTEGER DEFAULT 1")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_stamp_path TEXT DEFAULT ''")
+            conn.execute("ALTER TABLE lab_settings ADD COLUMN pdf_custom_footer_notes TEXT DEFAULT ''")
+
         conn.commit()
     finally:
         conn.close()

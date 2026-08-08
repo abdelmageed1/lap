@@ -108,6 +108,40 @@ def draw_centered_text(c, x_center, y, text, font=FONT_REGULAR, size=11, color=N
     c.drawCentredString(x_center, y, shape(text))
 
 
+def draw_stamp_and_signature(c, x_right, y, lab_settings) -> int:
+    """Draw doctor signature and digital stamp images dynamically if configured. Returns height consumed."""
+    height_consumed = 0
+    show_sig = bool(lab_settings.get("pdf_show_doctor_signature", 1))
+    sig_path = lab_settings.get("pdf_doctor_signature_path", "")
+    sig_title = lab_settings.get("pdf_doctor_signature_title") or "طبيب التحاليل المسؤول"
+
+    show_stamp = bool(lab_settings.get("pdf_show_stamp", 1))
+    stamp_path = lab_settings.get("pdf_stamp_path", "")
+
+    # Draw stamp on the left side if available
+    if show_stamp and stamp_path and os.path.exists(stamp_path):
+        try:
+            c.drawImage(stamp_path, x_right - 460, y - 45, width=65, height=65, preserveAspectRatio=True, mask='auto')
+        except Exception:
+            pass
+
+    # Draw signature image on the right side if available
+    if show_sig:
+        if sig_path and os.path.exists(sig_path):
+            try:
+                c.drawImage(sig_path, x_right - 100, y - 35, width=90, height=45, preserveAspectRatio=True, mask='auto')
+                y -= 48
+                height_consumed += 48
+            except Exception:
+                pass
+        draw_rtl_text(c, x_right, y, f"اعتماد: {sig_title}", font=FONT_BOLD, size=9.5, color=BRAND_DARK)
+        if lab_settings.get("supervising_doctor_name"):
+            draw_rtl_text(c, x_right, y - 14, str(lab_settings["supervising_doctor_name"]), font=FONT_REGULAR, size=9, color=BRAND_GRAY)
+            height_consumed += 14
+        height_consumed += 16
+    return height_consumed
+
+
 def draw_rtl_label_value(c, x_right, y, label, value, font=FONT_REGULAR, size=10.5, color=None, gap=4):
     """Draws 'label: value' positioned right-to-left."""
     ensure_fonts_registered()

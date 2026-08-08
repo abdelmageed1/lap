@@ -119,7 +119,7 @@ QScrollArea {{
     border: none;
     background: transparent;
 }}
-#Sidebar {{
+#SidebarScroll, #Sidebar {{
     background-color: {c['sidebar_bg']};
 }}
 #SidebarTitle {{
@@ -221,11 +221,26 @@ QPushButton#Primary {{
 QPushButton#Primary:hover {{
     background-color: {c['primary_hover'] if theme_name == 'light' else c['primary']};
 }}
+QPushButton#Secondary {{
+    background-color: {c['bg_card'] if theme_name == 'light' else c['bg_subtle']};
+    color: {c['text_main']};
+    border: 1px solid {c['border_light']};
+    border-radius: 5px;
+    padding: 6px 14px;
+    font-weight: bold;
+    font-size: 13px;
+}}
+QPushButton#Secondary:hover {{
+    background-color: {c['bg_subtle'] if theme_name == 'light' else c['border_light']};
+    border-color: {c['primary']};
+    color: {c['text_emphasis']};
+}}
 QPushButton#Danger {{
     background-color: {c['danger']};
     color: white;
     border-radius: 5px;
     padding: 6px 14px;
+    font-weight: bold;
     border: none;
     font-size: 13px;
 }}

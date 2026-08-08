@@ -44,40 +44,56 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
     except Exception:
         brand_secondary = BRAND_TEAL
 
-    c.setFillColor(brand_primary)
-    c.rect(0, PAGE_H - 8, PAGE_W, 8, fill=1, stroke=0)
+    paper_mode = lab_settings.get("pdf_paper_mode", "white_paper")
+    top_margin_pt = float(lab_settings.get("pdf_top_margin_mm", 15.0) or 15.0) * 2.83465
+    bottom_margin_pt = float(lab_settings.get("pdf_bottom_margin_mm", 15.0) or 15.0) * 2.83465
 
-    y = PAGE_H - 45
-    draw_logo(c, LEFT, y - 40, width=LOGO_WIDTH, height=60, logo_override_path=lab_settings.get("logo_path"))
+    if paper_mode == "white_paper":
+        c.setFillColor(brand_primary)
+        c.rect(0, PAGE_H - 8, PAGE_W, 8, fill=1, stroke=0)
 
-    lab_name = lab_settings.get("lab_name") or "المعمل الطبي"
-    lab_name_size = lab_settings.get("lab_name_font_size") or 20
-    draw_centered_text(c, HEADER_TEXT_CENTER_X, y, lab_name, font=FONT_BOLD, size=lab_name_size, color=brand_primary)
-    y -= round(lab_name_size * 1.2)
+        y = PAGE_H - 45
+        logo_align = lab_settings.get("pdf_logo_align", "right")
+        logo_x = LEFT
+        if logo_align == "center":
+            logo_x = (PAGE_W - LOGO_WIDTH) / 2
+        elif logo_align == "left":
+            logo_x = RIGHT - LOGO_WIDTH
 
-    if lab_settings.get("supervising_doctor_name"):
-        draw_rtl_text(c, RIGHT, y, f"تحت إشراف {lab_settings['supervising_doctor_name']}",
-                      font=FONT_BOLD, size=12, color=brand_secondary)
-        y -= 18
+        if bool(lab_settings.get("pdf_header_show_logo", 1)):
+            draw_logo(c, logo_x, y - 40, width=LOGO_WIDTH, height=60, logo_override_path=lab_settings.get("logo_path"))
 
-    if lab_settings.get("tagline"):
-        draw_rtl_text(c, RIGHT, y, lab_settings["tagline"], font=FONT_REGULAR, size=10.5, color=BRAND_GRAY)
-        y -= 16
+        lab_name = lab_settings.get("lab_name") or "المعمل الطبي"
+        lab_name_size = lab_settings.get("lab_name_font_size") or 20
+        draw_centered_text(c, HEADER_TEXT_CENTER_X, y, lab_name, font=FONT_BOLD, size=lab_name_size, color=brand_primary)
+        y -= round(lab_name_size * 1.2)
 
-    contact_parts = []
-    if lab_settings.get("address"):
-        contact_parts.append(lab_settings["address"])
-    if lab_settings.get("phone_numbers"):
-        contact_parts.append(f"ت: {lab_settings['phone_numbers']}")
-    if contact_parts:
-        draw_rtl_text(c, RIGHT, y, " - ".join(contact_parts), font=FONT_REGULAR, size=9.5, color=BRAND_GRAY)
-        y -= 16
+        if lab_settings.get("supervising_doctor_name"):
+            draw_rtl_text(c, RIGHT, y, f"تحت إشراف {lab_settings['supervising_doctor_name']}",
+                          font=FONT_BOLD, size=12, color=brand_secondary)
+            y -= 18
 
-    y -= 4
-    c.setStrokeColor(BRAND_BORDER)
-    c.setLineWidth(1)
-    c.line(LEFT, y, RIGHT, y)
-    y -= 22
+        if lab_settings.get("tagline"):
+            draw_rtl_text(c, RIGHT, y, lab_settings["tagline"], font=FONT_REGULAR, size=10.5, color=BRAND_GRAY)
+            y -= 16
+
+        contact_parts = []
+        if lab_settings.get("address"):
+            contact_parts.append(lab_settings["address"])
+        if lab_settings.get("phone_numbers"):
+            contact_parts.append(f"ت: {lab_settings['phone_numbers']}")
+        if contact_parts:
+            draw_rtl_text(c, RIGHT, y, " - ".join(contact_parts), font=FONT_REGULAR, size=9.5, color=BRAND_GRAY)
+            y -= 16
+
+        y -= 4
+        c.setStrokeColor(BRAND_BORDER)
+        c.setLineWidth(1)
+        c.line(LEFT, y, RIGHT, y)
+        y -= 22
+    else:
+        # Pre-printed paper mode: skip printing header branding, start content below top margin
+        y = PAGE_H - top_margin_pt - 20
 
     draw_rtl_text(c, RIGHT, y, f"تقرير نتيجة تحليل: {test_name}", font=FONT_BOLD, size=16, color=brand_primary)
     draw_rtl_label_value(c, LEFT + 140, y, "زيارة رقم", f"#{invoice_number}", font=FONT_BOLD, size=11, color=BRAND_GRAY)
@@ -99,10 +115,6 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
     col_range_right = RIGHT - 350
     col_flag_right = LEFT + 84
 
-    # header_h is the header bar's own height; HEADER_GAP is extra clearance below it before the
-    # first row's text baseline. This must exceed the font's ascent at the row font size, or glyph
-    # tops visibly poke up into the header bar (a real, confirmed-by-rendering bug at the previous
-    # header_h + 4 gap - see info/06-CHANGES-THIS-ROUND.md).
     header_h = 26
     HEADER_GAP = 12
 
@@ -151,24 +163,28 @@ def generate_lab_report_pdf(patient_name: str, gender: str, age_years, test_name
         c.line(LEFT, y - 4, RIGHT, y - 4)
 
         y -= row_h
-        if y < 120:
-            c.setFillColor(brand_primary)
-            c.rect(0, PAGE_H - 8, PAGE_W, 8, fill=1, stroke=0)
+        if y < max(120, bottom_margin_pt + 50):
+            if paper_mode == "white_paper":
+                c.setFillColor(brand_primary)
+                c.rect(0, PAGE_H - 8, PAGE_W, 8, fill=1, stroke=0)
             c.showPage()
-            y = draw_table_header(PAGE_H - 60)
+            y = draw_table_header(PAGE_H - top_margin_pt - 40)
 
     y -= 28
     c.setStrokeColor(BRAND_BORDER)
     c.setLineWidth(0.8)
     c.line(LEFT, y + 12, RIGHT, y + 12)
 
+    from app.reports.pdf_base import draw_stamp_and_signature
+    draw_stamp_and_signature(c, RIGHT, y - 4, lab_settings)
+
     sig1 = lab_settings.get("footer_signature1") or "مدير المختبر"
     sig2 = lab_settings.get("footer_signature2") or "الطبيب المعتمد"
-    draw_rtl_text(c, RIGHT, y - 4, f"توقيع واعتماد: {sig1}", font=FONT_BOLD, size=9.5, color=BRAND_DARK)
+    draw_rtl_text(c, RIGHT - 180, y - 4, f"توقيع واعتماد: {sig1}", font=FONT_BOLD, size=9.5, color=BRAND_DARK)
     draw_rtl_text(c, LEFT + 180, y - 4, f"المراجع: {sig2}", font=FONT_BOLD, size=9.5, color=BRAND_DARK)
 
-    y -= 18
-    seal_text = lab_settings.get("digital_seal_text") or "🔒 هذا التقرير مُعتمَد إلكترونيًا ولا يحتاج توقيعًا يدوياً."
+    y -= 22
+    seal_text = lab_settings.get("pdf_custom_footer_notes") or lab_settings.get("digital_seal_text") or "🔒 هذا التقرير مُعتمَد إلكترونيًا ولا يحتاج توقيعًا يدوياً."
     draw_rtl_text(c, RIGHT, y, seal_text, font=FONT_REGULAR, size=8.5, color=BRAND_GRAY)
 
     c.showPage()

@@ -438,7 +438,11 @@ def save_lab_settings(settings: dict, user_id: int = None) -> None:
             "app_title=?, brand_primary_color=?, brand_secondary_color=?, lab_name_font_size=?, "
             "periodic_report_enabled=?, periodic_report_frequency=?, periodic_report_last_sent=?, "
             "smtp_host=?, smtp_port=?, smtp_username=?, smtp_password=?, smtp_from_email=?, "
-            "smtp_to_email=? WHERE id=1",
+            "smtp_to_email=?, pdf_paper_mode=?, pdf_page_size=?, pdf_top_margin_mm=?, "
+            "pdf_bottom_margin_mm=?, pdf_left_margin_mm=?, pdf_right_margin_mm=?, "
+            "pdf_logo_align=?, pdf_header_show_logo=?, pdf_show_doctor_signature=?, "
+            "pdf_doctor_signature_title=?, pdf_doctor_signature_path=?, pdf_show_stamp=?, "
+            "pdf_stamp_path=?, pdf_custom_footer_notes=? WHERE id=1",
             (settings.get("lab_name"), settings.get("supervising_doctor_name"), settings.get("tagline"),
              settings.get("address"), settings.get("phone_numbers"), settings.get("footer_signature1"),
              settings.get("footer_signature2"), settings.get("digital_seal_text"),
@@ -448,7 +452,17 @@ def save_lab_settings(settings: dict, user_id: int = None) -> None:
              settings.get("periodic_report_last_sent"),
              settings.get("smtp_host"), settings.get("smtp_port") or None,
              settings.get("smtp_username"), settings.get("smtp_password"),
-             settings.get("smtp_from_email"), settings.get("smtp_to_email")),
+             settings.get("smtp_from_email"), settings.get("smtp_to_email"),
+             settings.get("pdf_paper_mode", "white_paper"), settings.get("pdf_page_size", "A4"),
+             float(settings.get("pdf_top_margin_mm", 15.0) or 15.0),
+             float(settings.get("pdf_bottom_margin_mm", 15.0) or 15.0),
+             float(settings.get("pdf_left_margin_mm", 12.0) or 12.0),
+             float(settings.get("pdf_right_margin_mm", 12.0) or 12.0),
+             settings.get("pdf_logo_align", "right"), int(bool(settings.get("pdf_header_show_logo", 1))),
+             int(bool(settings.get("pdf_show_doctor_signature", 1))),
+             settings.get("pdf_doctor_signature_title", "طبيب التحاليل المسؤول"),
+             settings.get("pdf_doctor_signature_path", ""), int(bool(settings.get("pdf_show_stamp", 1))),
+             settings.get("pdf_stamp_path", ""), settings.get("pdf_custom_footer_notes", "")),
         )
         try:
             log_action('lab_settings', 1, 'update', user_id=user_id, conn=conn)

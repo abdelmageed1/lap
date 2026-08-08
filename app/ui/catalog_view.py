@@ -2,7 +2,7 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import (
     QAbstractItemView, QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout,
     QHBoxLayout, QHeaderView, QLabel, QLineEdit, QListWidget,
-    QMessageBox, QPushButton, QTabWidget, QTableWidget, QTableWidgetItem,
+    QMessageBox, QPushButton, QScrollArea, QTabWidget, QTableWidget, QTableWidgetItem,
     QVBoxLayout, QWidget
 )
 
@@ -193,7 +193,7 @@ class CatalogView(QWidget):
         foot_row.addWidget(self.test_count_label)
         
         clear_btn = QPushButton("مسح المرشحات 🔄")
-        clear_btn.setStyleSheet("font-size: 11px; padding: 2px 8px;")
+        clear_btn.setObjectName("Secondary")
         clear_btn.clicked.connect(self._clear_filters)
         foot_row.addStretch()
         foot_row.addWidget(clear_btn)
@@ -208,6 +208,7 @@ class CatalogView(QWidget):
         page_ctrl_row.addWidget(self.page_size_combo)
 
         self.prev_button = QPushButton("◀ السابق")
+        self.prev_button.setObjectName("Secondary")
         self.prev_button.clicked.connect(lambda: self._change_page(-1))
         page_ctrl_row.addWidget(self.prev_button)
 
@@ -216,6 +217,7 @@ class CatalogView(QWidget):
         page_ctrl_row.addWidget(self.page_label)
 
         self.next_button = QPushButton("التالي ▶")
+        self.next_button.setObjectName("Secondary")
         self.next_button.clicked.connect(lambda: self._change_page(1))
         page_ctrl_row.addWidget(self.next_button)
 
@@ -413,65 +415,34 @@ class CatalogView(QWidget):
         ap_layout = QVBoxLayout(add_param_card)
         ap_layout.setSpacing(6)
 
-        param_add_row = QHBoxLayout()
-        param_add_row.setSpacing(6)
-        
         self.new_param_name_edit = QLineEdit()
         self.new_param_name_edit.setPlaceholderText("اسم المعيار...")
         self.new_param_name_edit.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')}; font-size: 13px;")
-        param_add_row.addWidget(self.new_param_name_edit, 2)
+        ap_layout.addWidget(self.new_param_name_edit)
+
+        param_add_row2 = QHBoxLayout()
+        param_add_row2.setSpacing(6)
 
         self.new_param_unit_edit = QLineEdit()
         self.new_param_unit_edit.setPlaceholderText("الوحدة...")
         self.new_param_unit_edit.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')}; font-size: 13px;")
-        param_add_row.addWidget(self.new_param_unit_edit, 1)
+        param_add_row2.addWidget(self.new_param_unit_edit, 1)
 
         self.new_param_type_combo = QComboBox()
         self.new_param_type_combo.addItems(DATA_TYPES)
         self.new_param_type_combo.setStyleSheet(f"padding: 7px 10px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('text_main')}; background-color: {get_color('bg_card')}; font-size: 13px;")
-        param_add_row.addWidget(self.new_param_type_combo, 1)
+        param_add_row2.addWidget(self.new_param_type_combo, 1)
 
         add_param_btn = AnimatedButton("إضافة معيار ➕")
         add_param_btn.setObjectName("Primary")
-        add_param_btn.setStyleSheet(f"""
-            QPushButton#Primary {{
-                background-color: {get_color('primary')};
-                color: #FFFFFF;
-                border-radius: 6px;
-                padding: 7px 16px;
-                font-weight: bold;
-                font-size: 13px;
-                min-width: 100px;
-                min-height: 36px;
-                border: none;
-            }}
-            QPushButton#Primary:hover {{
-                background-color: {get_color('primary_hover')};
-            }}
-        """)
         add_param_btn.clicked.connect(self.add_parameter)
-        param_add_row.addWidget(add_param_btn)
-        ap_layout.addLayout(param_add_row)
+        param_add_row2.addWidget(add_param_btn, 1)
+        ap_layout.addLayout(param_add_row2)
 
         pb_layout.addWidget(add_param_card)
 
         del_param_btn = AnimatedButton("🗑️ حذف المعيار المحدَّد")
         del_param_btn.setObjectName("Danger")
-        del_param_btn.setStyleSheet(f"""
-            QPushButton#Danger {{
-                background-color: {get_color('danger')};
-                color: #FFFFFF;
-                border-radius: 6px;
-                padding: 7px 16px;
-                font-weight: bold;
-                font-size: 13px;
-                min-height: 36px;
-                border: none;
-            }}
-            QPushButton#Danger:hover {{
-                background-color: {get_color('danger_hover')};
-            }}
-        """)
         del_param_btn.clicked.connect(self.delete_selected_parameter)
         pb_layout.addWidget(del_param_btn)
 
@@ -552,17 +523,16 @@ class CatalogView(QWidget):
         rc_layout.setSpacing(8)
 
         rc_grid = QGridLayout()
-        rc_grid.setSpacing(10)
+        rc_grid.setSpacing(8)
 
         input_qss = f"padding: 6px 8px; border-radius: 6px; border: 1px solid {get_color('border_light')}; color: {get_color('primary_text')}; background-color: {get_color('bg_card')}; font-size: 13px;"
 
-        lbl_sex = QLabel("الجنس / الفئة:")
+        lbl_sex = QLabel("الجنس:")
         lbl_sex.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
         rc_grid.addWidget(lbl_sex, 0, 0)
         self.range_sex_combo = QComboBox()
         self.range_sex_combo.addItems(SEX_OPTIONS)
         self.range_sex_combo.setStyleSheet(input_qss)
-        self.range_sex_combo.setMinimumWidth(100)
         rc_grid.addWidget(self.range_sex_combo, 0, 1)
 
         lbl_age_from = QLabel("من سن:")
@@ -572,37 +542,33 @@ class CatalogView(QWidget):
         self.range_age_from.setRange(0, 120)
         self.range_age_from.setSuffix(" سنة")
         self.range_age_from.setStyleSheet(input_qss)
-        self.range_age_from.setMinimumWidth(90)
         rc_grid.addWidget(self.range_age_from, 0, 3)
 
         lbl_age_to = QLabel("إلى سن:")
         lbl_age_to.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
-        rc_grid.addWidget(lbl_age_to, 0, 4)
+        rc_grid.addWidget(lbl_age_to, 1, 0)
         self.range_age_to = QDoubleSpinBox()
         self.range_age_to.setRange(0, 120)
         self.range_age_to.setValue(120)
         self.range_age_to.setSuffix(" سنة")
         self.range_age_to.setStyleSheet(input_qss)
-        self.range_age_to.setMinimumWidth(90)
-        rc_grid.addWidget(self.range_age_to, 0, 5)
+        rc_grid.addWidget(self.range_age_to, 1, 1)
 
         lbl_low = QLabel("من قيمة:")
         lbl_low.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
-        rc_grid.addWidget(lbl_low, 1, 0)
+        rc_grid.addWidget(lbl_low, 1, 2)
         self.range_low = QDoubleSpinBox()
         self.range_low.setRange(-100000, 100000)
         self.range_low.setStyleSheet(input_qss)
-        self.range_low.setMinimumWidth(100)
-        rc_grid.addWidget(self.range_low, 1, 1)
+        rc_grid.addWidget(self.range_low, 1, 3)
 
         lbl_high = QLabel("إلى قيمة:")
         lbl_high.setStyleSheet(f"font-weight: 700; color: {get_color('text_main')};")
-        rc_grid.addWidget(lbl_high, 1, 2)
+        rc_grid.addWidget(lbl_high, 2, 0)
         self.range_high = QDoubleSpinBox()
         self.range_high.setRange(-100000, 100000)
         self.range_high.setStyleSheet(input_qss)
-        self.range_high.setMinimumWidth(100)
-        rc_grid.addWidget(self.range_high, 1, 3)
+        rc_grid.addWidget(self.range_high, 2, 1)
 
         rc_layout.addLayout(rc_grid)
 
@@ -612,55 +578,28 @@ class CatalogView(QWidget):
         rc_layout.addWidget(self.range_normal_text_edit)
 
         r_btns = QHBoxLayout()
-        r_btns.setSpacing(10)
+        r_btns.setSpacing(8)
 
         add_range_btn = AnimatedButton("حفظ وإضافة المدى ➕")
         add_range_btn.setObjectName("Primary")
-        add_range_btn.setStyleSheet(f"""
-            QPushButton#Primary {{
-                background-color: {get_color('primary')};
-                color: #FFFFFF;
-                border-radius: 6px;
-                padding: 8px 18px;
-                font-weight: bold;
-                font-size: 13px;
-                min-height: 38px;
-                min-width: 140px;
-                border: none;
-            }}
-            QPushButton#Primary:hover {{
-                background-color: {get_color('primary_hover')};
-            }}
-        """)
         add_range_btn.clicked.connect(self.add_range)
-        r_btns.addWidget(add_range_btn)
+        r_btns.addWidget(add_range_btn, 1)
 
         del_range_btn = AnimatedButton("🗑️ حذف المدى المحدد")
         del_range_btn.setObjectName("Danger")
-        del_range_btn.setStyleSheet(f"""
-            QPushButton#Danger {{
-                background-color: {get_color('danger')};
-                color: #FFFFFF;
-                border-radius: 6px;
-                padding: 8px 18px;
-                font-weight: bold;
-                font-size: 13px;
-                min-height: 38px;
-                min-width: 140px;
-                border: none;
-            }}
-            QPushButton#Danger:hover {{
-                background-color: {get_color('danger_hover')};
-            }}
-        """)
         del_range_btn.clicked.connect(self.delete_selected_range)
-        r_btns.addWidget(del_range_btn)
+        r_btns.addWidget(del_range_btn, 1)
         rc_layout.addLayout(r_btns)
 
         rb_layout.addWidget(range_ctrl_box)
         params_layout.addWidget(ranges_box, 56)
 
-        self.detail_tabs.addTab(params_tab, "📏 المعايير والمدى الطبيعي")
+        params_scroll = QScrollArea()
+        params_scroll.setWidgetResizable(True)
+        params_scroll.setFrameShape(QScrollArea.NoFrame)
+        params_scroll.setWidget(params_tab)
+
+        self.detail_tabs.addTab(params_scroll, "📏 المعايير والمدى الطبيعي")
 
         right_layout.addWidget(self.detail_tabs)
 

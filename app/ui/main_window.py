@@ -3,7 +3,7 @@ from PySide2.QtWidgets import QApplication
 from app.ui.styles import apply_theme, get_saved_theme
 from PySide2.QtGui import QIcon, QPixmap
 from PySide2.QtWidgets import (QComboBox, QDialog, QFrame, QGridLayout, QHBoxLayout,
-                                 QLabel, QListWidget, QMessageBox, QPushButton, QTableWidget,
+                                 QLabel, QListWidget, QMessageBox, QPushButton, QScrollArea, QTableWidget,
                                  QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView, QStackedWidget)
 from app.ui.animated_button import AnimatedButton
 
@@ -22,6 +22,7 @@ from app.ui.reports_view import ReportsView
 from app.ui.results_view import ResultsView
 from app.ui.specimen_tracking_view import SpecimenTrackingView
 
+from app.ui.pdf_designer_view import PdfDesignerView
 from app.ui.settings_view import SettingsView
 from app.ui.users_view import UsersView
 from app.ui.visits_view import VisitsView
@@ -118,6 +119,7 @@ class MainWindow(QWidget):
                 ("Catalog", "كتالوج التحاليل", CatalogView),
                 ("QualityControl", "مراقبة الجودة (QC)", QCView),
                 ("Reports", "التقارير والإحصائيات", ReportsView),
+                ("PdfDesigner", "تصميم الـ PDF والطباعة", PdfDesignerView),
                 ("Settings", "الإعدادات", SettingsView),
                 ("Users", "المستخدمون والأدوار", UsersView),
                 ("Audit", "سجل التدقيق", AuditLogView),
@@ -166,7 +168,15 @@ class MainWindow(QWidget):
         logout_button.clicked.connect(self.logout)
         sidebar_layout.addWidget(logout_button)
 
-        root.addWidget(sidebar)
+        sidebar_scroll = QScrollArea()
+        sidebar_scroll.setObjectName("SidebarScroll")
+        sidebar_scroll.setWidgetResizable(True)
+        sidebar_scroll.setFrameShape(QScrollArea.NoFrame)
+        sidebar_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        sidebar_scroll.setFixedWidth(190)
+        sidebar_scroll.setWidget(sidebar)
+
+        root.addWidget(sidebar_scroll)
         # Apply saved theme on startup
         apply_theme(QApplication.instance(), get_saved_theme())
 
